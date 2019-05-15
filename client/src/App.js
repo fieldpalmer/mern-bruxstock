@@ -1,6 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./cormorant.png";
+import "./App.css";
 
 function App() {
   return (
@@ -8,15 +8,24 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <code>NEW BRUXSTOCK COMING IN HOT</code>
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://bruxstock.herokuapp.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          view old site
+        </a>
+        <br />
+        <a
+          className="App-link"
+          href="https://bruxstock.herokuapp.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          login
         </a>
       </header>
     </div>
