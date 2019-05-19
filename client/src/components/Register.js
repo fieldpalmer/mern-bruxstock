@@ -11,7 +11,7 @@ export default function Register() {
               <h4>Register</h4>
             </div>
             <div className="card-body">
-              <form action="/users/register" method="POST">
+              <form action="/api/users/register" method="POST">
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
                   <input

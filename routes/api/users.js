@@ -5,41 +5,49 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
+const keys = require("../../config/keys");
 const passport = require("passport");
 
 // Load Input Validation
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 // get db models / collections
-const User = require("../models/User");
+const User = require("../../models/User");
 
-// @route      GET users/test
+// @route      POST api/users
+// @desc       Tests users route
+// @access     Public
+router.post("/", (req, res) => {
+  res.send("register");
+});
+
+// @route      GET api/users/test
 // @desc       Tests users route
 // @access     Public
 router.get("/test", (req, res) => console.log("User Route Connected"));
 
-// @route      POST users/register
+// @route      POST api/users/register
 // @desc       Register users
 // @access     Public
 router.post("/register", (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { name, email, password } = req.body;
+
+  const { isValid } = validateRegisterInput(req.body);
 
   // check Validation
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.status(400).json({ msg: "Please enter all fields" });
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email }).then(user => {
     if (user) {
-      errors.email = "Email already exists";
-      return res.status(400).json(errors);
+      return res.status(400).json({ msg: "Email already exists" });
     } else {
       const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
+        name,
+        email,
+        password
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -48,7 +56,15 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user =>
+              res.json({
+                user: {
+                  id: user.id,
+                  name: user.name,
+                  email: user.email
+                }
+              })
+            )
             .catch(err => console.log(err));
         });
       });
@@ -56,7 +72,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route      POST users/login
+// @route      POST api/login
 // @desc       login user / return JWT
 // @access     Public
 router.post("/login", (req, res) => {
@@ -107,7 +123,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-// @route      GET users/current
+// @route      GET api/current
 // @desc       Return current user
 // @access     Private
 router.get(

@@ -22,7 +22,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <nav className="navbar navbar-default navbar-static-top">
           <div className="container">
             <Link to="/" className="navbar-brand">
@@ -30,7 +30,7 @@ class App extends Component {
             </Link>
             <Link to="/gallery">Gallery</Link>
             <Link to="/manager">Manager</Link>
-            <Link to="/Home">Login</Link>
+            <Link to="/home">Login</Link>
           </div>
         </nav>
         <Switch>

@@ -1,27 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
-const users = require("./routes/users");
 // const images = require("./routes/images");
 // const profiles = require("./routes/profiles");
 
 const app = express();
 
 // bodyParser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 //DB Config
 const db = require("./config/keys.js").mongoURI;
+mongoose.set("useCreateIndex", true);
 
 if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 } else {
   // connect to MongoDB
   mongoose
-    .connect(db)
+    .connect(db, { useNewUrlParser: true })
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 }
@@ -33,9 +31,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // use routes
-app.use("/routes/users", users);
-// app.use("/routes/profiles", profiles);
-// app.use("/routes/images", images);
+app.use("/api/users", require("./routes/api/users"));
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
