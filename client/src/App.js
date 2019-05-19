@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import { Router } from "react-router";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 
 // import logo from "./logo.svg";
 import "./App.css";
@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Gallery from "./components/Gallery";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Manager from "./components/Manager";
 
 class App extends Component {
   state = {
@@ -24,7 +25,12 @@ class App extends Component {
       <div>
         <nav class="navbar navbar-default navbar-static-top">
           <div class="container">
-            <h3>Bruxstock</h3>
+            <Link to="/" className="navbar-brand">
+              Bruxstock
+            </Link>
+            <Link to="/gallery">Gallery</Link>
+            <Link to="/manager">Manager</Link>
+            <Link to="/Home">Login</Link>
           </div>
         </nav>
         <Switch>
@@ -33,6 +39,7 @@ class App extends Component {
           <Route path="/gallery" component={Gallery} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/manager" component={Manager} />
         </Switch>
       </div>
     );

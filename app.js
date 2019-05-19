@@ -1,20 +1,63 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// dependencies
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// routes
+const users = require("./routes/users.js");
+const images = require("./routes/images.js");
 
-var app = express();
+// db config
+const db = require("./config/keys").MongoURI;
+// const db = process.env.MONGODB_URI;
 
-app.use(logger('dev'));
-app.use(express.json());
+// connect to MongoDB
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB connected..."))
+  .catch(err => console.log(err));
+
+// passport middleware
+app.use(passport.initialize());
+
+// passport config
+require("./config/passport")(passport);
+
+const app = express();
+
+// Method Override
+app.use(methodOverride("_method"));
+
+// BodyParser
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Express Session
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
-module.exports = app;
+// app.use(passport.session());
+
+// connect Flash
+app.use(flash());
+// Global Vars
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  next();
+});
+
+// ROUTES
+app.use("./routes/users.js", users);
+app.use("./routes/images.js", images);
+// app.use("/gallery", require("./routes/gallery.js"));
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, console.log(`server started on port ${PORT}`));

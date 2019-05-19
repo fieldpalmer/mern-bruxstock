@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+// routes related to users go here
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// register
 
-module.exports = router;
+// login
+
+// logout
+
+// editProfile
+
+// deleteAccount
+
+// viewProfile (no auth)
+
+// viewProfiles (no auth)

@@ -6,16 +6,10 @@ export default function Register() {
     <div className="container">
       <div className="row">
         <div className="col-md-5 m-auto">
-          <Link to="/home">
-            <i className="fas fa-arrow-left" />
-            &nbsp;Back
-          </Link>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-5 m-auto">
-          <div className="card">
-            <div className="card-header">Register</div>
+          <div className="card mt-3">
+            <div className="card-header text-center">
+              <h4>Register</h4>
+            </div>
             <div className="card-body">
               <form action="/users/register" method="POST">
                 <div className="form-group">
@@ -65,7 +59,7 @@ export default function Register() {
             </div>
             <div className="card-footer">
               <p className="lead mt-4 text-center">
-                Have An Account? <a href="/users/login">Login</a>
+                Have An Account? <Link to="/login">Login</Link>
               </p>
             </div>
           </div>

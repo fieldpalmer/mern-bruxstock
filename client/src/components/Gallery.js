@@ -4,7 +4,7 @@ import React from "react";
 export default function Gallery() {
   return (
     <div>
-      <p>this is where the gallery goes</p>
+      <h4>things need to be in the gallery first b</h4>
     </div>
   );
 }
