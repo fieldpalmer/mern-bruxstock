@@ -5,12 +5,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
 const passport = require("passport");
 
-// Load Input Validation
-const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
+const keys = require("../../config/db/keys");
 
 // get db models / collections
 const User = require("../../models/User");
@@ -19,26 +16,14 @@ const User = require("../../models/User");
 // @desc       Tests users route
 // @access     Public
 router.post("/", (req, res) => {
-  res.send("register");
+  res.send("api/users works!");
 });
-
-// @route      GET api/users/test
-// @desc       Tests users route
-// @access     Public
-router.get("/test", (req, res) => console.log("User Route Connected"));
 
 // @route      POST api/users/register
 // @desc       Register users
 // @access     Public
 router.post("/register", (req, res) => {
   const { name, email, password } = req.body;
-
-  const { isValid } = validateRegisterInput(req.body);
-
-  // check Validation
-  if (!isValid) {
-    return res.status(400).json({ msg: "Please enter all fields" });
-  }
 
   User.findOne({ email }).then(user => {
     if (user) {
@@ -56,15 +41,25 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user =>
-              res.json({
-                user: {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email
+            .then(user => {
+              // Sign token
+              jwt.sign(
+                { id: user.id },
+                keys.secretOrKey,
+                { expiresIn: 3600 },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token,
+                    user: {
+                      id: user.id,
+                      name: user.name,
+                      email: user.email
+                    }
+                  });
                 }
-              })
-            )
+              );
+            })
             .catch(err => console.log(err));
         });
       });
@@ -72,59 +67,55 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route      POST api/login
+// @route      POST api/users/login
 // @desc       login user / return JWT
 // @access     Public
 router.post("/login", (req, res) => {
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { email, password } = req.body;
 
-  // check Validation
-  if (!isValid) {
-    return res.status(400).json(errors);
+  // Simple validation
+  if (!email || !password) {
+    return res.status(400).json({ msg: "Please enter all fields" });
   }
 
-  const email = req.body.email;
-  const password = req.body.password;
-
-  // find user by email
+  // Check for existing user
   User.findOne({ email }).then(user => {
-    // Check for user
-    if (!user) {
-      errors.email = "User not found";
-      return res.status(404).json(errors);
-    }
-    // Check password
+    if (!user) return res.status(400).json({ msg: "User Does not exist" });
+
+    // Validate password
     bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
-        // User matched
-        // create JWT payload
-        const payload = {
-          id: user.id,
-          name: user.name,
-          avatar: user.avatar
-        };
-        // Sign token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
-          }
-        );
-      } else {
-        errors.password = "Password Incorrect";
-        return res.status(400).json(errors);
-      }
+      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+      // Sign token
+      jwt.sign(
+        { id: user.id },
+        keys.secretOrKey,
+        { expiresIn: 3600 },
+        (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token,
+            user: {
+              id: user.id,
+              name: user.name,
+              email: user.email
+            }
+          });
+        }
+      );
     });
   });
 });
 
-// @route      GET api/current
-// @desc       Return current user
+// @route      get api/users/passport
+// @desc       Test for passport reading JWT
+// @access     Private
+router.get("/passport", (req, res) => {
+  passport.authenticate("jwt", { session: false });
+  res.json("passport is working");
+});
+
+// @route      get api/users/current
+// @desc       Get current user data
 // @access     Private
 router.get(
   "/current",

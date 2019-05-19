@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 //DB Config
-const db = require("./config/keys.js").mongoURI;
+const db = require("./config/db/keys.js").mongoURI;
 mongoose.set("useCreateIndex", true);
 
 if (process.env.MONGODB_URI) {
@@ -28,7 +28,7 @@ if (process.env.MONGODB_URI) {
 app.use(passport.initialize());
 
 // Passport Config
-require("./config/passport")(passport);
+require("./config/passport/passport")(passport);
 
 // use routes
 app.use("/api/users", require("./routes/api/users"));
