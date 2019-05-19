@@ -12,19 +12,19 @@ import Login from "./components/Login";
 import Manager from "./components/Manager";
 
 class App extends Component {
-  state = {
-    auth: {
-      user: "userObj",
-      isAuthenticated: Boolean
-    },
-    art: [{}]
-  };
+  // state = {
+  //   auth: {
+  //     user: "userObj",
+  //     isAuthenticated: Boolean
+  //   },
+  //   art: [{}]
+  // };
 
   render() {
     return (
       <div>
-        <nav class="navbar navbar-default navbar-static-top">
-          <div class="container">
+        <nav className="navbar navbar-default navbar-static-top">
+          <div className="container">
             <Link to="/" className="navbar-brand">
               Bruxstock
             </Link>

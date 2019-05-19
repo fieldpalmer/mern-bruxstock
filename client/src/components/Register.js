@@ -13,7 +13,7 @@ export default function Register() {
             <div className="card-body">
               <form action="/users/register" method="POST">
                 <div className="form-group">
-                  <label for="name">Name</label>
+                  <label htmlFor="name">Name</label>
                   <input
                     type="name"
                     id="name"
@@ -23,7 +23,7 @@ export default function Register() {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="email">Email</label>
+                  <label htmlFor="email">Email</label>
                   <input
                     type="email"
                     id="email"
@@ -33,7 +33,7 @@ export default function Register() {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     id="password"
@@ -43,7 +43,7 @@ export default function Register() {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="password2">Confirm Password</label>
+                  <label htmlFor="password2">Confirm Password</label>
                   <input
                     type="password"
                     id="password2"

@@ -18,10 +18,6 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
-  },
-  stock: {
-    type: Array,
-    required: false
   }
 });
 

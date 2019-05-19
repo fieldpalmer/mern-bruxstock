@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Home from "./Home";
+// import Home from "./Home";
 import logo from "../../src/cormorant.png";
 
 export default function Landing() {
@@ -19,9 +19,7 @@ export default function Landing() {
         >
           view old site
         </a>
-        <Link to="/home" component={Home}>
-          check on progress
-        </Link>
+        <Link to="/home">check on progress</Link>
       </header>
     </div>
   );
