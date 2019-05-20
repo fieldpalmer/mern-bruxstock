@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
 const keys = require("../../config/db/keys");
+// const ensureAuthenticated = require("../../config/passport/auth");
 
 // get db models / collections
 const User = require("../../models/User");

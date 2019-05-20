@@ -32,6 +32,7 @@ require("./config/passport/passport")(passport);
 
 // use routes
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/images", require("./routes/api/images"));
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
