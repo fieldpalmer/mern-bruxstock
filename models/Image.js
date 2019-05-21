@@ -24,8 +24,8 @@ const ImageSchema = new Schema({
   },
   public: {
     type: Boolean,
-    default: true,
-    required: true
+    default: true
+    // required: true
   },
   uploadDate: {
     type: Date,

@@ -107,14 +107,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-// @route      get api/users/passport
-// @desc       Test for passport reading JWT
-// @access     Private
-router.get("/passport", (req, res) => {
-  passport.authenticate("jwt", { session: false });
-  res.json("passport is working");
-});
-
 // @route      get api/users/current
 // @desc       Get current user data
 // @access     Private
