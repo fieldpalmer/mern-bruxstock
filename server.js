@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cookieparser = require("cookie-parser");
 const path = require("path");
 // const images = require("./routes/images");
 // const profiles = require("./routes/profiles");
@@ -32,7 +33,8 @@ require("./config/passport/passport")(passport);
 
 // use routes
 app.use("/api/users", require("./routes/api/users"));
-app.use("/api/images", require("./routes/api/images"));
+// app.use("/api/images", require("./routes/api/images"));
+app.use("/api/image", require("./routes/api/image"));
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
