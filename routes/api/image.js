@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const crypto = require("crypto");
-const path = require("path");
+// const crypto = require("crypto");
+// const path = require("path");
+const passport = require("passport");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
@@ -9,17 +10,17 @@ const GridFsStorage = require("multer-gridfs-storage");
 const keys = require("../../config/db/keys");
 
 // Image model
-const Image = require("../../models/Image");
+// const Image = require("../../models/Image");
 
 // set up connection to db for file storage
 const mongoUri = keys.mongoURI;
 const conn = mongoose.createConnection(mongoUri);
 
 // initialize gfs stream
+Grid.mongo = mongoose.mongo;
 let gfs;
-conn.once("open", () => {
-  // initialize stream
-  gfs = Grid(conn.db, mongoose.mongo);
+conn.once("open", function() {
+  gfs = Grid(conn.db);
   gfs.collection("files");
 });
 
@@ -28,32 +29,26 @@ const storage = new GridFsStorage({
   url: mongoUri,
   file: (req, file) => {
     return {
-      filename: file.originalname
+      filename: file.originalname,
+      bucketName: "files"
     };
   }
-  // file: (req, res) => {
-  //   return new Promise((resolve, reject) => {
-  //     crypto.randomBytes(16, (buf, err) => {
-  //       if (err) {
-  //         return reject(err);
-  //       }
-  //       const filename =
-  //         buf.renderToString("hex") + path.extname(req.file.originalname);
-  //       const fileInfo = {
-  //         filename: filename,
-  //         bucketName: "files"
-  //       };
-  //       res.json(fileInfo);
-  //       resolve(fileInfo);
-  //     });
-  //   });
-  // }
 });
-const singleUpload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage }).single("file");
 
+// test route
 router.get("/", (req, res) => {
-  res.json("api/image works!\n" + req.user);
+  res.json("api/image works!");
 });
+
+// test passport route
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 router.get("/files/:filename", (req, res) => {
   gfs.files.find({ filename: req.params.filename }).toArray((err, files) => {
@@ -71,18 +66,22 @@ router.get("/files/:filename", (req, res) => {
   });
 });
 
-router.get("/files", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        msg: "Could not find files"
-      });
-    }
-    return res.json(files);
-  });
-});
+router.get(
+  "/files",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+      if (!files || files.length === 0) {
+        return res.status(404).json({
+          message: "Could not find files"
+        });
+      }
+      return res.json(files);
+    });
+  }
+);
 
-router.post("/files", singleUpload, (req, res) => {
+router.post("/files", upload, (req, res) => {
   if (req.file) {
     return res.json({
       success: true,
