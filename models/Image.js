@@ -10,6 +10,10 @@ const ImageSchema = new Schema({
     type: String,
     required: true
   },
+  file_id: {
+    type: String,
+    required: true
+  },
   file_type: {
     type: String,
     required: true

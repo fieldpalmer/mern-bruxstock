@@ -1,10 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const cookieparser = require("cookie-parser");
+const config = require("config");
 const path = require("path");
-// const images = require("./routes/images");
-// const profiles = require("./routes/profiles");
 
 const app = express();
 
@@ -12,8 +10,10 @@ const app = express();
 app.use(express.json());
 
 //DB Config
-const db = require("./config/db/keys.js").mongoURI;
+// need to add process env
+const db = config.get("mongoURI");
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
@@ -33,8 +33,7 @@ require("./config/passport/passport")(passport);
 
 // use routes
 app.use("/api/users", require("./routes/api/users"));
-// app.use("/api/images", require("./routes/api/images"));
-app.use("/api/image", require("./routes/api/image"));
+app.use("/api/files", require("./routes/api/files"));
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

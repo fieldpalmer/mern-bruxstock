@@ -1,39 +1,47 @@
-// routes related to users/artists go in this file
-
 // dependencies
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 const passport = require("passport");
 
 const keys = require("../../config/db/keys");
 // const ensureAuthenticated = require("../../config/passport/auth");
 
+// Load Input Validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
+
 // get db models / collections
 const User = require("../../models/User");
+const Image = require("../../models/Image");
 
-// @route      POST api/users
+// @route      GET /users/test
 // @desc       Tests users route
 // @access     Public
-router.post("/", (req, res) => {
-  res.send("api/users works!");
-});
+router.get("/test", (req, res) => res.json({ msg: "User Route Connected" }));
 
-// @route      POST api/users/register
+// @route      POST /users/register
 // @desc       Register users
 // @access     Public
 router.post("/register", (req, res) => {
-  const { name, email, password } = req.body;
+  const { errors, isValid } = validateRegisterInput(req.body);
 
-  User.findOne({ email }).then(user => {
+  // check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ msg: "Email already exists" });
+      errors.email = "Email already exists";
+      return res.status(400).json(errors);
     } else {
       const newUser = new User({
-        name,
-        email,
-        password
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -42,25 +50,7 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => {
-              // Sign token
-              jwt.sign(
-                { id: user.id },
-                keys.secretOrKey,
-                { expiresIn: 3600 },
-                (err, token) => {
-                  res.json({
-                    success: true,
-                    token,
-                    user: {
-                      id: user.id,
-                      name: user.name,
-                      email: user.email
-                    }
-                  });
-                }
-              );
-            })
+            .then(user => res.json(user))
             .catch(err => console.log(err));
         });
       });
@@ -68,49 +58,82 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route      POST api/users/login
+// @route      POST users/login
 // @desc       login user / return JWT
 // @access     Public
 router.post("/login", (req, res) => {
-  const { email, password } = req.body;
+  const { errors, isValid } = validateLoginInput(req.body);
 
-  // Simple validation
-  if (!email || !password) {
-    return res.status(400).json({ msg: "Please enter all fields" });
+  // check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
 
-  // Check for existing user
-  User.findOne({ email }).then(user => {
-    if (!user) return res.status(400).json({ msg: "User Does not exist" });
+  const email = req.body.email;
+  const password = req.body.password;
 
-    // Validate password
+  // find user by email
+  User.findOne({ email }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.email = "User not found";
+      return res.status(404).json(errors);
+    }
+    // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
-      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
-      // Sign token
-      jwt.sign(
-        { id: user.id },
-        keys.secretOrKey,
-        { expiresIn: 3600 },
-        (err, token) => {
-          res.json({
-            success: true,
-            token: "Bearer " + token,
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email
-            }
-          });
-        }
-      );
+      if (isMatch) {
+        // User matched
+        // create JWT payload
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+        // Sign token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+      } else {
+        errors.password = "Password Incorrect";
+        return res.status(400).json(errors);
+      }
     });
   });
 });
 
-// @route      get api/users/current
+// @route      GET /users/:userId
+// @desc       View all images for specific artist
+// @access     Public
+router.get("/:userId", (req, res) => {
+  User.findOne({ _id: req.params.userId }).then(user => {
+    let stockArr = [];
+    let userStock = user.stock;
+    userStock.forEach(el => {
+      stockArr.push(el.filename);
+    });
+    Image.find({ filename: { $in: stockArr } }).then(files => {
+      if (!files || files.length === 0) {
+        return res.status(400).json({
+          msg: "Could not find files"
+        });
+      } else {
+        return res.json(files);
+      }
+    });
+  });
+});
+
+// @route      get users/current
 // @desc       Get current user data
 // @access     Private
-router.get(
+router.post(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -118,8 +141,17 @@ router.get(
   }
 );
 
-module.exports = router;
-
 // logout
+// @route get users/logout
+// @desc log user out
+// @access Private
+router.get(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    req.logout();
+    // res.redirect("/");
+  }
+);
 
-// deleteAccount
+module.exports = router;

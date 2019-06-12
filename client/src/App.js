@@ -1,47 +1,55 @@
 import React, { Component } from "react";
-// import { Router } from "react-router";
-import { Route, Switch, Link } from "react-router-dom";
-
-// import logo from "./logo.svg";
+import { Provider } from "react-redux";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
+import setAuthToken from "./utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+
+import AppNavbar from "./components/AppNavbar";
 import Landing from "./components/Landing";
-import Home from "./components/Home";
-import Gallery from "./components/Gallery";
-import Register from "./components/Register";
-import Login from "./components/Login";
+// import Home from "./components/Home";
+import Gallery from "./components/gallery/Gallery";
 import Manager from "./components/Manager";
+import store from "./store";
+
+// check for auth token
+if (localStorage.jwtToken) {
+  // set auth token header auth
+  setAuthToken(localStorage.jwtToken);
+  // decode token and get info
+  const decoded = jwt_decode(localStorage.jwtToken);
+  // set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+  // store.dispatch(getCurrentProfile());
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // logout user
+    store.dispatch(logoutUser());
+    // clear profile
+    // store.dispatch(clearCurrentProfile());
+    // redirect to login
+    window.location.href = "/login";
+  }
+}
 
 class App extends Component {
-  // state = {
-  //   auth: {
-  //     user: "userObj",
-  //     isAuthenticated: Boolean
-  //   },
-  //   art: [{}]
-  // };
-
   render() {
     return (
-      <div className="container-fluid">
-        <nav className="navbar navbar-default navbar-static-top">
-          <div className="container">
-            <Link to="/" className="navbar-brand">
-              Bruxstock
-            </Link>
-            <Link to="/gallery">Gallery</Link>
-            <Link to="/manager">Manager</Link>
-            <Link to="/home">Login</Link>
+      <Provider store={store}>
+        <div className="App">
+          <div className="container-fluid">
+            <AppNavbar />
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/gallery" component={Gallery} />
+              <Route path="/manager" component={Manager} />
+            </Switch>
           </div>
-        </nav>
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route path="/home" component={Home} />
-          <Route path="/gallery" component={Gallery} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/manager" component={Manager} />
-        </Switch>
-      </div>
+        </div>
+      </Provider>
     );
   }
 }
