@@ -10,24 +10,28 @@ const ImageSchema = new Schema({
     type: String,
     required: true
   },
-  file_id: {
+  gfsId: {
     type: String,
     required: true
   },
-  file_type: {
+  title: {
     type: String,
     required: true
   },
-  img_title: {
+  notes: {
     type: String,
-    required: false
+    required: true
   },
-  img_notes: {
+  type: {
     type: String,
-    required: false
+    required: true
   },
-  public: {
-    type: Boolean,
+  category: {
+    type: String,
+    required: true
+  },
+  view: {
+    type: String,
     default: true
     // required: true
   },

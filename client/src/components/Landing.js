@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
+// import { PropTypes } from "prop-types";
+// import { connect } from "react-redux";
 // import logo from "../cormorant.png";
 import { Container, Col, Row } from "reactstrap";
 
 class Landing extends Component {
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }
-
   render() {
     return (
       // Landing Page
@@ -48,14 +42,16 @@ class Landing extends Component {
   }
 }
 
-Landing.propTypes = {
-  auth: PropTypes.object.isRequired
-  // errors: PropTypes.object.isRequired
-};
+// Landing.propTypes = {
+//   auth: PropTypes.object.isRequired
+//   // errors: PropTypes.object.isRequired
+// };
 
-const mapStateToProps = state => ({
-  auth: state.auth
-  // errors: state.errors
-});
+// const mapStateToProps = state => ({
+//   auth: state.auth
+//   // errors: state.errors
+// });
 
-export default connect(mapStateToProps)(Landing);
+// export default connect(mapStateToProps)(Landing);
+
+export default Landing;

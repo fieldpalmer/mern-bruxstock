@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import GalleryItem from "./GalleryItem";
+import GalleryItem from "../gallery/GalleryItem";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getFiles, setFileLoading } from "../../redux/actions/fileActions";
+import {
+  getFiles,
+  getUserFiles,
+  setFileLoading
+} from "../../redux/actions/fileActions";
 import { Container, CardColumns } from "reactstrap";
 
-class Gallery extends Component {
+class Portfolio extends Component {
   static propTypes = {
     getFiles: PropTypes.func.isRequired,
+    getUserFiles: PropTypes.func.isRequired,
     files: PropTypes.object.isRequired,
     setFileLoading: PropTypes.func.isRequired
   };
@@ -29,6 +34,8 @@ class Gallery extends Component {
 
     return (
       <Container>
+        <h2>This is the portfolio</h2>
+        <hr />
         {files ? (
           <CardColumns>{galleryItems}</CardColumns>
         ) : (
@@ -49,5 +56,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getFiles, setFileLoading }
-)(Gallery);
+  { getFiles, getUserFiles, setFileLoading }
+)(Portfolio);

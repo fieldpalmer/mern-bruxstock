@@ -1,37 +1,31 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
-import setAuthToken from "./utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
-
-import AppNavbar from "./components/AppNavbar";
+import AppNavbar from "./components/common/AppNavbar";
 import Landing from "./components/Landing";
-// import Home from "./components/Home";
 import Gallery from "./components/gallery/Gallery";
-import Manager from "./components/Manager";
-import store from "./store";
+import Portfolio from "./components/portfolio/Portfolio";
+import Dashboard from "./components/manage/Dashboard";
+import Upload from "./components/manage/Upload";
+import ViewItem from "./components/item/ViewItem";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import store from "./redux/store";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
 
-// check for auth token
+// Check for token to keep user logged in
 if (localStorage.jwtToken) {
-  // set auth token header auth
-  setAuthToken(localStorage.jwtToken);
-  // decode token and get info
-  const decoded = jwt_decode(localStorage.jwtToken);
-  // set user and isAuthenticated
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  const decoded = jwt_decode(token);
   store.dispatch(setCurrentUser(decoded));
-  // store.dispatch(getCurrentProfile());
-
-  // Check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    // logout user
     store.dispatch(logoutUser());
-    // clear profile
-    // store.dispatch(clearCurrentProfile());
-    // redirect to login
-    window.location.href = "/login";
+    window.location.href = "./login";
   }
 }
 
@@ -44,8 +38,13 @@ class App extends Component {
             <AppNavbar />
             <Switch>
               <Route exact path="/" component={Landing} />
-              <Route exact path="/gallery" component={Gallery} />
-              <Route path="/manager" component={Manager} />
+              <Route path="/gallery" component={Gallery} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/upload" component={Upload} />
+              <Route path="/portfolio/:userid" component={Portfolio} />
+              <Route path="/view/:filename" component={ViewItem} />
             </Switch>
           </div>
         </div>

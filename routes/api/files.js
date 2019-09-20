@@ -1,6 +1,6 @@
 const router = require("express").Router();
-// const crypto = require("crypto");
-// const path = require("path");
+const crypto = require("crypto");
+const path = require("path");
 const passport = require("passport");
 const multer = require("multer");
 const mongoose = require("mongoose");
@@ -10,11 +10,12 @@ const GridFsStorage = require("multer-gridfs-storage");
 const keys = require("../../config/db/keys");
 
 // import file validator
-const validateFileInput = require("../../validation/files");
+// const validateFileInput = require("../../validation/files");
 
+// User model
+const User = require("../../models/User");
 // Image model
 const Image = require("../../models/Image");
-const User = require("../../models/User");
 
 // set up connection to db for file storage
 const mongoUri = keys.mongoURI;
@@ -28,40 +29,40 @@ conn.once("open", function() {
   gfs.collection("files");
 });
 
-// set up storage engine
+// set up storage engine v1 (broken)
 const storage = new GridFsStorage({
   url: mongoUri,
   file: (req, file) => {
-    return {
-      filename: file.originalname,
-      bucketName: "files"
-    };
+    return new Promise((resolve, reject) => {
+      // const { title, uploadedBy, uploadDate, notes, category, view } = req.body;
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          bucketName: "files",
+          filename: filename
+        };
+        resolve(fileInfo);
+      });
+    });
   }
 });
-const upload = multer({ storage: storage }).single("file");
 
-// @route      GET /api/files/test
-// @desc       Tests files route
-// @access     Public
-router.get("/test", (req, res) => res.json({ msg: "Files Route Connected" }));
+const upload = multer({ storage: storage }).single("file");
 
 // @route      GET /api/files
 // @desc       Gets all files from db
 // @access     Public
 router.get("/", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        responseCode: 1,
-        responseMessage: "error"
-      });
-    }
-    return res.json(files);
+  Image.find((err, images) => {
+    return res.json(images);
   });
 });
 
 // @route      GET /api/files/:filename
-// @desc       View one specific image
+// @desc       View Image
 // @access     Public
 router.get("/:filename", (req, res) => {
   gfs.files.find({ filename: req.params.filename }).toArray((err, files) => {
@@ -70,7 +71,6 @@ router.get("/:filename", (req, res) => {
         msg: "Could not find file"
       });
     }
-
     let readstream = gfs.createReadStream({
       filename: files[0].filename
     });
@@ -79,70 +79,70 @@ router.get("/:filename", (req, res) => {
   });
 });
 
+// @route      GET /api/files/portfolio/:userid
+// @desc       Get user's collection of files
+// @access     Public
+router.get("/portfolio/:userid", (req, res) => {
+  Image.find({ uploadedBy: req.params.userid }, (err, files) => {
+    if (!files || files.length === 0) {
+      return res.status(400).json({
+        msg: "Something's up"
+      });
+    } else {
+      return res.json(files);
+    }
+  });
+});
+
 // @route      POST /api/files/upload
 // @desc       Posts or edits files
 // @access     Private
 router.post(
+  // this needs to be a writestream
   "/upload",
+  // this is the file being sent to GFS
   upload,
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateFileInput(req.body);
+    console.log(req);
+    let reqBodyParsed = JSON.parse(req.body.body);
+    // const { title, uploadedBy, notes, category, view } = req.body.body;
+    const { title, uploadedBy, notes, category, view } = reqBodyParsed;
+    const { id, filename, uploadDate, contentType } = req.file;
 
-    // check Validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-    if (req.user && req.file) {
-      const { _id, email } = req.user;
-      const { filename, contentType, uploadDate, id } = req.file;
-      const { title, notes, public } = req.body;
+    // creating image object
+    const newImg = new Image({
+      gfsId: id,
+      uploadedBy: uploadedBy,
+      uploadDate: uploadDate,
+      filename: filename,
+      type: contentType,
+      category: category,
+      title: title,
+      notes: notes,
+      view: view
+    });
 
-      Image.findOne({ id }).then(img => {
-        const newImg = new Image({
-          uploadedBy: _id,
-          filename: filename,
-          file_id: id,
-          file_type: contentType,
-          img_title: title,
-          img_notes: notes,
-          public: public,
-          uploadDate: uploadDate
-        });
-        newImg
-          .save()
-          .then(img => {
-            User.findOneAndUpdate(
-              { email: email },
-              { $push: { stock: img } },
-              (err, doc) => {
-                if (err) {
-                  return console.log(err);
-                } else {
-                  return res.json({
-                    success: true,
-                    msg: "file posted!",
-                    file: req.file,
-                    image: img
-                  });
-                }
-              }
-            );
-          })
-          .catch(err => console.log(err));
+    Image.findOne({ id }).then(img => {
+      newImg.save().then(img => {
+        User.findOneAndUpdate(
+          { _id: uploadedBy },
+          { $push: { stock: img.gfsId } },
+          (err, doc) => {
+            if (err) {
+              return console.log(err);
+            }
+            return res.json({
+              success: true,
+              msg: "file posted!",
+              file: req.file,
+              body: req.body
+            });
+          }
+        );
       });
-    } else {
-      res.send({ success: false });
-    }
+    });
   }
 );
-
-// @route      PUT /api/files/:id
-// @desc       Edit one specific image
-// @access     Private
-// router.put("/edit/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-//   Image.findOneAndUpdate({file_id: req.params.id}, {})
-// })
 
 // @route      DELETE /api/files/delete/:id
 // @desc       Delete one specific image
@@ -163,12 +163,7 @@ router.delete(
         }
       }
     );
-    // remove from images collection
-    Image.findOneAndDelete({ file_id: req.params.id }, (err, doc) => {
-      if (err) {
-        return console.log(err);
-      }
-    });
+
     // remove from gridfs
     gfs.remove({ _id: req.params.id, root: "files" }, (err, gridStore) => {
       if (err) return res.status(500).json({ success: false });

@@ -3,13 +3,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 const passport = require("passport");
-
 const keys = require("../../config/db/keys");
 // const ensureAuthenticated = require("../../config/passport/auth");
 
-// Load Input Validation
+// get input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
@@ -28,22 +26,21 @@ router.get("/test", (req, res) => res.json({ msg: "User Route Connected" }));
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
-  // check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      errors.email = "Email already exists";
-      return res.status(400).json(errors);
+      return res.status(400).json({ email: "Email already exists" });
     } else {
+      // create new user object
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password
       });
-
+      // hash password before saving
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -62,22 +59,17 @@ router.post("/register", (req, res) => {
 // @desc       login user / return JWT
 // @access     Public
 router.post("/login", (req, res) => {
+  const { email, password } = req.body;
   const { errors, isValid } = validateLoginInput(req.body);
 
-  // check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
-  const password = req.body.password;
-
   // find user by email
   User.findOne({ email }).then(user => {
-    // Check for user
     if (!user) {
-      errors.email = "User not found";
-      return res.status(404).json(errors);
+      return res.status(404).json({ emailnotfound: "Email not found" });
     }
     // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -96,7 +88,8 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer " + token
+              token: "Bearer " + token,
+              payload: payload
             });
           }
         );
@@ -111,8 +104,8 @@ router.post("/login", (req, res) => {
 // @route      GET /users/:userId
 // @desc       View all images for specific artist
 // @access     Public
-router.get("/:userId", (req, res) => {
-  User.findOne({ _id: req.params.userId }).then(user => {
+router.get("/:userid", (req, res) => {
+  User.findOne({ _id: req.params.userid }).then(user => {
     let stockArr = [];
     let userStock = user.stock;
     userStock.forEach(el => {
@@ -138,19 +131,6 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json(req.user);
-  }
-);
-
-// logout
-// @route get users/logout
-// @desc log user out
-// @access Private
-router.get(
-  "/logout",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    req.logout();
-    // res.redirect("/");
   }
 );
 

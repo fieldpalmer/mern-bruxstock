@@ -1,15 +1,15 @@
 import axios from "axios";
 import {
+  ADD_FILE,
+  GET_ERRORS,
   GET_FILE,
   GET_FILES,
   GET_USER_FILES,
-  FILE_LOADING,
-  // SET_CURRENT_USER,
-  GET_ERRORS
+  FILE_LOADING
 } from "./types";
 
 // get current file
-export const getCurrentFile = filename => dispatch => {
+export const getFile = filename => dispatch => {
   dispatch(setFileLoading());
   axios
     .get(`/api/files/${filename}`)
@@ -21,8 +21,8 @@ export const getCurrentFile = filename => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_FILE,
-        payload: {}
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };
@@ -40,17 +40,17 @@ export const getFiles = () => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_FILES,
-        payload: null
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };
 
-// get files by user id
-export const getFilesByUserId = id => dispatch => {
+// get user files
+export const getUserFiles = userid => dispatch => {
   dispatch(setFileLoading());
   axios
-    .get(`/api/users/${id}`)
+    .get(`/api/files/portfolio/${userid}`)
     .then(res =>
       dispatch({
         type: GET_USER_FILES,
@@ -59,21 +59,27 @@ export const getFilesByUserId = id => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_USER_FILES,
-        payload: null
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };
 
-// create file
-export const createfile = (fileData, history) => dispatch => {
+// add file
+export const addFile = fileData => dispatch => {
+  dispatch(setFileLoading());
   axios
     .post("/api/files/upload", fileData)
-    .then(res => history.push("/dashboard"))
+    .then(res =>
+      dispatch({
+        type: ADD_FILE,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.res.data
       })
     );
 };
@@ -84,24 +90,3 @@ export const setFileLoading = () => {
     type: FILE_LOADING
   };
 };
-
-// delete file
-export const deleteFile = id => dispatch => {
-  if (window.confirm("Are you sure? This cannot be undone.")) {
-    axios
-      .delete(`/api/files/delete/:${id}`)
-      .then(res =>
-        dispatch({
-          type: GET_FILE,
-          payload: res.data
-        })
-      )
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        })
-      );
-  }
-};
-// };
