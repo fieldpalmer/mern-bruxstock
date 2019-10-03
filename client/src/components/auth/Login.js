@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {
   Alert,
+  Card,
   Container,
+  Col,
+  Row,
   Form,
   FormGroup,
   Label,
@@ -31,7 +34,7 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/gallery");
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -55,57 +58,65 @@ class Login extends Component {
     const { errors } = this.state;
     return (
       <Container>
-        <h2>Login</h2>
-        <Form className="form" noValidate onSubmit={this.onSubmit}>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              name="email"
-              id="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-              placeholder="email@email.com"
-              className={classnames("", {
-                invalid: errors.email || errors.emailnotfound
-              })}
-            />
-            {/* display errors if they exist */}
-            {errors.email || errors.emailnotfound ? (
-              <Alert color="danger">
-                {errors.email}
-                {errors.emailnotfound}
-              </Alert>
-            ) : (
-              ""
-            )}
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="password">Password</Label>
-            <Input
-              onChange={this.onChange}
-              value={this.state.password}
-              error={errors.password}
-              id="password"
-              type="password"
-              placeholder="enter password"
-              className={classnames("", {
-                invalid: errors.password || errors.passwordincorrect
-              })}
-            />
-            {/* display errors if they exist */}
-            {errors.password || errors.passwordincorrect ? (
-              <Alert color="danger">
-                {errors.password}
-                {errors.passwordincorrect}
-              </Alert>
-            ) : (
-              ""
-            )}
-          </FormGroup>
-          <Button type="submit">Submit</Button>
-        </Form>
+        <Row>
+          <Col sm="12" md="4">
+            <Card className="p-4">
+              <h2>Login</h2>
+              <hr />
+              <Form className="form" noValidate onSubmit={this.onSubmit}>
+                <FormGroup>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    error={errors.email}
+                    placeholder="email@email.com"
+                    className={classnames("", {
+                      invalid: errors.email || errors.emailnotfound
+                    })}
+                  />
+                  {/* display errors if they exist */}
+                  {errors.email || errors.emailnotfound ? (
+                    <Alert color="danger">
+                      {errors.email}
+                      {errors.emailnotfound}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                    id="password"
+                    type="password"
+                    placeholder="enter password"
+                    className={classnames("", {
+                      invalid: errors.password || errors.passwordincorrect
+                    })}
+                  />
+                  {/* display errors if they exist */}
+                  {errors.password || errors.passwordincorrect ? (
+                    <Alert color="danger">
+                      {errors.password}
+                      {errors.passwordincorrect}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </FormGroup>
+                <hr />
+                <Button type="submit">Submit</Button>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     );
   }

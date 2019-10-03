@@ -11,7 +11,7 @@ import {
   CardImg
 } from "reactstrap";
 
-class GalleryItem extends Component {
+class SpreadsheetItem extends Component {
   static propTypes = {
     file: PropTypes.object.isRequired
   };
@@ -47,4 +47,4 @@ class GalleryItem extends Component {
   }
 }
 
-export default withRouter(GalleryItem);
+export default withRouter(SpreadsheetItem);

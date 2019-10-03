@@ -66,15 +66,17 @@ export const getUserFiles = userid => dispatch => {
 };
 
 // add file
-export const addFile = fileData => dispatch => {
+export const addFile = (fileData, history) => dispatch => {
   dispatch(setFileLoading());
   axios
     .post("/api/files/upload", fileData)
-    .then(res =>
-      dispatch({
-        type: ADD_FILE,
-        payload: res.data
-      })
+    .then(
+      res =>
+        dispatch({
+          type: ADD_FILE,
+          payload: res.data
+        })
+      // history.push("/gallery")
     )
     .catch(err =>
       dispatch({

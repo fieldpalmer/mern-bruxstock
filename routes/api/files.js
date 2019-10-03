@@ -98,14 +98,11 @@ router.get("/portfolio/:userid", (req, res) => {
 // @desc       Posts or edits files
 // @access     Private
 router.post(
-  // this needs to be a writestream
   "/upload",
   // this is the file being sent to GFS
   upload,
   (req, res) => {
-    console.log(req);
     let reqBodyParsed = JSON.parse(req.body.body);
-    // const { title, uploadedBy, notes, category, view } = req.body.body;
     const { title, uploadedBy, notes, category, view } = reqBodyParsed;
     const { id, filename, uploadDate, contentType } = req.file;
 
@@ -134,8 +131,7 @@ router.post(
             return res.json({
               success: true,
               msg: "file posted!",
-              file: req.file,
-              body: req.body
+              doc: doc
             });
           }
         );

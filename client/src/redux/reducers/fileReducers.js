@@ -22,7 +22,6 @@ export default (state = initialState, action) => {
     case ADD_FILE:
       return {
         ...state,
-        // is this supposed to be current File?
         file: action.payload,
         loading: false
       };

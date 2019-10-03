@@ -3,16 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../redux/actions/authActions";
 import Upload from "./Upload";
-import { Button, Card, Container } from "reactstrap";
+import Spreadsheet from "./Spreadsheet";
+import { Container, Row, Col } from "reactstrap";
+
 class Dashboard extends Component {
   static propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  };
-
-  onLogoutClick = e => {
-    e.preventDefault();
-    this.props.logoutUser();
   };
 
   render() {
@@ -24,13 +20,14 @@ class Dashboard extends Component {
           <b>Hello,</b> {user.name}
         </h4>
         <hr />
-        <Card className="py-3">
-          <Upload />
-        </Card>
-        <hr />
-        <Button color="danger" onClick={this.onLogoutClick}>
-          Logout
-        </Button>
+        <Row>
+          <Col sm="!2" md="6">
+            <Upload />
+          </Col>
+          <Col sm="!2" md="6">
+            <Spreadsheet />
+          </Col>
+        </Row>
       </Container>
     );
   }

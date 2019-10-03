@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/authActions";
 import {
+  Button,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -20,6 +24,15 @@ class AppNavbar extends Component {
       // errors: {}
     };
   }
+
+  static propTypes = {
+    logoutUser: PropTypes.func.isRequired
+  };
+
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
 
   toggle = () => {
     this.setState({
@@ -53,6 +66,9 @@ class AppNavbar extends Component {
                 <NavItem>
                   <NavLink href="/upload">Upload</NavLink>
                 </NavItem>
+                <Button color="danger" onClick={this.onLogoutClick}>
+                  Logout
+                </Button>
                 {/* {isAuthenticated ? authLinks : ""} */}
               </Nav>
             </Collapse>
@@ -63,13 +79,13 @@ class AppNavbar extends Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
-// export default connect(
-//   mapStateToProps,
-//   null
-// )(AppNavbar);
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(AppNavbar);
 
-export default AppNavbar;
+// export default AppNavbar;

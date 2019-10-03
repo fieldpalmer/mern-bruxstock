@@ -11,9 +11,9 @@ class ViewItem extends Component {
   };
 
   goToPortfolio = () => {
-    const { uploadedBy } = this.props.file;
-    this.props.history.push(`/portfolio/${uploadedBy}`);
-    // this.props.history.push(`/portfolio/5cf74ae7906085c7833b196a`);
+    // const { uploadedBy } = this.props.file;
+    // this.props.history.push(`/portfolio/${uploadedBy}`);
+    this.props.history.push(`/portfolio/5d852a9571e5035f557a10e9`);
   };
 
   render() {

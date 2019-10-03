@@ -18,17 +18,18 @@ class Portfolio extends Component {
   };
 
   componentDidMount() {
-    this.props.getFiles();
+    // this isn't working
+    // get userFiles should add an array of the user's public files to an array
+    // could be from state or from db === already in state?
+    this.props.getUserFiles();
   }
-
-  // Future Update: use onLoad event to smooth image loading
 
   render() {
     const { files } = this.props.files;
 
-    let galleryItems;
+    let portfolioItems;
 
-    galleryItems = files.map(file => (
+    portfolioItems = files.map(file => (
       <GalleryItem key={file._id} file={file} />
     ));
 
@@ -37,7 +38,7 @@ class Portfolio extends Component {
         <h2>This is the portfolio</h2>
         <hr />
         {files ? (
-          <CardColumns>{galleryItems}</CardColumns>
+          <CardColumns>{portfolioItems}</CardColumns>
         ) : (
           <div>
             <h1>
