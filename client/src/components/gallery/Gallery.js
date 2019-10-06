@@ -16,14 +16,10 @@ class Gallery extends Component {
     this.props.getFiles();
   }
 
-  // Future Update: use onLoad event to smooth image loading
-
   render() {
     const { files } = this.props.files;
 
-    let galleryItems;
-
-    galleryItems = files.map(file => (
+    let galleryItems = files.map(file => (
       <GalleryItem key={file._id} file={file} />
     ));
 

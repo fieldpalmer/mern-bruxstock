@@ -26,7 +26,8 @@ class AppNavbar extends Component {
   }
 
   static propTypes = {
-    logoutUser: PropTypes.func.isRequired
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
   };
 
   onLogoutClick = e => {
@@ -41,6 +42,7 @@ class AppNavbar extends Component {
   };
 
   render() {
+    // const { user } = this.props.auth;
     return (
       <div>
         <Navbar expand="sm" className="mb-3">
@@ -51,6 +53,7 @@ class AppNavbar extends Component {
             </NavbarToggler>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
+                {/* {user ? authLinks : guestLinks} */}
                 <NavItem>
                   <NavLink href="/dashboard">Dashboard</NavLink>
                 </NavItem>

@@ -2,9 +2,9 @@ export const GET_FILE = "GET_FILE";
 export const GET_FILE_SUCCESS = "GET_FILE_SUCCESS";
 export const GET_FILE_FAIL = "GET_FILE_FAIL";
 
-export const SET_FILE = "SET_FILE";
-export const SET_FILES_SUCCESS = "SET_FILE_SUCCESS";
-export const SET_FILES_FAIL = "SET_FILE_FAIL";
+export const SELECT_FILE = "SELECT_FILE";
+export const SELECT_FILES_SUCCESS = "SELECT_FILE_SUCCESS";
+export const SELECT_FILES_FAIL = "SELECT_FILE_FAIL";
 
 export const VIEW_FILE = "VIEW_FILE";
 export const VIEW_FILE_SUCCESS = "VIEW_FILE_SUCCESS";

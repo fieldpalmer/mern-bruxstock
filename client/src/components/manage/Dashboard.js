@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../redux/actions/authActions";
 import Upload from "./Upload";
-import Spreadsheet from "./Spreadsheet";
+import Spreadsheet from "./Spreadsheet/Spreadsheet";
 import { Container, Row, Col } from "reactstrap";
 
 class Dashboard extends Component {
@@ -21,10 +21,10 @@ class Dashboard extends Component {
         </h4>
         <hr />
         <Row>
-          <Col sm="!2" md="6">
+          <Col sm="12" md="4">
             <Upload />
           </Col>
-          <Col sm="!2" md="6">
+          <Col sm="12" md="8">
             <Spreadsheet />
           </Col>
         </Row>
