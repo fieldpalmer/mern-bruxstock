@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { Button, Card, CardImg } from "reactstrap";
+import { withRouter, Link } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardFooter,
+  CardImg,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap";
+import Moment from "react-moment";
 
 class SpreadsheetItem extends Component {
   static propTypes = {
@@ -14,7 +22,16 @@ class SpreadsheetItem extends Component {
   };
 
   render() {
-    const { filename, title, notes, view } = this.props.file;
+    const {
+      filename,
+      title,
+      notes,
+      view,
+      category,
+      type,
+      uploadDate,
+      uploadedBy
+    } = this.props.file;
 
     return (
       <tr>
@@ -26,19 +43,38 @@ class SpreadsheetItem extends Component {
               src={`/api/files/${filename}`}
               alt="Card image cap"
             />
+            <CardFooter>
+              <Link
+                to={{
+                  pathname: `/view/${filename}`,
+                  state: {
+                    uploadedBy: uploadedBy
+                  }
+                }}
+              >
+                <Button color="success">View</Button>
+              </Link>
+              <Button disabled className="btn-warning" onClick={this.goToImage}>
+                Edit
+              </Button>
+              <Button disabled className="btn-danger" onClick={this.goToImage}>
+                Delete
+              </Button>
+            </CardFooter>
           </Card>
         </td>
         <td>
-          {title}
-          <br />
-          <br />
-          {notes}
-          <br />
-          <br />
-          {view}
-        </td>
-        <td>
-          <Button onClick={this.goToImage}>Go to Image</Button>
+          <ListGroup>
+            <ListGroupItem>title: {title}</ListGroupItem>
+            <ListGroupItem>notes: {notes}</ListGroupItem>
+            <ListGroupItem>view: {view}</ListGroupItem>
+            <ListGroupItem>category: {category}</ListGroupItem>
+            <ListGroupItem>file type: {type}</ListGroupItem>
+            <ListGroupItem>
+              upload date:&nbsp;
+              <Moment format="MM/DD/YYYY" date={{ uploadDate }} />
+            </ListGroupItem>
+          </ListGroup>
         </td>
       </tr>
     );

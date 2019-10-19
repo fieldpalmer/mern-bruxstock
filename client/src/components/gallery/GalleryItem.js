@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -18,8 +18,6 @@ class GalleryItem extends Component {
 
   goToImage = () => {
     const { filename } = this.props.file;
-    // need to dispatch redux action to set currentFile state
-    // currentFile state really only needs to contain the uploadedBy info
     this.props.history.push(`/view/${filename}`);
   };
 
@@ -40,7 +38,16 @@ class GalleryItem extends Component {
           <CardText>{uploadedBy}</CardText>
         </CardBody>
         <CardFooter>
-          <Button onClick={this.goToImage}>View Image</Button>
+          <Link
+            to={{
+              pathname: `/view/${filename}`,
+              state: {
+                uploadedBy: uploadedBy
+              }
+            }}
+          >
+            <Button color="success">Go to Image</Button>
+          </Link>
         </CardFooter>
       </Card>
     );

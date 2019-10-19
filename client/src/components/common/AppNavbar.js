@@ -42,7 +42,7 @@ class AppNavbar extends Component {
   };
 
   render() {
-    // const { user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <Navbar expand="sm" className="mb-3">
@@ -53,26 +53,39 @@ class AppNavbar extends Component {
             </NavbarToggler>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                {/* {user ? authLinks : guestLinks} */}
-                <NavItem>
-                  <NavLink href="/dashboard">Dashboard</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink href="/login">Login</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink href="/register">Register</NavLink>
-                </NavItem>
+                {isAuthenticated ? (
+                  <NavItem>
+                    <NavLink href="/dashboard">Dashboard</NavLink>
+                  </NavItem>
+                ) : (
+                  ""
+                )}
+
+                {isAuthenticated ? (
+                  ""
+                ) : (
+                  <NavItem>
+                    <NavLink href="/login">Login</NavLink>
+                  </NavItem>
+                )}
+                {isAuthenticated ? (
+                  ""
+                ) : (
+                  <NavItem>
+                    <NavLink href="/register">Register</NavLink>
+                  </NavItem>
+                )}
+
                 <NavItem>
                   <NavLink href="/gallery">Gallery</NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="/upload">Upload</NavLink>
-                </NavItem>
-                <Button color="danger" onClick={this.onLogoutClick}>
-                  Logout
-                </Button>
-                {/* {isAuthenticated ? authLinks : ""} */}
+                {isAuthenticated ? (
+                  <Button color="danger" onClick={this.onLogoutClick}>
+                    Logout
+                  </Button>
+                ) : (
+                  ""
+                )}
               </Nav>
             </Collapse>
           </Container>
@@ -90,5 +103,3 @@ export default connect(
   mapStateToProps,
   { logoutUser }
 )(AppNavbar);
-
-// export default AppNavbar;

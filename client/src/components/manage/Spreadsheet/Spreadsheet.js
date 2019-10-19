@@ -9,34 +9,30 @@ import "./index.css";
 class Spreadsheet extends Component {
   static propTypes = {
     getFiles: PropTypes.func.isRequired,
-    files: PropTypes.object.isRequired
+    files: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
   };
 
-  // style value to set table to max height and scroll image table
   componentDidMount = () => {
     this.props.getFiles();
   };
 
   render() {
     const { files } = this.props.files;
+    let userId = this.props.auth.user.id;
 
     let spreadsheetItems;
 
-    spreadsheetItems = files.map(file => (
-      <SpreadsheetItem key={file._id} file={file} />
-    ));
+    spreadsheetItems = files.map(file =>
+      file.uploadedBy === userId ? (
+        <SpreadsheetItem key={file._id} file={file} />
+      ) : null
+    );
 
     return (
       <div id="spreadsheet">
+        <h4>Uploads</h4>
         <Table striped>
-          <thead>
-            <h4>My Files</h4>
-            <tr>
-              <th>Thumbnail</th>
-              <th>Title</th>
-              <th>Link</th>
-            </tr>
-          </thead>
           <tbody>{spreadsheetItems}</tbody>
         </Table>
       </div>
@@ -45,7 +41,8 @@ class Spreadsheet extends Component {
 }
 
 const mapStateToProps = state => ({
-  files: state.files
+  files: state.files,
+  auth: state.auth
 });
 
 export default connect(

@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import GalleryItem from "./GalleryItem";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getFiles, setFileLoading } from "../../redux/actions/fileActions";
+import { connect } from "react-redux";
 import { Container, CardColumns } from "reactstrap";
 
-class Gallery extends Component {
+import { getFiles, setFileLoading } from "../../redux/actions/fileActions";
+import GalleryItem from "../gallery/GalleryItem";
+
+class Portfolio extends Component {
   static propTypes = {
     getFiles: PropTypes.func.isRequired,
-    files: PropTypes.object.isRequired,
-    setFileLoading: PropTypes.func.isRequired
+    setFileLoading: PropTypes.func.isRequired,
+    files: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -18,15 +19,18 @@ class Gallery extends Component {
 
   render() {
     const { files } = this.props.files;
+    const userId = this.props.match.params.userid;
 
-    let galleryItems = files.map(file =>
-      file.view === "public" ? <GalleryItem key={file._id} file={file} /> : null
+    let userGallery = files.map(file =>
+      file.uploadedBy === userId ? (
+        <GalleryItem key={file._id} file={file} />
+      ) : null
     );
 
     return (
       <Container>
         {files ? (
-          <CardColumns>{galleryItems}</CardColumns>
+          <CardColumns>{userGallery}</CardColumns>
         ) : (
           <div>
             <h1>
@@ -46,4 +50,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getFiles, setFileLoading }
-)(Gallery);
+)(Portfolio);

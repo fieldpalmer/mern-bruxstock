@@ -1,19 +1,12 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-// import { setFileLoading } from "../../actions/fileActions";
 import { Button, Container, Card, CardImg } from "reactstrap";
 
 class ViewItem extends Component {
-  componentDidMount = () => {
-    // this.props.setFile(this.props.match.params.filename);
-    console.log(this.props);
-  };
-
   goToPortfolio = () => {
-    // const { uploadedBy } = this.props.file;
-    // this.props.history.push(`/portfolio/${uploadedBy}`);
-    this.props.history.push(`/portfolio/5d852a9571e5035f557a10e9`);
+    const { uploadedBy } = this.props.location.state;
+    console.log(uploadedBy);
+    this.props.history.push(`/portfolio/${uploadedBy}`);
   };
 
   render() {

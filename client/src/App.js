@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import AppNavbar from "./components/common/AppNavbar";
 import Landing from "./components/Landing";
 import Gallery from "./components/gallery/Gallery";
-// import Portfolio from "./components/portfolio/Portfolio";
+import Portfolio from "./components/portfolio/Portfolio";
 import Dashboard from "./components/manage/Dashboard";
 import Upload from "./components/manage/Upload";
 import ViewItem from "./components/item/ViewItem";
@@ -43,7 +43,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/upload" component={Upload} />
-              {/* <Route path="/portfolio/:userid" component={Portfolio} /> */}
+              <Route path="/portfolio/:userid" component={Portfolio} />
               <Route path="/view/:filename" component={ViewItem} />
             </Switch>
           </div>
