@@ -22,7 +22,7 @@ class GalleryItem extends Component {
   };
 
   render() {
-    const { filename, uploadedBy, title, notes } = this.props.file;
+    const { filename, uploadedBy, title, notes, category } = this.props.file;
 
     return (
       <Card>
@@ -33,22 +33,20 @@ class GalleryItem extends Component {
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle>{title}</CardTitle>
-          <CardText>{notes}</CardText>
-          <CardText>{uploadedBy}</CardText>
-        </CardBody>
-        <CardFooter>
           <Link
             to={{
               pathname: `/view/${filename}`,
               state: {
-                uploadedBy: uploadedBy
+                uploadedBy: uploadedBy,
+                title: title,
+                notes: notes,
+                category: category
               }
             }}
           >
             <Button color="success">Go to Image</Button>
           </Link>
-        </CardFooter>
+        </CardBody>
       </Card>
     );
   }

@@ -22,7 +22,7 @@ class Portfolio extends Component {
     const userId = this.props.match.params.userid;
 
     let userGallery = files.map(file =>
-      file.uploadedBy === userId ? (
+      file.uploadedBy === userId && file.view === "public" ? (
         <GalleryItem key={file._id} file={file} />
       ) : null
     );

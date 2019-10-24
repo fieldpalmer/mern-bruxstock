@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/actions/authActions";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import {
@@ -33,13 +34,17 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+    this.goToDashboard();
   }
 
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
+  };
+
+  goToDashboard = () => {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   };
 
   onSubmit = e => {
@@ -49,9 +54,7 @@ class Login extends Component {
       password: this.state.password
     };
     this.props.loginUser(userData);
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+    window.setTimeout(this.goToDashboard, 1 * 1000);
   };
 
   render() {
@@ -130,4 +133,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { loginUser }
-)(Login);
+)(withRouter(Login));

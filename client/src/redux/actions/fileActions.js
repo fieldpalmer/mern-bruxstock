@@ -70,13 +70,14 @@ export const addFile = (fileData, history) => dispatch => {
   dispatch(setFileLoading());
   axios
     .post("/api/files/upload", fileData)
-    .then(
-      res =>
-        dispatch({
+    .then(res =>
+      dispatch(
+        {
           type: ADD_FILE,
           payload: res.data
-        })
-      // history.push("/gallery")
+        },
+        window.location.reload()
+      )
     )
     .catch(err =>
       dispatch({

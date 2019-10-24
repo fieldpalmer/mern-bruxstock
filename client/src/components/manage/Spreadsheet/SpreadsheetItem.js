@@ -9,7 +9,7 @@ import {
   ListGroup,
   ListGroupItem
 } from "reactstrap";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 
 class SpreadsheetItem extends Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class SpreadsheetItem extends Component {
       view,
       category,
       type,
-      uploadDate,
+      // uploadDate,
       uploadedBy
     } = this.props.file;
 
@@ -48,11 +48,14 @@ class SpreadsheetItem extends Component {
                 to={{
                   pathname: `/view/${filename}`,
                   state: {
-                    uploadedBy: uploadedBy
+                    uploadedBy: uploadedBy,
+                    title: title,
+                    notes: notes,
+                    category: category
                   }
                 }}
               >
-                <Button color="success">View</Button>
+                <Button color="success">Go to Image</Button>
               </Link>
               <Button disabled className="btn-warning" onClick={this.goToImage}>
                 Edit
@@ -70,10 +73,10 @@ class SpreadsheetItem extends Component {
             <ListGroupItem>view: {view}</ListGroupItem>
             <ListGroupItem>category: {category}</ListGroupItem>
             <ListGroupItem>file type: {type}</ListGroupItem>
-            <ListGroupItem>
+            {/* <ListGroupItem>
               upload date:&nbsp;
               <Moment format="MM/DD/YYYY" date={{ uploadDate }} />
-            </ListGroupItem>
+            </ListGroupItem> */}
           </ListGroup>
         </td>
       </tr>
