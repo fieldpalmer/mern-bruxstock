@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Table } from "reactstrap";
 import { connect } from "react-redux";
 import { getFiles } from "../../../redux/actions/fileActions";
 import PropTypes from "prop-types";
@@ -32,9 +31,7 @@ class Spreadsheet extends Component {
     return (
       <div id="spreadsheet">
         <h4>Uploads</h4>
-        <Table striped>
-          <tbody>{spreadsheetItems}</tbody>
-        </Table>
+        {spreadsheetItems}
       </div>
     );
   }

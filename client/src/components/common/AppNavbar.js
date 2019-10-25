@@ -11,7 +11,11 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container
+  Container,
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu
 } from "reactstrap";
 // import { connect } from "react-redux";
 
@@ -75,12 +79,25 @@ class AppNavbar extends Component {
                     <NavLink href="/register">Register</NavLink>
                   </NavItem>
                 )}
-
+                {/* this is gonna need to be it's own component */}
+                {/* we need to get all users from db and map their 
+                usernames as dropdown items */}
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Portfolios
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem disabled>Select an Artist</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Option 1</DropdownItem>
+                    <DropdownItem>Option 2</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
                 <NavItem>
                   <NavLink href="/gallery">Gallery</NavLink>
                 </NavItem>
                 {isAuthenticated ? (
-                  <Button color="danger" onClick={this.onLogoutClick}>
+                  <Button color="danger" size="sm" onClick={this.onLogoutClick}>
                     Logout
                   </Button>
                 ) : (

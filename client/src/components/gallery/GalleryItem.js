@@ -5,10 +5,9 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   CardText,
-  CardImg
+  CardImg,
+  CardImgOverlay
 } from "reactstrap";
 
 class GalleryItem extends Component {
@@ -32,7 +31,7 @@ class GalleryItem extends Component {
           src={`/api/files/${filename}`}
           alt="Card image cap"
         />
-        <CardBody>
+        <CardImgOverlay>
           <Link
             to={{
               pathname: `/view/${filename}`,
@@ -44,8 +43,21 @@ class GalleryItem extends Component {
               }
             }}
           >
-            <Button color="success">Go to Image</Button>
+            <Button outline size="sm" color="warning">
+              View Image
+            </Button>
           </Link>
+        </CardImgOverlay>
+        <CardBody>
+          <CardText>
+            <small>title:</small>&nbsp;
+            <strong>{title}</strong>
+          </CardText>
+          <CardText>
+            <small>medium:</small>&nbsp;
+            <strong>{category}</strong>
+          </CardText>
+          {/* <hr /> */}
         </CardBody>
       </Card>
     );

@@ -34,7 +34,6 @@ const storage = new GridFsStorage({
   url: mongoUri,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
-      // const { title, uploadedBy, uploadDate, notes, category, view } = req.body;
       crypto.randomBytes(16, (err, buf) => {
         if (err) {
           return reject(err);

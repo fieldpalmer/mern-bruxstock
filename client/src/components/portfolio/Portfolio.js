@@ -29,6 +29,9 @@ class Portfolio extends Component {
 
     return (
       <Container>
+        <small>artist:</small>
+        <strong>&nbsp;{userId}</strong>
+        <hr />
         {files ? (
           <CardColumns>{userGallery}</CardColumns>
         ) : (

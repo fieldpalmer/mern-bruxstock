@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import {
+  Container,
+  Row,
+  Col,
   Button,
   Card,
-  CardFooter,
   CardImg,
   ListGroup,
   ListGroupItem
 } from "reactstrap";
-// import Moment from "react-moment";
+import Moment from "react-moment";
 
 class SpreadsheetItem extends Component {
   static propTypes = {
@@ -29,21 +31,15 @@ class SpreadsheetItem extends Component {
       view,
       category,
       type,
-      // uploadDate,
+      uploadDate,
       uploadedBy
     } = this.props.file;
 
     return (
-      <tr>
-        <td>
-          <Card className="p-0 m-0">
-            <CardImg
-              top
-              width="100%"
-              src={`/api/files/${filename}`}
-              alt="Card image cap"
-            />
-            <CardFooter>
+      <Container>
+        <Row className="my-3">
+          <Col>
+            <Card className="p-0 mb-2">
               <Link
                 to={{
                   pathname: `/view/${filename}`,
@@ -55,31 +51,53 @@ class SpreadsheetItem extends Component {
                   }
                 }}
               >
-                <Button color="success">Go to Image</Button>
+                <CardImg
+                  top
+                  width="100%"
+                  src={`/api/files/${filename}`}
+                  alt="Card image cap"
+                />
               </Link>
-              <Button disabled className="btn-warning" onClick={this.goToImage}>
-                Edit
-              </Button>
-              <Button disabled className="btn-danger" onClick={this.goToImage}>
-                Delete
-              </Button>
-            </CardFooter>
-          </Card>
-        </td>
-        <td>
-          <ListGroup>
-            <ListGroupItem>title: {title}</ListGroupItem>
-            <ListGroupItem>notes: {notes}</ListGroupItem>
-            <ListGroupItem>view: {view}</ListGroupItem>
-            <ListGroupItem>category: {category}</ListGroupItem>
-            <ListGroupItem>file type: {type}</ListGroupItem>
-            {/* <ListGroupItem>
-              upload date:&nbsp;
-              <Moment format="MM/DD/YYYY" date={{ uploadDate }} />
-            </ListGroupItem> */}
-          </ListGroup>
-        </td>
-      </tr>
+            </Card>
+            {/* <hr /> */}
+          </Col>
+          <Col>
+            <ListGroup>
+              <ListGroupItem className="py-1">
+                <small>title:</small>&nbsp;{title}
+              </ListGroupItem>
+              <ListGroupItem className="py-1">
+                <small>notes:</small>&nbsp;{notes}
+              </ListGroupItem>
+              <ListGroupItem className="py-1">
+                <small>view:</small>&nbsp;{view}
+              </ListGroupItem>
+              <ListGroupItem className="py-1">
+                <small>category:</small>&nbsp;{category}
+              </ListGroupItem>
+              <ListGroupItem className="py-1">
+                <small>type:</small>&nbsp;{type}
+              </ListGroupItem>
+              <ListGroupItem className="py-1">
+                <small>upload date:</small>&nbsp;
+                <Moment format="MM/DD/YYYY">{uploadDate}</Moment>
+              </ListGroupItem>
+              <ListGroupItem className="p-2">
+                <Button
+                  disabled
+                  block
+                  outline
+                  color="warning"
+                  size="sm"
+                  onClick={this.goToImage}
+                >
+                  edit image
+                </Button>
+              </ListGroupItem>
+            </ListGroup>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

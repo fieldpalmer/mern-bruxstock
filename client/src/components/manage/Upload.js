@@ -68,7 +68,6 @@ class Upload extends Component {
     formData.append("body", formValuesStr);
 
     this.props.addFile(formData, this.props.history);
-    // window.setTimeout(window.location.reload(), 2 * 1000);
   };
 
   render() {
