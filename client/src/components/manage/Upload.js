@@ -3,16 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addFile, setFileLoading } from "../../redux/actions/fileActions";
 import PropTypes from "prop-types";
-import {
-  Card,
-  Col,
-  Row,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button
-} from "reactstrap";
+import { Col, Row, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 class Upload extends Component {
   constructor(props) {
@@ -74,88 +65,86 @@ class Upload extends Component {
     const { title, notes, view, category } = this.state;
 
     return (
-      <Row>
+      <Row className="mb-3">
         <Col sm="12">
-          <Card className="p-4">
-            <h2>Upload File</h2>
-            <hr />
-            <Form
-              onSubmit={this.onSubmit}
-              encType="multipart/form-data"
-              method="POST"
-            >
-              <FormGroup>
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  onChange={this.onFileSelect}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="title">Title</Label>
+          <h4>Upload File</h4>
+          <hr />
+          <Form
+            onSubmit={this.onSubmit}
+            encType="multipart/form-data"
+            method="POST"
+          >
+            <FormGroup>
+              <input
+                type="file"
+                id="file"
+                name="file"
+                onChange={this.onFileSelect}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="title">Title</Label>
+              <Input
+                type="text"
+                name="title"
+                id="title"
+                value={title}
+                onChange={this.onChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="notes">Notes</Label>
+              <Input
+                type="textarea"
+                name="notes"
+                id="notes"
+                value={notes}
+                onChange={this.onChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="selectType">Type</Label>
+              <Input
+                type="select"
+                name="category"
+                id="category"
+                value={category}
+                onChange={this.onChange}
+              >
+                <option value="select">Select</option>
+                <option value="drawing">Drawing</option>
+                <option value="painting">Painting</option>
+                <option value="addNewType">Add New Type</option>
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <FormGroup check inline>
                 <Input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={title}
+                  type="radio"
+                  name="view"
+                  value="public"
+                  checked={view === "public"}
+                  className="form-check-input"
                   onChange={this.onChange}
                 />
+                Public
               </FormGroup>
-              <FormGroup>
-                <Label htmlFor="notes">Notes</Label>
+              <FormGroup check inline>
                 <Input
-                  type="textarea"
-                  name="notes"
-                  id="notes"
-                  value={notes}
+                  type="radio"
+                  name="view"
+                  value="private"
+                  checked={view === "private"}
+                  className="form-check-input"
                   onChange={this.onChange}
                 />
+                Private
               </FormGroup>
-              <FormGroup>
-                <Label for="selectType">Type</Label>
-                <Input
-                  type="select"
-                  name="category"
-                  id="category"
-                  value={category}
-                  onChange={this.onChange}
-                >
-                  <option value="select">Select</option>
-                  <option value="drawing">Drawing</option>
-                  <option value="painting">Painting</option>
-                  <option value="addNewType">Add New Type</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <FormGroup check inline>
-                  <Input
-                    type="radio"
-                    name="view"
-                    value="public"
-                    checked={view === "public"}
-                    className="form-check-input"
-                    onChange={this.onChange}
-                  />
-                  Public
-                </FormGroup>
-                <FormGroup check inline>
-                  <Input
-                    type="radio"
-                    name="view"
-                    value="private"
-                    checked={view === "private"}
-                    className="form-check-input"
-                    onChange={this.onChange}
-                  />
-                  Private
-                </FormGroup>
-              </FormGroup>
-              <Button color="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Card>
+            </FormGroup>
+            <Button color="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
         </Col>
       </Row>
     );

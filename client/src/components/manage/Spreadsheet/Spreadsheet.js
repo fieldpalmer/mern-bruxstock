@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getFiles } from "../../../redux/actions/fileActions";
 import PropTypes from "prop-types";
 import SpreadsheetItem from "./SpreadsheetItem";
+import { CardColumns } from "reactstrap";
 import "./index.css";
 
 class Spreadsheet extends Component {
@@ -28,12 +29,7 @@ class Spreadsheet extends Component {
       ) : null
     );
 
-    return (
-      <div id="spreadsheet">
-        <h4>Uploads</h4>
-        {spreadsheetItems}
-      </div>
-    );
+    return <CardColumns>{spreadsheetItems}</CardColumns>;
   }
 }
 

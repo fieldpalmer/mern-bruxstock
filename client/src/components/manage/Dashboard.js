@@ -21,11 +21,11 @@ class Dashboard extends Component {
         </h4>
         <hr />
         <Row>
-          <Col sm="12" md="4">
-            <Upload />
-          </Col>
           <Col sm="12" md="8">
             <Spreadsheet />
+          </Col>
+          <Col sm="12" md="4">
+            <Upload />
           </Col>
         </Row>
       </Container>

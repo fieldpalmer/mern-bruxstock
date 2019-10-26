@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { connect } from "react-redux";
 import { logoutUser } from "../../redux/actions/authActions";
 import {
@@ -22,9 +23,10 @@ import {
 class AppNavbar extends Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
+    // this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      users: []
       // errors: {}
     };
   }
@@ -34,6 +36,19 @@ class AppNavbar extends Component {
     auth: PropTypes.object.isRequired
   };
 
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/api/users")
+      .then(res => {
+        let userNames = [];
+        res.data.map(user => userNames.push(user.name));
+        this.setState({ users: userNames });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -42,6 +57,12 @@ class AppNavbar extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
+    });
+  };
+
+  getUsers = () => {
+    return this.state.users.map((username, i) => {
+      return <DropdownItem key={i}>{username}</DropdownItem>;
     });
   };
 
@@ -89,8 +110,7 @@ class AppNavbar extends Component {
                   <DropdownMenu right>
                     <DropdownItem disabled>Select an Artist</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>Option 1</DropdownItem>
-                    <DropdownItem>Option 2</DropdownItem>
+                    {this.getUsers()}
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>

@@ -13,12 +13,15 @@ const validateLoginInput = require("../../validation/login");
 
 // get db models / collections
 const User = require("../../models/User");
-const Image = require("../../models/Image");
 
-// @route      GET /users/test
-// @desc       Tests users route
+// @route      GET /users/
+// @desc       gets all users
 // @access     Public
-router.get("/test", (req, res) => res.json({ msg: "User Route Connected" }));
+router.get("/", (req, res) => {
+  User.find((err, users) => {
+    return res.json(users);
+  });
+});
 
 // @route      POST /users/register
 // @desc       Register users
@@ -96,28 +99,6 @@ router.post("/login", (req, res) => {
       } else {
         errors.password = "Password Incorrect";
         return res.status(400).json(errors);
-      }
-    });
-  });
-});
-
-// @route      GET /users/:userId
-// @desc       View all images for specific artist
-// @access     Public
-router.get("/:userid", (req, res) => {
-  User.findOne({ _id: req.params.userid }).then(user => {
-    let stockArr = [];
-    let userStock = user.stock;
-    userStock.forEach(el => {
-      stockArr.push(el.filename);
-    });
-    Image.find({ filename: { $in: stockArr } }).then(files => {
-      if (!files || files.length === 0) {
-        return res.status(400).json({
-          msg: "Could not find files"
-        });
-      } else {
-        return res.json(files);
       }
     });
   });
