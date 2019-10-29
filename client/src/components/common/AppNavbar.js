@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
 import {
-  Button,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -18,16 +18,14 @@ import {
   DropdownToggle,
   DropdownMenu
 } from "reactstrap";
-// import { connect } from "react-redux";
 
 class AppNavbar extends Component {
   constructor(props) {
     super(props);
-    // this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      users: []
-      // errors: {}
+      users: [],
+      errors: {}
     };
   }
 
@@ -41,7 +39,7 @@ class AppNavbar extends Component {
       .get("http://localhost:5000/api/users")
       .then(res => {
         let userNames = [];
-        res.data.map(user => userNames.push(user.name));
+        res.data.forEach(user => userNames.push(user.name + "~" + user._id));
         this.setState({ users: userNames });
       })
       .catch(error => {
@@ -62,7 +60,13 @@ class AppNavbar extends Component {
 
   getUsers = () => {
     return this.state.users.map((username, i) => {
-      return <DropdownItem key={i}>{username}</DropdownItem>;
+      const name = username.split("~")[0];
+      const id = username.split("~")[1];
+      return (
+        <DropdownItem key={i}>
+          <Link to={`/portfolio/${id}`}>{name}</Link>
+        </DropdownItem>
+      );
     });
   };
 
@@ -80,7 +84,7 @@ class AppNavbar extends Component {
               <Nav className="ml-auto" navbar>
                 {isAuthenticated ? (
                   <NavItem>
-                    <NavLink href="/dashboard">Dashboard</NavLink>
+                    <NavLink href="/dashboard">My Dashboard</NavLink>
                   </NavItem>
                 ) : (
                   ""
@@ -100,26 +104,44 @@ class AppNavbar extends Component {
                     <NavLink href="/register">Register</NavLink>
                   </NavItem>
                 )}
+
+                <NavItem>
+                  <NavLink href="/gallery">Gallery</NavLink>
+                </NavItem>
+
                 {/* this is gonna need to be it's own component */}
                 {/* we need to get all users from db and map their 
                 usernames as dropdown items */}
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    Portfolios
+                    Artists
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem disabled>Select an Artist</DropdownItem>
+                    <DropdownItem disabled>View artist portfolios</DropdownItem>
                     <DropdownItem divider />
                     {this.getUsers()}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <NavItem>
-                  <NavLink href="/gallery">Gallery</NavLink>
-                </NavItem>
+
                 {isAuthenticated ? (
-                  <Button color="danger" size="sm" onClick={this.onLogoutClick}>
-                    Logout
-                  </Button>
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      Account
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <Link to={`/portfolio/edit/${this.props.auth.user.id}`}>
+                          Edit Profile
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={this.onLogoutClick}
+                        className="text-danger"
+                      >
+                        Logout
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 ) : (
                   ""
                 )}
@@ -139,4 +161,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(AppNavbar);
+)(withRouter(AppNavbar));

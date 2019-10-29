@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { addFile, setFileLoading } from "../../redux/actions/fileActions";
+import {
+  addFile,
+  getFiles,
+  setFileLoading
+} from "../../redux/actions/fileActions";
 import PropTypes from "prop-types";
 import { Col, Row, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
@@ -17,6 +21,7 @@ class Upload extends Component {
       title: "",
       notes: "",
       category: "",
+      categorySelects: [],
       view: "public",
       errors: {}
     };
@@ -24,9 +29,28 @@ class Upload extends Component {
 
   static propTypes = {
     addFile: PropTypes.func.isRequired,
+    getFiles: PropTypes.func.isRequired,
     setFileLoading: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
+  };
+
+  componentDidMount = () => {
+    this.props.getFiles();
+  };
+
+  getCategories = () => {
+    const { files } = this.props.files;
+    let allCategories = [];
+    files.forEach(file => {
+      allCategories.push(file.category);
+    });
+    const cats = Array.from(new Set(allCategories));
+    cats.forEach(cat => {
+      this.setState({
+        categorySelects: this.state.categorySelects.push(cat)
+      });
+    });
   };
 
   onFileSelect = e => {
@@ -62,7 +86,15 @@ class Upload extends Component {
   };
 
   render() {
-    const { title, notes, view, category } = this.state;
+    const { title, notes, view, category, categorySelects } = this.state;
+
+    let catSelects = categorySelects.map((cat, i) => {
+      return (
+        <option key={i} value={cat}>
+          {cat}
+        </option>
+      );
+    });
 
     return (
       <Row className="mb-3">
@@ -112,8 +144,7 @@ class Upload extends Component {
                 onChange={this.onChange}
               >
                 <option value="select">Select</option>
-                <option value="drawing">Drawing</option>
-                <option value="painting">Painting</option>
+                {catSelects}
                 <option value="addNewType">Add New Type</option>
               </Input>
             </FormGroup>
@@ -153,10 +184,11 @@ class Upload extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  files: state.files
 });
 
 export default connect(
   mapStateToProps,
-  { addFile, setFileLoading }
+  { addFile, getFiles, setFileLoading }
 )(withRouter(Upload));
