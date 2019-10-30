@@ -71,9 +71,12 @@ class Upload extends Component {
   };
 
   categorySelects = () => {
-    // const cats = this.props.files.categories;
-    return this.props.files.categories.map(cat => {
-      return <option value={cat}>{cat}</option>;
+    return this.props.files.categories.map((cat, i) => {
+      return (
+        <option key={i} value={cat}>
+          {cat}
+        </option>
+      );
     });
   };
 

@@ -2,38 +2,31 @@ import React, { Component } from "react";
 import GroupByCategory from "./GroupByCategory";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getFiles, setFileLoading } from "../../redux/actions/fileActions";
+import {
+  getFiles,
+  setFileLoading,
+  getCategories
+} from "../../redux/actions/fileActions";
+import { getArtists } from "../../redux/actions/authActions";
 import { Container, Row, Col } from "reactstrap";
 
 class Gallery extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      artists: []
-    };
-  }
   static propTypes = {
     getFiles: PropTypes.func.isRequired,
+    getArtists: PropTypes.func.isRequired,
+    getCategories: PropTypes.func.isRequired,
     files: PropTypes.object.isRequired,
     setFileLoading: PropTypes.func.isRequired
   };
 
   componentDidMount = () => {
     this.props.getFiles();
-  };
-
-  getCategories = () => {
-    const { files } = this.props.files;
-    let allCategories = [];
-    files.forEach(file => {
-      allCategories.push(file.category);
-    });
-    return Array.from(new Set(allCategories));
+    this.props.getArtists();
+    this.props.getCategories();
   };
 
   render() {
-    const { files } = this.props.files;
-    const categories = this.getCategories();
+    const { files, categories } = this.props.files;
 
     return (
       <Container>
@@ -66,10 +59,11 @@ class Gallery extends Component {
 }
 
 const mapStateToProps = state => ({
-  files: state.files
+  files: state.files,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getFiles, setFileLoading }
+  { getFiles, getArtists, getCategories, setFileLoading }
 )(Gallery);

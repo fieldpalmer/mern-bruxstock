@@ -4,54 +4,33 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Container, CardColumns } from "reactstrap";
 
-import { getFiles, setFileLoading } from "../../redux/actions/fileActions";
+import {
+  getFiles,
+  setFileLoading,
+  getCategories
+} from "../../redux/actions/fileActions";
+import { getArtists } from "../../redux/actions/authActions";
 import GalleryItem from "../gallery/GalleryItem";
 
 class Portfolio extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: []
-    };
-  }
-
   static propTypes = {
     getFiles: PropTypes.func.isRequired,
+    getArtists: PropTypes.func.isRequired,
+    getCategories: PropTypes.func.isRequired,
     setFileLoading: PropTypes.func.isRequired,
     files: PropTypes.object.isRequired
   };
 
   componentDidMount = () => {
     this.props.getFiles();
-    axios
-      .get("http://localhost:5000/api/users")
-      .then(res => {
-        let userNames = [];
-        res.data.forEach(user =>
-          userNames.push(
-            user.name +
-              "~" +
-              user._id +
-              "~" +
-              user.email +
-              "~" +
-              user.stock +
-              "~" +
-              user.register_date
-          )
-        );
-        this.setState({ users: userNames });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.getArtists();
+    this.props.getCategories();
   };
 
   matchUser = userId => {
-    return this.state.users.map((username, i) => {
-      const userData = username.split("~");
-      const [name, id] = userData;
-      return id === userId ? { name } : "";
+    return this.props.auth.users.map((user, i) => {
+      const { name, _id } = user;
+      return _id === userId ? <p key={i}>{name}</p> : null;
     });
   };
 
@@ -86,10 +65,11 @@ class Portfolio extends Component {
 }
 
 const mapStateToProps = state => ({
-  files: state.files
+  files: state.files,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getFiles, setFileLoading }
+  { getFiles, getArtists, getCategories, setFileLoading }
 )(Portfolio);

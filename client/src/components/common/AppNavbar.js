@@ -49,10 +49,10 @@ class AppNavbar extends Component {
 
   showArtists = () => {
     return this.props.auth.users.map((user, i) => {
-      const { name, id, stock } = user;
+      const { name, _id, stock } = user;
       return stock.length > 0 ? (
         <DropdownItem key={i}>
-          <Link to={`/portfolio/${id}`}>{name}</Link>
+          <Link to={`/portfolio/${_id}`}>{name}</Link>
         </DropdownItem>
       ) : null;
     });
