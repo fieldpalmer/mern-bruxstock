@@ -1,5 +1,6 @@
 import {
   GET_FILES,
+  GET_CATEGORIES,
   ADD_FILE,
   SELECT_FILE,
   GET_USER_FILES,
@@ -10,6 +11,7 @@ const initialState = {
   files: [],
   userFiles: [],
   currentFile: {},
+  categories: [],
   loading: false
 };
 
@@ -19,6 +21,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         files: action.payload,
+        loading: false
+      };
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload,
         loading: false
       };
     case GET_USER_FILES:

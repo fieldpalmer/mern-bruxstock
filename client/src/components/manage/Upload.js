@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   addFile,
-  getFiles,
+  getCategories,
   setFileLoading
 } from "../../redux/actions/fileActions";
 import PropTypes from "prop-types";
@@ -21,7 +21,6 @@ class Upload extends Component {
       title: "",
       notes: "",
       category: "",
-      categorySelects: [],
       view: "public",
       errors: {}
     };
@@ -29,28 +28,14 @@ class Upload extends Component {
 
   static propTypes = {
     addFile: PropTypes.func.isRequired,
-    getFiles: PropTypes.func.isRequired,
+    getCategories: PropTypes.func.isRequired,
     setFileLoading: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
   };
 
   componentDidMount = () => {
-    this.props.getFiles();
-  };
-
-  getCategories = () => {
-    const { files } = this.props.files;
-    let allCategories = [];
-    files.forEach(file => {
-      allCategories.push(file.category);
-    });
-    const cats = Array.from(new Set(allCategories));
-    cats.forEach(cat => {
-      this.setState({
-        categorySelects: this.state.categorySelects.push(cat)
-      });
-    });
+    this.props.getCategories();
   };
 
   onFileSelect = e => {
@@ -85,16 +70,16 @@ class Upload extends Component {
     this.props.addFile(formData, this.props.history);
   };
 
-  render() {
-    const { title, notes, view, category, categorySelects } = this.state;
-
-    let catSelects = categorySelects.map((cat, i) => {
-      return (
-        <option key={i} value={cat}>
-          {cat}
-        </option>
-      );
+  categorySelects = () => {
+    // const cats = this.props.files.categories;
+    return this.props.files.categories.map(cat => {
+      return <option value={cat}>{cat}</option>;
     });
+  };
+
+  render() {
+    const { title, notes, view, category } = this.state;
+    const catSelects = this.categorySelects();
 
     return (
       <Row className="mb-3">
@@ -190,5 +175,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addFile, getFiles, setFileLoading }
+  { addFile, setFileLoading, getCategories }
 )(withRouter(Upload));

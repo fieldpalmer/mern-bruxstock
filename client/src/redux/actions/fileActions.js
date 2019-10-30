@@ -4,11 +4,12 @@ import {
   GET_ERRORS,
   GET_FILE,
   GET_FILES,
+  GET_CATEGORIES,
   GET_USER_FILES,
   FILE_LOADING
 } from "./types";
 
-// get current file
+// view selected file
 export const getFile = filename => dispatch => {
   dispatch(setFileLoading());
   axios
@@ -35,6 +36,25 @@ export const getFiles = () => dispatch => {
     .then(res =>
       dispatch({
         type: GET_FILES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// get all categories
+export const getCategories = () => dispatch => {
+  dispatch(setFileLoading());
+  axios
+    .get("/api/files/categories")
+    .then(res =>
+      dispatch({
+        type: GET_CATEGORIES,
         payload: res.data
       })
     )

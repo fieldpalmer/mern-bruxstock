@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import { logoutUser } from "../../redux/actions/authActions";
+import { logoutUser, getArtists } from "../../redux/actions/authActions";
 import {
   Collapse,
   Navbar,
@@ -23,28 +22,18 @@ class AppNavbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
-      users: [],
-      errors: {}
+      isOpen: false
     };
   }
 
   static propTypes = {
     logoutUser: PropTypes.func.isRequired,
+    getArtists: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
 
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/api/users")
-      .then(res => {
-        let userNames = [];
-        res.data.forEach(user => userNames.push(user.name + "~" + user._id));
-        this.setState({ users: userNames });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.getArtists();
   }
 
   onLogoutClick = e => {
@@ -58,15 +47,14 @@ class AppNavbar extends Component {
     });
   };
 
-  getUsers = () => {
-    return this.state.users.map((username, i) => {
-      const name = username.split("~")[0];
-      const id = username.split("~")[1];
-      return (
+  showArtists = () => {
+    return this.props.auth.users.map((user, i) => {
+      const { name, id, stock } = user;
+      return stock.length > 0 ? (
         <DropdownItem key={i}>
           <Link to={`/portfolio/${id}`}>{name}</Link>
         </DropdownItem>
-      );
+      ) : null;
     });
   };
 
@@ -109,9 +97,6 @@ class AppNavbar extends Component {
                   <NavLink href="/gallery">Gallery</NavLink>
                 </NavItem>
 
-                {/* this is gonna need to be it's own component */}
-                {/* we need to get all users from db and map their 
-                usernames as dropdown items */}
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Artists
@@ -119,7 +104,7 @@ class AppNavbar extends Component {
                   <DropdownMenu right>
                     <DropdownItem disabled>View artist portfolios</DropdownItem>
                     <DropdownItem divider />
-                    {this.getUsers()}
+                    {this.showArtists()}
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
@@ -160,5 +145,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getArtists }
 )(withRouter(AppNavbar));

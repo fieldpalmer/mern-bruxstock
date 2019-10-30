@@ -60,6 +60,20 @@ router.get("/", (req, res) => {
   });
 });
 
+// @route      GET /api/files/categories
+// @desc       Gets all categories from files in db
+// @access     Public
+router.get("/categories", (req, res) => {
+  Image.find((err, images) => {
+    let allCategories = [];
+    images.forEach(img => {
+      allCategories.push(img.category);
+    });
+    let catArry = Array.from(new Set(allCategories));
+    return res.json(catArry);
+  });
+});
+
 // @route      GET /api/files/:filename
 // @desc       View Image
 // @access     Public
