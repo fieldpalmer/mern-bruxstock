@@ -5,7 +5,6 @@ import {
   GET_FILE,
   GET_FILES,
   GET_CATEGORIES,
-  GET_USER_FILES,
   FILE_LOADING
 } from "./types";
 
@@ -55,25 +54,6 @@ export const getCategories = () => dispatch => {
     .then(res =>
       dispatch({
         type: GET_CATEGORIES,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// get user files
-export const getUserFiles = userid => dispatch => {
-  dispatch(setFileLoading());
-  axios
-    .get(`/api/files/portfolio/${userid}`)
-    .then(res =>
-      dispatch({
-        type: GET_USER_FILES,
         payload: res.data
       })
     )

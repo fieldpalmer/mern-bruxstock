@@ -7,6 +7,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  displayName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -15,6 +19,14 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  location: {
+    type: String,
+    required: false
+  },
+  specialties: {
+    type: Array,
+    required: false
   },
   stock: {
     type: Array,

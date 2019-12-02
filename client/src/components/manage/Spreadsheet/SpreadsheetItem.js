@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { Card, CardImg } from "reactstrap";
+import { CardBody, CardImg } from "reactstrap";
 import NotesCollapse from "./NotesCollapse";
 
 class SpreadsheetItem extends Component {
@@ -17,12 +17,13 @@ class SpreadsheetItem extends Component {
       view,
       category,
       type,
+      gfsId,
       uploadDate,
       uploadedBy
     } = this.props.file;
 
     return (
-      <Card className="p-0 mb-2">
+      <CardBody className="p-0">
         <Link
           to={{
             pathname: `/view/${filename}`,
@@ -45,11 +46,12 @@ class SpreadsheetItem extends Component {
           title={title}
           notes={notes}
           view={view}
+          gfsId={gfsId}
           category={category}
           type={type}
           uploadDate={uploadDate}
         />
-      </Card>
+      </CardBody>
     );
   }
 }

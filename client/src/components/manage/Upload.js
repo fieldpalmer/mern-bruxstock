@@ -21,8 +21,7 @@ class Upload extends Component {
       title: "",
       notes: "",
       category: "",
-      view: "public",
-      errors: {}
+      view: "public"
     };
   }
 
@@ -30,8 +29,7 @@ class Upload extends Component {
     addFile: PropTypes.func.isRequired,
     getCategories: PropTypes.func.isRequired,
     setFileLoading: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired
   };
 
   componentDidMount = () => {
@@ -80,6 +78,16 @@ class Upload extends Component {
     });
   };
 
+  addNewCategory = () => {
+    const newCat = window.prompt(
+      "Enter the new category you need. Check typos and capitalization!",
+      "New Category"
+    );
+    this.setState({
+      category: newCat
+    });
+  };
+
   render() {
     const { title, notes, view, category } = this.state;
     const catSelects = this.categorySelects();
@@ -101,40 +109,6 @@ class Upload extends Component {
                 name="file"
                 onChange={this.onFileSelect}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="title">Title</Label>
-              <Input
-                type="text"
-                name="title"
-                id="title"
-                value={title}
-                onChange={this.onChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="notes">Notes</Label>
-              <Input
-                type="textarea"
-                name="notes"
-                id="notes"
-                value={notes}
-                onChange={this.onChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="selectType">Type</Label>
-              <Input
-                type="select"
-                name="category"
-                id="category"
-                value={category}
-                onChange={this.onChange}
-              >
-                <option value="select">Select</option>
-                {catSelects}
-                <option value="addNewType">Add New Type</option>
-              </Input>
             </FormGroup>
             <FormGroup>
               <FormGroup check inline>
@@ -160,6 +134,51 @@ class Upload extends Component {
                 Private
               </FormGroup>
             </FormGroup>
+            <FormGroup>
+              <Label htmlFor="title">Title</Label>
+              <Input
+                type="text"
+                name="title"
+                id="title"
+                value={title}
+                onChange={this.onChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="notes">Notes</Label>
+              <Input
+                type="textarea"
+                name="notes"
+                id="notes"
+                value={notes}
+                onChange={this.onChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="selectType">Category</Label>
+              <Input
+                type="select"
+                name="category"
+                id="category"
+                value={category}
+                onChange={this.onChange}
+              >
+                <option value="select">
+                  {category === "" ? "Select existing" : category}
+                </option>
+                {catSelects}
+              </Input>
+              <small>Don't see the category you're looking for?</small>
+              <Button
+                size="sm"
+                color="info"
+                block
+                onClick={this.addNewCategory}
+              >
+                Start a New Category
+              </Button>
+            </FormGroup>
+            <hr />
             <Button color="primary" type="submit">
               Submit
             </Button>

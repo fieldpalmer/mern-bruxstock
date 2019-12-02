@@ -29,8 +29,7 @@ class Login extends Component {
 
   static propTypes = {
     loginUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -126,8 +125,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  auth: state.auth
 });
 
 export default connect(

@@ -25,7 +25,7 @@ class ViewItem extends Component {
     const { title, category, uploadedBy } = this.props.location.state;
     return (
       <div>
-        <Container className="m-5 p-5">
+        <Container>
           <Row>
             <Col sm="12" md={{ size: 6, offset: 3 }}>
               <Card>
@@ -36,9 +36,7 @@ class ViewItem extends Component {
                   alt="Card image cap"
                 />
               </Card>
-            </Col>
-            {/* upload */}
-            <Col sm="12" md="3">
+              <hr />
               <CardText>
                 <small>title:</small>&nbsp;
                 <strong>{title}</strong>
@@ -51,14 +49,37 @@ class ViewItem extends Component {
                 <small>medium:</small>&nbsp;
                 <strong>{category}</strong>
               </CardText>
-              <hr />
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col>
               <Button
                 outline
-                color="danger"
-                size="sm"
+                color="primary"
+                block
+                size="md"
                 onClick={this.goToPortfolio}
               >
-                View in Portfolio
+                View Artist's Portfolio
+              </Button>
+              <Button
+                outline
+                color="info"
+                block
+                size="md"
+                // onClick={this.goToPortfolio}
+              >
+                Save to Favorites
+              </Button>
+              <Button
+                outline
+                color="success"
+                block
+                size="md"
+                // onClick={this.goToPortfolio}
+              >
+                Make an Offer
               </Button>
             </Col>
           </Row>

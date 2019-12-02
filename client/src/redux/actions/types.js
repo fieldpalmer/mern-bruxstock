@@ -2,10 +2,6 @@ export const GET_FILE = "GET_FILE";
 export const GET_FILE_SUCCESS = "GET_FILE_SUCCESS";
 export const GET_FILE_FAIL = "GET_FILE_FAIL";
 
-export const SELECT_FILE = "SELECT_FILE";
-export const SELECT_FILES_SUCCESS = "SELECT_FILE_SUCCESS";
-export const SELECT_FILES_FAIL = "SELECT_FILE_FAIL";
-
 export const VIEW_FILE = "VIEW_FILE";
 export const VIEW_FILE_SUCCESS = "VIEW_FILE_SUCCESS";
 export const VIEW_FILE_FAIL = "VIEW_FILE_FAIL";
@@ -13,10 +9,6 @@ export const VIEW_FILE_FAIL = "VIEW_FILE_FAIL";
 export const GET_FILES = "GET_FILES";
 export const GET_FILES_SUCCESS = "GET_FILES_SUCCESS";
 export const GET_FILES_FAIL = "GET_FILES_FAIL";
-
-export const GET_USER_FILES = "GET_USER_FILES";
-export const GET_USER_FILES_SUCCESS = "GET_USER_FILES_SUCCESS";
-export const GET_USER_FILES_FAIL = "GET_USER_FILES_FAIL";
 
 export const EDIT_FILE = "EDIT_FILE";
 export const EDIT_FILE_SUCCESS = "EDIT_FILE_SUCCESS";

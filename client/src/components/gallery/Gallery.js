@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import GroupByCategory from "./GroupByCategory";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -32,9 +34,19 @@ class Gallery extends Component {
       <Container>
         <Row>
           <Col>
-            <p className="display-4">Welcome to the Gallery</p>
+            <p className="display-4">La Galérie</p>
             <p className="lead">
-              Here you can see everything grouped and sorted a number of ways.
+              Here you can see all works made publicly visible. Click the image
+              to view it's page.
+            </p>
+            <p className="lead">
+              If you want your work displayed in the gallery, you'll need to{" "}
+              <Link to="/register">create an account</Link>{" "}
+            </p>
+            <p className="lead">
+              If you're not quite ready to make your work public but still want
+              to benefit from our sweet dashboard, you should also{" "}
+              <Link to="/register">create an account</Link>{" "}
             </p>
           </Col>
         </Row>
@@ -63,7 +75,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getFiles, getArtists, getCategories, setFileLoading }
-)(Gallery);
+export default connect(mapStateToProps, {
+  getFiles,
+  getArtists,
+  getCategories,
+  setFileLoading
+})(Gallery);

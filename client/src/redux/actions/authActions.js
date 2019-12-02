@@ -39,6 +39,19 @@ export const loginUser = (userData, history) => dispatch => {
     );
 };
 
+// Register User
+export const editUser = (userData, history) => dispatch => {
+  axios
+    .post("/api/users/edit", userData)
+    .then(res => history.push("/dashboard")) // re-direct to login on successful register
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {

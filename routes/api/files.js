@@ -92,32 +92,6 @@ router.get("/:filename", (req, res) => {
   });
 });
 
-// @route      GET /api/files/portfolio/:userid
-// @desc       Get user's collection of files
-// @access     Public
-router.get(`/portfolio/:userid`, (req, res) => {
-  // get user data
-  let userId = req.params.userid;
-  let userData = User.findOne({ _id: userId }, { name: 1, stock: 1 });
-
-  // filter through userData to create array of their filenames
-  let userStock = [];
-  let userStockObjArr = userData.stock; // array containing user's stock
-  userStockObjArr.forEach(el => {
-    userStock.push(el.filename);
-  });
-  // pull file info from GridFS if it exists in user's stock
-  gfs.files.find({ filename: { $in: userStock } }).toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.status(400).json({
-        msg: "Could not find file"
-      });
-    } else {
-      return res.json(files);
-    }
-  });
-});
-
 // @route      POST /api/files/upload
 // @desc       Posts or edits files
 // @access     Private
@@ -171,27 +145,30 @@ router.delete(
   "/delete/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const userId = req.user.id;
-
-    // remove from user's stock
-    User.findOneAndUpdate(
-      { _id: userId },
-      { $pull: { stock: { file_id: req.params.id } } },
-      (err, doc) => {
-        if (err) {
-          return console.log(err);
+    console.log(req);
+    const userId = req.user._id;
+    const gfsId = req.params.id;
+    // remove from Images collection
+    Image.deleteOne({ gfsId: gfsId }).then(() => {
+      // remove from user's stock
+      User.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { stock: { file_id: req.params.id } } },
+        () => {
+          // remove from gridfs (WORKS)
+          gfs.remove(
+            { _id: req.params.id, root: "files" },
+            (err, gridStore) => {
+              if (err) return res.status(500).json({ success: false });
+              return res.json({
+                success: true,
+                msg: "file deleted!",
+                files: gridStore
+              });
+            }
+          );
         }
-      }
-    );
-
-    // remove from gridfs
-    gfs.remove({ _id: req.params.id, root: "files" }, (err, gridStore) => {
-      if (err) return res.status(500).json({ success: false });
-      return res.json({
-        success: true,
-        msg: "file deleted!",
-        files: gridStore
-      });
+      );
     });
   }
 );

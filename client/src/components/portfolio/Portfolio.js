@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
 import { Container, CardColumns } from "reactstrap";
 
@@ -29,8 +28,8 @@ class Portfolio extends Component {
 
   matchUser = userId => {
     return this.props.auth.users.map((user, i) => {
-      const { name, _id } = user;
-      return _id === userId ? <p key={i}>{name}</p> : null;
+      const { displayName, _id } = user;
+      return _id === userId ? <p key={i}>{displayName}</p> : null;
     });
   };
 

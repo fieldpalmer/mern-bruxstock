@@ -27,7 +27,6 @@ class AppNavbar extends Component {
   }
 
   static propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     getArtists: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
@@ -35,11 +34,6 @@ class AppNavbar extends Component {
   componentDidMount() {
     this.props.getArtists();
   }
-
-  onLogoutClick = e => {
-    e.preventDefault();
-    this.props.logoutUser();
-  };
 
   toggle = () => {
     this.setState({
@@ -49,10 +43,11 @@ class AppNavbar extends Component {
 
   showArtists = () => {
     return this.props.auth.users.map((user, i) => {
-      const { name, _id, stock } = user;
+      const { displayName, _id, stock } = user;
+
       return stock.length > 0 ? (
         <DropdownItem key={i}>
-          <Link to={`/portfolio/${_id}`}>{name}</Link>
+          <Link to={`/portfolio/${_id}`}>{displayName}</Link>
         </DropdownItem>
       ) : null;
     });
@@ -64,7 +59,7 @@ class AppNavbar extends Component {
       <div>
         <Navbar expand="sm" className="mb-3">
           <Container>
-            <NavbarBrand href="/gallery">BRXTK</NavbarBrand>
+            <NavbarBrand href="/">Beaux's Art</NavbarBrand>
             <NavbarToggler color="dark" onClick={this.toggle}>
               X
             </NavbarToggler>
@@ -72,7 +67,7 @@ class AppNavbar extends Component {
               <Nav className="ml-auto" navbar>
                 {isAuthenticated ? (
                   <NavItem>
-                    <NavLink href="/dashboard">My Dashboard</NavLink>
+                    <NavLink href="/dashboard">Dashboard</NavLink>
                   </NavItem>
                 ) : (
                   ""
@@ -107,29 +102,6 @@ class AppNavbar extends Component {
                     {this.showArtists()}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-
-                {isAuthenticated ? (
-                  <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                      Account
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        <Link to={`/portfolio/edit/${this.props.auth.user.id}`}>
-                          Edit Profile
-                        </Link>
-                      </DropdownItem>
-                      <DropdownItem
-                        onClick={this.onLogoutClick}
-                        className="text-danger"
-                      >
-                        Logout
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                ) : (
-                  ""
-                )}
               </Nav>
             </Collapse>
           </Container>
@@ -143,7 +115,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser, getArtists }
-)(withRouter(AppNavbar));
+export default connect(mapStateToProps, { logoutUser, getArtists })(
+  withRouter(AppNavbar)
+);

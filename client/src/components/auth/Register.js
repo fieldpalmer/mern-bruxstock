@@ -22,6 +22,7 @@ class Register extends Component {
     super();
     this.state = {
       name: "",
+      displayName: "",
       email: "",
       password: "",
       password2: "",
@@ -47,11 +48,14 @@ class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    const { name, displayName, email, password, password2 } = this.state;
+
     const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      name,
+      displayName,
+      email,
+      password,
+      password2
     };
     this.props.registerUser(newUser, this.props.history);
   };
@@ -75,18 +79,19 @@ class Register extends Component {
                     id="name"
                     value={this.state.name}
                     onChange={this.onChange}
-                    error={errors.name}
                     placeholder="your name please"
-                    className={classnames("", {
-                      invalid: errors.name
-                    })}
                   />
-                  {/* display errors if they exist */}
-                  {errors.name ? (
-                    <Alert color="danger">{errors.name}</Alert>
-                  ) : (
-                    ""
-                  )}
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="displayName">Display Name</Label>
+                  <Input
+                    type="name"
+                    name="displayName"
+                    id="displayName"
+                    value={this.state.displayName}
+                    onChange={this.onChange}
+                    placeholder="how you want your name to appear"
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>

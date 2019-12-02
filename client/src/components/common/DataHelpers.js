@@ -3,12 +3,12 @@ import axios from "axios";
 
 const GetPublicFiles = props => {
   const { files } = props;
-  return <div></div>;
+  return <div>{files}</div>;
 };
 
 const GetAllFiles = props => {
   const { files } = props;
-  return <div></div>;
+  return <div>{files}</div>;
 };
 
 const GetAllCategories = props => {

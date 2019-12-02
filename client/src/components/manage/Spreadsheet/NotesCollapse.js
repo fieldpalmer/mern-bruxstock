@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { Collapse, Button, ListGroup, ListGroupItem } from "reactstrap";
+import {
+  Collapse,
+  Button,
+  CardFooter,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap";
 import Moment from "react-moment";
+// import EditImage from "../EditImage";
 
 const NotesCollapse = props => {
   const [collapse, setCollapse] = useState(false);
 
   const toggle = () => setCollapse(!collapse);
 
-  const { title, notes, view, category, type, uploadDate } = props;
-
-  const goToImage = () => {
-    const { filename } = this.props.file;
-    this.props.history.push(`/view/${filename}`);
-  };
+  const { title, notes, view, category, type, uploadDate, gfsId } = props;
 
   return (
-    <div>
+    <CardFooter classNam="px-1">
       <Button block outline color="success" onClick={toggle}>
-        {title}
+        view info
       </Button>
       <Collapse isOpen={collapse}>
         <ListGroup>
@@ -31,6 +33,9 @@ const NotesCollapse = props => {
             <small>view:</small>&nbsp;{view}
           </ListGroupItem>
           <ListGroupItem className="py-1">
+            <small>gfsId:</small>&nbsp;{gfsId}
+          </ListGroupItem>
+          <ListGroupItem className="py-1">
             <small>category:</small>&nbsp;{category}
           </ListGroupItem>
           <ListGroupItem className="py-1">
@@ -40,21 +45,9 @@ const NotesCollapse = props => {
             <small>upload date:</small>&nbsp;
             <Moment format="MM/DD/YYYY">{uploadDate}</Moment>
           </ListGroupItem>
-          <ListGroupItem className="p-2">
-            <Button
-              disabled
-              block
-              outline
-              color="warning"
-              size="sm"
-              onClick={goToImage}
-            >
-              edit image
-            </Button>
-          </ListGroupItem>
         </ListGroup>
       </Collapse>
-    </div>
+    </CardFooter>
   );
 };
 

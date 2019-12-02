@@ -40,6 +40,7 @@ router.post("/register", (req, res) => {
       // create new user object
       const newUser = new User({
         name: req.body.name,
+        displayName: req.body.displayName,
         email: req.body.email,
         password: req.body.password
       });
@@ -81,7 +82,11 @@ router.post("/login", (req, res) => {
         // create JWT payload
         const payload = {
           id: user.id,
-          name: user.name
+          displayName: user.displayName,
+          email: user.email,
+          location: user.location,
+          specialties: user.specialties,
+          stock: user.stock
         };
         // Sign token
         jwt.sign(
@@ -107,11 +112,29 @@ router.post("/login", (req, res) => {
 // @route      get users/current
 // @desc       Get current user data
 // @access     Private
-router.post(
+router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json(req.user);
+  }
+);
+
+// @route      post users/edit
+// @desc       edit current user data
+// @access     Private
+router.post(
+  "/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // might need to update auth state to get full user doc data
+    let filter = { _id: req.user._id };
+    // this might need to be a map of the user doc data state
+    let update = "any changed bit of user data state";
+    // doc will be the updated user document
+    User.findOneAndUpdate(filter, update, { new: true }).then(doc => {
+      res.json(doc);
+    });
   }
 );
 
