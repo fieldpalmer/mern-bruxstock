@@ -45,8 +45,8 @@ class Gallery extends Component {
             </p>
             <p className="lead">
               If you're not quite ready to make your work public but still want
-              to benefit from our sweet dashboard, you should also{" "}
-              <Link to="/register">create an account</Link>{" "}
+              to benefit from our sweet inventory management software, you
+              should also <Link to="/register">create an account</Link>{" "}
             </p>
           </Col>
         </Row>

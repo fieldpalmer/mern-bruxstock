@@ -10,6 +10,7 @@ import Upload from "./components/manage/Upload";
 import ViewItem from "./components/item/ViewItem";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import Footer from "./components/common/Footer";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import store from "./redux/store";
 import jwt_decode from "jwt-decode";
@@ -46,6 +47,7 @@ class App extends Component {
               <Route path="/portfolio/:userid" component={Portfolio} />
               <Route path="/view/:filename" component={ViewItem} />
             </Switch>
+            <Footer />
           </div>
         </div>
       </Provider>
