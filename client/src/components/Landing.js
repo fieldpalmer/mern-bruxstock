@@ -47,7 +47,7 @@ class Landing extends Component {
               <CardImg
                 top
                 width="100%"
-                src="https://via.placeholder.com/150"
+                src="https://cdn.pixabay.com/photo/2019/11/12/23/00/studio-4622221_960_720.jpg"
                 alt="Card image cap"
               />
             </Card>
@@ -85,7 +85,7 @@ class Landing extends Component {
               <CardImg
                 top
                 width="100%"
-                src="https://via.placeholder.com/150"
+                src="https://cdn.pixabay.com/photo/2019/12/05/07/46/artist-4674492_960_720.png"
                 alt="Card image cap"
               />
             </Card>
