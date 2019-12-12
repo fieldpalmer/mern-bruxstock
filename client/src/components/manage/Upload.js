@@ -7,7 +7,7 @@ import {
   setFileLoading
 } from "../../redux/actions/fileActions";
 import PropTypes from "prop-types";
-import { Col, Row, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 class Upload extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Upload extends Component {
       type: "",
       title: "",
       notes: "",
-      category: "",
+      category: undefined,
       view: "public"
     };
   }
@@ -93,98 +93,101 @@ class Upload extends Component {
     const catSelects = this.categorySelects();
 
     return (
-      <Row className="mb-3">
-        <Col sm="12">
-          <h4>Upload File</h4>
-          <hr />
-          <Form
-            onSubmit={this.onSubmit}
-            encType="multipart/form-data"
-            method="POST"
-          >
-            <FormGroup>
-              <input
-                type="file"
-                id="file"
-                name="file"
-                onChange={this.onFileSelect}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="radio"
-                  name="view"
-                  value="public"
-                  checked={view === "public"}
-                  className="form-check-input"
-                  onChange={this.onChange}
-                />
-                Public
-              </FormGroup>
-              <FormGroup check inline>
-                <Input
-                  type="radio"
-                  name="view"
-                  value="private"
-                  checked={view === "private"}
-                  className="form-check-input"
-                  onChange={this.onChange}
-                />
-                Private
-              </FormGroup>
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="title">Title</Label>
+      <CardBody className="p-4">
+        <Form
+          onSubmit={this.onSubmit}
+          encType="multipart/form-data"
+          method="POST"
+        >
+          <FormGroup>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              onChange={this.onFileSelect}
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormGroup check inline>
               <Input
-                type="text"
-                name="title"
-                id="title"
-                value={title}
+                type="radio"
+                name="view"
+                value="public"
+                checked={view === "public"}
+                className="form-check-input"
                 onChange={this.onChange}
               />
+              Public
             </FormGroup>
-            <FormGroup>
-              <Label htmlFor="notes">Notes</Label>
+            <FormGroup check inline>
               <Input
-                type="textarea"
-                name="notes"
-                id="notes"
-                value={notes}
+                type="radio"
+                name="view"
+                value="private"
+                checked={view === "private"}
+                className="form-check-input"
                 onChange={this.onChange}
               />
+              Private
             </FormGroup>
-            <FormGroup>
-              <Label for="selectType">Category</Label>
-              <Input
-                type="select"
-                name="category"
-                id="category"
-                value={category}
-                onChange={this.onChange}
-              >
-                <option value="select">
-                  {category === "" ? "Select existing" : category}
-                </option>
-                {catSelects}
-              </Input>
-              <small>Don't see the category you're looking for?</small>
-              <Button
-                size="sm"
-                color="info"
-                block
-                onClick={this.addNewCategory}
-              >
-                Start a New Category
-              </Button>
-            </FormGroup>
-            <hr />
-            <Button color="primary" type="submit">
-              Submit
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="title">Title</Label>
+            <Input
+              type="text"
+              name="title"
+              id="title"
+              value={title}
+              onChange={this.onChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="notes">Notes</Label>
+            <Input
+              type="textarea"
+              name="notes"
+              id="notes"
+              value={notes}
+              onChange={this.onChange}
+              placeholder={`date: [Date] media:[Media]`}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="selectType">Category</Label>
+            <Input
+              type="select"
+              name="category"
+              id="category"
+              value={category}
+              onChange={this.onChange}
+            >
+              <option value="select">
+                {category === undefined ||
+                category === "choose from existing category"
+                  ? "choose from existing category"
+                  : category}
+              </option>
+              {catSelects}
+            </Input>
+            <p className="text-center mt-3">
+              <small>--- OR ---</small>
+            </p>
+            <Button
+              size="sm"
+              outline
+              color="info"
+              block
+              onClick={this.addNewCategory}
+            >
+              Start a New Category
             </Button>
-          </Form>
-        </Col>
-      </Row>
+          </FormGroup>
+          <hr />
+          <Button color="primary" type="submit" block>
+            Submit
+          </Button>
+        </Form>
+      </CardBody>
     );
   }
 }
@@ -195,7 +198,8 @@ const mapStateToProps = state => ({
   files: state.files
 });
 
-export default connect(
-  mapStateToProps,
-  { addFile, setFileLoading, getCategories }
-)(withRouter(Upload));
+export default connect(mapStateToProps, {
+  addFile,
+  setFileLoading,
+  getCategories
+})(withRouter(Upload));

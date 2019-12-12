@@ -2,19 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../redux/actions/authActions";
-import EditProfile from "../auth/EditProfile";
-import UserInfoDisplay from "../common/UserInfoDisplay";
 import Upload from "./Upload";
 import Spreadsheet from "./Spreadsheet/Spreadsheet";
-import {
-  Container,
-  Row,
-  Col,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import ComponentCollapse from "../common/ComponentCollapse";
+import { Container, Row, Col, Jumbotron } from "reactstrap";
 
 class Dashboard extends Component {
   static propTypes = {
@@ -28,81 +19,51 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
 
-  onEditProfClick = e => {
-    e.preventDefault();
-    // open edit user info modal
-    // not currently set up as modal and shows nothing
-    // either send to new page or pass openSesame prop
-    return <EditProfile isOpen={true} />;
-  };
-
   render() {
     const { user } = this.props.auth;
 
     return (
-      <Container>
+      <div>
         <Row>
           <Col>
-            <UserInfoDisplay user={user} />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
-            <Row>
-              <span>
-                <UncontrolledDropdown>
-                  <DropdownToggle nav caret>
-                    Manage My Account
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem
-                      onClick={this.onEditProfClick}
-                      className="text-warning"
-                    >
-                      Edit Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      onClick={this.onLogoutClick}
-                      className="text-danger"
-                    >
-                      Logout
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </span>
-              <span>
-                <UncontrolledDropdown>
-                  <DropdownToggle nav caret>
-                    Manage My Files
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem className="text-success">
-                      Upload New
-                    </DropdownItem>
-                    <DropdownItem className="text-warning">
-                      Bulk Edit
-                    </DropdownItem>
-                    <DropdownItem className="text-info">
-                      View Favorites
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </span>
-            </Row>
-            {/* <Edit Profile isOpen={true} /> */}
+            <p className="lead">Hello, {user.displayName}!</p>
+            <h3>This is Your Dashboard</h3>
           </Col>
         </Row>
         <hr />
         <Row>
           <Col sm="12" md="8">
-            <Spreadsheet />
+            <ComponentCollapse
+              component={<Spreadsheet />}
+              header="Manage Your Work"
+            />
           </Col>
           <Col sm="12" md="4">
-            <Upload />
+            <ComponentCollapse
+              component={<Upload />}
+              header="Upload New File"
+            />
+          </Col>
+          <Col sm="12">
+            <ComponentCollapse
+              // this has to change
+              component={<Spreadsheet />}
+              header="Your Saved Pieces"
+            />
           </Col>
         </Row>
-      </Container>
+        <Row className="my-3">
+          <Jumbotron fluid>
+            <Container fluid>
+              <h1 className="display-3">Useful</h1>
+              <p className="lead">
+                This is a modified jumbotron that occupies the entire horizontal
+                space of its parent.
+              </p>
+            </Container>
+          </Jumbotron>
+        </Row>
+      </div>
     );
   }
 }
@@ -112,7 +73,4 @@ const mapStateToProps = state => ({
   files: state.files
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(Dashboard);
+export default connect(mapStateToProps, { logoutUser })(Dashboard);

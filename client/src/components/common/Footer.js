@@ -1,52 +1,60 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { Nav, NavItem, NavLink } from "reactstrap";
 
-export default function Footer() {
-  return (
-    <footer className="page-footer font-small pt-4">
-      <div className="container-fluid text-center text-md-left">
-        <div className="row">
-          <div className="col-md-6 mt-md-0 mt-3">
-            <h5 className="text-uppercase">Beaux's Art</h5>
-            <p>
-              Let us know of any annoying bugs you find or optimization
-              suggestions you have
-            </p>
-          </div>
-          <hr className="clearfix w-100 d-md-none pb-3" />
-          <div className="col-md-3 mb-md-0 mb-3">
-            <h5 className="text-uppercase">Site Links</h5>
-            <ul className="list-unstyled">
-              <li>
-                <a href="#!">Home</a>
-              </li>
-              <li>
-                <a href="#!">Gallery</a>
-              </li>
-              <li>
-                <a href="#!">Register</a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-md-3 mb-md-0 mb-3">
-            <h5 className="text-uppercase">Contact Links</h5>
-            <ul className="list-unstyled">
-              <li>
-                <a href="#!">Send a Message</a>
-              </li>
-              <li>
-                <a href="#!">Read T.O.S.</a>
-              </li>
-              <li>
-                <a href="#!">Just wanna chat?</a>
-              </li>
-            </ul>
+class Footer extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired
+  };
+
+  render() {
+    const { isAuthenticated } = this.props.auth;
+    return (
+      <footer className="page-footer font-small pt-4">
+        <div className="container text-center text-md-left">
+          <div className="row">
+            <div className="col-md-6 mt-md-0 mt-3">
+              <h4 className="text-uppercase">Beaux's Art</h4>
+              <h5>Management & Promotion</h5>
+              <p>Let us know of any glitches or suggestions</p>
+            </div>
+            <hr className="clearfix w-100 d-md-none pb-3" />
+            <Nav className="m-auto" navbar>
+              <NavItem>
+                <NavLink href="/">Home</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/gallery">Gallery</NavLink>
+              </NavItem>
+              {isAuthenticated ? (
+                <NavItem>
+                  <NavLink href="/dashboard">Dashboard</NavLink>
+                </NavItem>
+              ) : (
+                <NavItem>
+                  <NavLink href="/login">Login</NavLink>
+                </NavItem>
+              )}
+              <NavItem onClick={() => window.alert("Call Field")}>
+                <NavLink href="/">Contact</NavLink>
+              </NavItem>
+            </Nav>
           </div>
         </div>
-      </div>
-      <div className="footer-copyright text-center py-3">
-        © 2019 Copyright:
-        <a href="gfieldp.me"> BRXTK LLC</a>
-      </div>
-    </footer>
-  );
+        <hr className="clearfix w-100 d-md-none pt-3" />
+
+        <div className="footer-copyright text-center mt-3 py-3">
+          © 2019 Copyright: BRXTK LLC
+        </div>
+      </footer>
+    );
+  }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(withRouter(Footer));

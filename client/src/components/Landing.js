@@ -37,9 +37,24 @@ class Landing extends Component {
               and if you know any French that also means y'all handsome so
               you're welcome.
             </p>
-
-            <hr />
           </Col>
+        </Row>
+        <hr />
+
+        <Row>
+          <Col sm="12" md="6">
+            <Card className="m-2">
+              <CardImg
+                top
+                width="100%"
+                src="https://via.placeholder.com/150"
+                alt="Card image cap"
+              />
+            </Card>
+          </Col>
+        </Row>
+        <hr />
+        <Row>
           <Col sm="12" md="6">
             <Card>
               <CardBody>
@@ -55,7 +70,7 @@ class Landing extends Component {
                   </ListGroupItem>
                   <Link to="/register">
                     <Button size="lg" color="primary" block>
-                      Apply For Membership
+                      Create Your Account
                     </Button>
                   </Link>
                 </ListGroup>

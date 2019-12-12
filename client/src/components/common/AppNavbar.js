@@ -28,6 +28,7 @@ class AppNavbar extends Component {
 
   static propTypes = {
     getArtists: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
 
@@ -53,13 +54,18 @@ class AppNavbar extends Component {
     });
   };
 
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <Navbar expand="sm" className="mb-3">
           <Container>
-            <NavbarBrand href="/">B.A.M.P.</NavbarBrand>
+            <NavbarBrand href="/">Beaux's Art</NavbarBrand>
             <NavbarToggler color="dark" onClick={this.toggle}>
               X
             </NavbarToggler>
@@ -102,6 +108,20 @@ class AppNavbar extends Component {
                     {this.showArtists()}
                   </DropdownMenu>
                 </UncontrolledDropdown>
+
+                {isAuthenticated ? (
+                  <NavItem>
+                    <NavLink
+                      className="text-danger"
+                      href="/"
+                      onClick={this.onLogoutClick}
+                    >
+                      Logout
+                    </NavLink>
+                  </NavItem>
+                ) : (
+                  ""
+                )}
               </Nav>
             </Collapse>
           </Container>

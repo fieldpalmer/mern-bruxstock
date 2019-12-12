@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { getFiles } from "../../../redux/actions/fileActions";
 import PropTypes from "prop-types";
 import SpreadsheetItem from "./SpreadsheetItem";
-import { CardColumns, Button, Card, CardFooter } from "reactstrap";
+import { Card, CardBody, CardColumns, Button, CardFooter } from "reactstrap";
 import "./index.css";
 
 class Spreadsheet extends Component {
@@ -16,12 +15,6 @@ class Spreadsheet extends Component {
 
   componentDidMount = () => {
     this.props.getFiles();
-  };
-
-  handleDelete = gfsId => {
-    axios.delete(`http://localhost:5000/api/files/delete/${gfsId}`).then(() => {
-      window.location.reload();
-    });
   };
 
   render() {
@@ -39,28 +32,20 @@ class Spreadsheet extends Component {
               block
               outline
               color="warning"
-              size="sm"
               // onClick={() => this.handleDelete(file.gfsId)}
             >
               edit image
-            </Button>
-          </CardFooter>
-          <CardFooter>
-            <Button
-              block
-              outline
-              color="danger"
-              size="sm"
-              onClick={() => this.handleDelete(file.gfsId)}
-            >
-              delete image
             </Button>
           </CardFooter>
         </Card>
       ) : null
     );
 
-    return <CardColumns>{spreadsheetItems}</CardColumns>;
+    return (
+      <CardBody>
+        <CardColumns>{spreadsheetItems}</CardColumns>
+      </CardBody>
+    );
   }
 }
 
@@ -69,7 +54,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getFiles }
-)(Spreadsheet);
+export default connect(mapStateToProps, { getFiles })(Spreadsheet);
