@@ -53,6 +53,7 @@ class Landing extends Component {
             </Card>
           </Col>
         </Row>
+        <hr />
         <Row>
           <Col sm="12" md="6">
             <Card>
@@ -77,6 +78,7 @@ class Landing extends Component {
             </Card>
           </Col>
         </Row>
+        <hr />
         <Row>
           <Col sm="12" md="6">
             <Card>
