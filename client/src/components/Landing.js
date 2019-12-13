@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 // import { connect } from "react-redux";
 // import logo from "../cormorant.png";
 import { Button, Container, Col, Row, Card, CardImg } from "reactstrap";
+import { cpus } from "os";
+import { createCipher } from "crypto";
 
 class Landing extends Component {
   render() {
@@ -13,9 +15,23 @@ class Landing extends Component {
         <Row>
           <Col className="text-center" sm="12">
             <h1>BEAUX'S ART</h1>
-            <h1>
-              <em>Management & Promotion</em>
-            </h1>
+            <h2>
+              {/* <em>Management & Promotion</em> */}
+              Management & Promotion
+            </h2>
+          </Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col>
+            <em>
+              <p className="lead">
+                This website is intended to reduce the effort required by
+                artists to manage and share their work. Our mission is to give
+                artists a convenient, secure, connected environment in which to
+                process and promote their progress and their products.
+              </p>
+            </em>
           </Col>
         </Row>
         <hr />
