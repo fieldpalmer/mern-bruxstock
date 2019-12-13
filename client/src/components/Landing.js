@@ -36,6 +36,8 @@ class Landing extends Component {
               <h1>
                 <strong>Inventory</strong>
               </h1>
+              <hr />
+
               <p className="lead">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Repellendus eos quibusdam minima magnam assumenda voluptatibus
@@ -63,6 +65,8 @@ class Landing extends Component {
             <h1>
               <strong>Portfolio</strong>
             </h1>
+            <hr />
+
             <p className="lead">
               Lorem ipsum dolor sit amet consectetur adipisicing elit, sapiente
               nesciunt quibusdam minima magnam assumenda voluptatibus labore
@@ -109,6 +113,8 @@ class Landing extends Component {
               <h1>
                 <strong>Community</strong>
               </h1>
+              <hr />
+
               <p className="lead">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Repellendus eos quibusdam minima magnam assumenda voluptatibus
