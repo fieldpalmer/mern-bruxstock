@@ -5,7 +5,7 @@ import { logoutUser } from "../../redux/actions/authActions";
 import Upload from "./Upload";
 import Spreadsheet from "./Spreadsheet/Spreadsheet";
 import ComponentCollapse from "../common/ComponentCollapse";
-import { Container, Row, Col, Jumbotron } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 class Dashboard extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
 
     return (
-      <div>
+      <Container>
         <Row>
           <Col>
             <p className="lead">Hello, {user.displayName}!</p>
@@ -44,26 +44,8 @@ class Dashboard extends Component {
               header="Upload New File"
             />
           </Col>
-          <Col sm="12">
-            <ComponentCollapse
-              // this has to change
-              component={<Spreadsheet />}
-              header="Your Saved Pieces"
-            />
-          </Col>
         </Row>
-        <Row className="my-3">
-          <Jumbotron fluid>
-            <Container fluid>
-              <h1 className="display-3">Useful</h1>
-              <p className="lead">
-                This is a modified jumbotron that occupies the entire horizontal
-                space of its parent.
-              </p>
-            </Container>
-          </Jumbotron>
-        </Row>
-      </div>
+      </Container>
     );
   }
 }

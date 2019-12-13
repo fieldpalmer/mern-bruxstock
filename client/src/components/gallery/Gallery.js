@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import GroupByCategory from "./GroupByCategory";
+import CategorySort from "./CategorySort";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -53,6 +54,7 @@ class Gallery extends Component {
         <hr />
         <Row>
           <Col>
+            <CategorySort categories={categories} />
             {files ? (
               <GroupByCategory files={files} categories={categories} />
             ) : (

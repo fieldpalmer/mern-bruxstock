@@ -10,9 +10,8 @@ class Footer extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
     return (
-      <footer className="page-footer font-small pt-4">
+      <footer className="page-footer font-small mt-4 pt-4 bg-light">
         <div className="container text-center text-md-left">
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
@@ -25,18 +24,6 @@ class Footer extends Component {
               <NavItem>
                 <NavLink href="/">Home</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/gallery">Gallery</NavLink>
-              </NavItem>
-              {isAuthenticated ? (
-                <NavItem>
-                  <NavLink href="/dashboard">Dashboard</NavLink>
-                </NavItem>
-              ) : (
-                <NavItem>
-                  <NavLink href="/login">Login</NavLink>
-                </NavItem>
-              )}
               <NavItem onClick={() => window.alert("Call Field")}>
                 <NavLink href="/">Contact</NavLink>
               </NavItem>

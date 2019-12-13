@@ -8,8 +8,9 @@ const GroupByCategory = props => {
   return categories.map((cat, i) => {
     return (
       <div key={i}>
-        {/* <h1>{cat}</h1> */}
-        {/* <hr /> */}
+        <hr />
+        <h1>{cat}s</h1>
+        <hr />
         <CardColumns>
           {files.map(file =>
             file.category === cat && file.view === "public" ? (

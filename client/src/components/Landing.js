@@ -3,83 +3,82 @@ import { Link } from "react-router-dom";
 // import { PropTypes } from "prop-types";
 // import { connect } from "react-redux";
 // import logo from "../cormorant.png";
-import {
-  Button,
-  Container,
-  Col,
-  Row,
-  Card,
-  CardImg,
-  CardBody,
-  ListGroup,
-  ListGroupItem
-} from "reactstrap";
+import { Button, Container, Col, Row, Card, CardImg } from "reactstrap";
 
 class Landing extends Component {
   render() {
     return (
       <Container className="App">
-        {/* <Row>
-          <Col>
-            <p className="display-4">Bienvenue</p>
-          </Col>
-        </Row> */}
+        {/* welcome header */}
         <Row>
-          <Col sm="12" md="6">
-            <p className="display-4">Bienvenue Chez Beaux</p>
-            <hr />
-            <p className="lead">
-              <strong>Beaux's Art Management & Promotion</strong> is a place to
-              store and share artwork.
-            </p>
-            <p className="">
-              You may ask yourself, <em>Who's Beaux?</em>...well, you're Beaux,
-              and if you know any French that also means y'all handsome so
-              you're welcome.
-            </p>
+          <Col className="text-center" sm="12">
+            <h1>BEAUX'S ART</h1>
+            <h1>
+              <em>Management & Promotion</em>
+            </h1>
           </Col>
         </Row>
         <hr />
-
-        <Row>
-          <Col sm="12" md="6">
-            <Card className="m-2">
+        {/* dashboard teaser with register btn */}
+        <Row className="my-2">
+          <Col sm="12" md="6" className="my-auto">
+            <Card>
               <CardImg
                 top
                 width="100%"
-                src="https://cdn.pixabay.com/photo/2019/11/12/23/00/studio-4622221_960_720.jpg"
+                src="https://cdn.pixabay.com/photo/2016/08/23/12/37/files-1614223_1280.jpg"
                 alt="Card image cap"
               />
             </Card>
           </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col sm="12" md="6">
-            <Card>
-              <CardBody>
-                <ListGroup flush>
-                  <ListGroupItem>
-                    <p className="lead">Keep Track of Inventory</p>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <p className="lead">Showcase Your Work</p>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <p className="lead">Discover New Art</p>
-                  </ListGroupItem>
-                  <Link to="/register">
-                    <Button size="lg" color="primary" block>
-                      Create Your Account
-                    </Button>
-                  </Link>
-                </ListGroup>
-              </CardBody>
-            </Card>
+          <Col sm="12" md="6" className="my-auto">
+            <div>
+              <h1>
+                <strong>Inventory</strong>
+              </h1>
+              <p className="lead">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Repellendus eos quibusdam minima magnam assumenda voluptatibus
+                quaerat!
+              </p>
+              <p className="lead">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Repellendus eos inventore temporibus ratione labore expedita
+                sapiente nesciunt quibusdam minima magnam assumenda voluptatibus
+                quaerat!
+              </p>
+            </div>
+            <hr />
+            <Link to="/register">
+              <Button size="lg" color="success" block>
+                Create an Account to Begin
+              </Button>
+            </Link>
           </Col>
         </Row>
         <hr />
-        <Row>
+        {/* Artist Portfolio teaser section */}
+        <Row className="my-2">
+          <Col sm="12" md="6" className="my-auto">
+            <h1>
+              <strong>Portfolio</strong>
+            </h1>
+            <p className="lead">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit, sapiente
+              nesciunt quibusdam minima magnam assumenda voluptatibus labore
+              expedita circumspectabat.
+            </p>
+            <p className="lead">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Repellendus eos inventore minima magnam assumenda voluptatibus
+              quaerat!
+            </p>
+            <Link to="/register">
+              <Button size="lg" color="info" block>
+                Create an Account to Begin
+              </Button>
+            </Link>
+          </Col>
           <Col sm="12" md="6">
             <Card>
               <CardImg
@@ -92,23 +91,41 @@ class Landing extends Component {
           </Col>
         </Row>
         <hr />
-        <Row>
+        {/* Gallery jumbotron with link */}
+        <Row className="my-2">
           <Col sm="12" md="6">
             <Card>
-              <CardBody>
-                <p className="lead">
-                  Beaux's Art is also a platform where individuals can gain
-                  inspiration and connect with artists for social or
-                  professional reasons.
-                </p>
-                <hr />
-                <Link to="/gallery">
-                  <Button size="lg" color="success" block>
-                    Explore the Gallery
-                  </Button>
-                </Link>
-              </CardBody>
+              <CardImg
+                top
+                width="100%"
+                src="https://cdn.pixabay.com/photo/2014/12/09/21/01/still-life-562357_1280.jpg"
+                alt="Card image cap"
+              />
             </Card>
+          </Col>
+          <Col sm="12" md="6" className="my-auto">
+            <div>
+              <h1>
+                <strong>Community</strong>
+              </h1>
+              <p className="lead">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Repellendus eos quibusdam minima magnam assumenda voluptatibus
+                quaerat!
+              </p>
+              <p className="lead">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Repellendus eos inventore temporibus ratione labore expedita
+                sapiente nesciunt quibusdam minima magnam assumenda voluptatibus
+                quaerat!
+              </p>
+            </div>
+            <hr />
+            <Link to="/gallery">
+              <Button size="lg" color="warning" block>
+                Explore the Gallery
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Container>
