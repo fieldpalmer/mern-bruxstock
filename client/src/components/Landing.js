@@ -20,7 +20,7 @@ class Landing extends Component {
         </Row>
         <hr />
         {/* dashboard teaser with register btn */}
-        <Row className="my-2">
+        <Row className="my-2 p-4">
           <Col sm="12" md="6" className="my-auto">
             <Card>
               <CardImg
@@ -58,7 +58,7 @@ class Landing extends Component {
         </Row>
         <hr />
         {/* Artist Portfolio teaser section */}
-        <Row className="my-2">
+        <Row className="my-2 p-4">
           <Col sm="12" md="6" className="my-auto">
             <h1>
               <strong>Portfolio</strong>
@@ -73,13 +73,14 @@ class Landing extends Component {
               Repellendus eos inventore minima magnam assumenda voluptatibus
               quaerat!
             </p>
+            <hr />
             <Link to="/register">
               <Button size="lg" color="info" block>
                 Create an Account to Begin
               </Button>
             </Link>
           </Col>
-          <Col sm="12" md="6">
+          <Col sm="12" md="6" className="my-auto">
             <Card>
               <CardImg
                 top
@@ -92,8 +93,8 @@ class Landing extends Component {
         </Row>
         <hr />
         {/* Gallery jumbotron with link */}
-        <Row className="my-2">
-          <Col sm="12" md="6">
+        <Row className="my-2 p-4">
+          <Col sm="12" md="6" className="my-auto">
             <Card>
               <CardImg
                 top
@@ -115,9 +116,7 @@ class Landing extends Component {
               </p>
               <p className="lead">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus eos inventore temporibus ratione labore expedita
-                sapiente nesciunt quibusdam minima magnam assumenda voluptatibus
-                quaerat!
+                Repellendus minima magnam assumenda voluptatibus quaerat!
               </p>
             </div>
             <hr />
