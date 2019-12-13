@@ -27,9 +27,9 @@ class Landing extends Component {
             <em>
               <p className="lead">
                 This website is intended to reduce the effort required by
-                artists to manage and share their work. Our mission is to give
-                artists a convenient, secure, connected environment in which to
-                process and promote their progress and their products.
+                artists to manage and share their work. Beaux's mission is to
+                give artists a convenient, secure, connected environment in
+                which to process and promote their progress and their products.
               </p>
             </em>
           </Col>
