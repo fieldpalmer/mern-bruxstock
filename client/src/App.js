@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import AppNavbar from "./components/common/AppNavbar";
-import Landing from "./components/Landing";
+import Landing from "./components/landing/Landing";
 import Gallery from "./components/gallery/Gallery";
 import Portfolio from "./components/portfolio/Portfolio";
 import Dashboard from "./components/manage/Dashboard";
@@ -16,7 +16,7 @@ import store from "./redux/store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
-
+import bgImg from "./img/cartographer.png";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -34,9 +34,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
+        <div className="App" style={{ backgroundImage: `url(${bgImg})` }}>
+          <AppNavbar />
           <div className="container-fluid">
-            <AppNavbar />
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route path="/gallery" component={Gallery} />
@@ -47,8 +47,8 @@ class App extends Component {
               <Route path="/portfolio/:userid" component={Portfolio} />
               <Route path="/view/:filename" component={ViewItem} />
             </Switch>
-            <Footer />
           </div>
+          <Footer />
         </div>
       </Provider>
     );

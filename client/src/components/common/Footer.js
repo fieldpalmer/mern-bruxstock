@@ -11,15 +11,13 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer className="page-footer font-small mt-4 pt-4 bg-light">
+      <footer className="page-footer font-small text-white">
         <div className="container text-center text-md-left">
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
-              <h4 className="text-uppercase">Beaux's Art</h4>
-              <h5>Management & Promotion</h5>
+              <h4 className="text-uppercase">Beaux's Art Collective</h4>
               <p>Let us know of any glitches or suggestions</p>
             </div>
-            <hr className="clearfix w-100 d-md-none pb-3" />
             <Nav className="m-auto" navbar>
               <NavItem>
                 <NavLink href="/">Home</NavLink>
@@ -30,7 +28,6 @@ class Footer extends Component {
             </Nav>
           </div>
         </div>
-        <hr className="clearfix w-100 d-md-none pt-3" />
 
         <div className="footer-copyright text-center mt-3 py-3">
           © 2019 Copyright: BRXTK LLC

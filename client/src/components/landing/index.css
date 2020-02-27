@@ -1,0 +1,16 @@
+.fullScreen {
+  height: 100vh;
+  padding: 0.5em;
+}
+
+.fullScreenFont {
+  color: rgb(141, 2, 31);
+  font-size: calc(32px + (108 - 32) * ((100vw - 300px) / (1600 - 300)));
+  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
+  letter-spacing: calc(0.3em + (0.7 - 0.2) * ((100vw - 300px) / (1600 - 300)));
+}
+
+.bigBox {
+  border: 4px solid rgb(141, 2, 31);
+  padding: 3em 5em 3em 5em;
+}

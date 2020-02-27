@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import GroupByCategory from "./GroupByCategory";
 import CategorySort from "./CategorySort";
@@ -36,7 +36,7 @@ class Gallery extends Component {
         <Row>
           <Col>
             <p className="display-4">La Galérie</p>
-            <p className="lead">
+            {/* <p className="lead">
               Here you can see all works made publicly visible. Click the image
               to view it's page.
             </p>
@@ -48,7 +48,7 @@ class Gallery extends Component {
               If you're not quite ready to make your work public but still want
               to benefit from our sweet inventory management software, you
               should also <Link to="/register">create an account</Link>{" "}
-            </p>
+            </p> */}
           </Col>
         </Row>
         <hr />
