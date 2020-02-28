@@ -6,7 +6,7 @@ import "./index.css";
 const Decision = () => {
   return (
     <Container fluid>
-      <hr className="d-block bg-light my-4" />
+      <hr className="d-block bg-light mb-4" />
       <Row>
         <Col>
           <h2 className="text-center text-white">which way this time?</h2>

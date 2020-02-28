@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
-
-import GroupByCategory from "./GroupByCategory";
-import CategorySort from "./CategorySort";
+// import GroupByCategory from "./GroupByCategory";
+import GalleryItem from "./GalleryItem";
+// import CategorySort from "./CategorySort";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -11,7 +11,7 @@ import {
   getCategories
 } from "../../redux/actions/fileActions";
 import { getArtists } from "../../redux/actions/authActions";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, CardColumns } from "reactstrap";
 
 class Gallery extends Component {
   static propTypes = {
@@ -35,36 +35,24 @@ class Gallery extends Component {
       <Container>
         <Row>
           <Col>
-            <p className="display-4">La Galérie</p>
-            {/* <p className="lead">
-              Here you can see all works made publicly visible. Click the image
-              to view it's page.
-            </p>
-            <p className="lead">
-              If you want your work displayed in the gallery, you'll need to{" "}
-              <Link to="/register">create an account</Link>{" "}
-            </p>
-            <p className="lead">
-              If you're not quite ready to make your work public but still want
-              to benefit from our sweet inventory management software, you
-              should also <Link to="/register">create an account</Link>{" "}
-            </p> */}
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
-            <CategorySort categories={categories} />
-            {files ? (
-              <GroupByCategory files={files} categories={categories} />
-            ) : (
-              <div>
-                <h1>
-                  Doesn't look like we were able to find anything in the
-                  database
-                </h1>
-              </div>
-            )}
+            {/* <CategorySort categories={categories} /> */}
+            <CardColumns>
+              {files ? (
+                // <GroupByCategory files={files} categories={categories} />
+                files.map(file =>
+                  file.view === "public" ? (
+                    <GalleryItem key={file._id} file={file} />
+                  ) : null
+                )
+              ) : (
+                <div>
+                  <h1>
+                    Doesn't look like we were able to find anything in the
+                    database
+                  </h1>
+                </div>
+              )}
+            </CardColumns>
           </Col>
         </Row>
       </Container>
