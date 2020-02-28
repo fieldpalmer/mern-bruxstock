@@ -1,0 +1,11 @@
+.bigBox {
+  border: 4px solid white;
+  padding: calc(2em + (3 - 1) * ((100vw - 300px) / (1600 - 300)));
+  color: white;
+}
+
+.fullScreenFont {
+  color: white;
+  font-size: calc(18px + (64 - 18) * ((100vw - 300px) / (1600 - 300)));
+  line-height: calc(1.2em + (1.4 - 1.2) * ((100vw - 300px) / (1600 - 300)));
+}

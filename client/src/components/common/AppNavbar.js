@@ -12,11 +12,13 @@ import {
   NavItem,
   NavLink,
   Container,
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu
+  // UncontrolledDropdown,
+  DropdownItem
+  // DropdownToggle,
+  // DropdownMenu
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrow } from "@fortawesome/free-solid-svg-icons";
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -65,7 +67,11 @@ class AppNavbar extends Component {
       <div>
         <Navbar expand="sm" className="mb-3">
           <Container>
-            <NavbarBrand href="/">Beaux's Art</NavbarBrand>
+            <NavbarBrand style={{ color: "white" }} href="/">
+              {/* Beaux's Art */}
+              <FontAwesomeIcon icon={faCrow} />
+              brxtk
+            </NavbarBrand>
             <NavbarToggler color="dark" onClick={this.toggle}>
               X
             </NavbarToggler>
@@ -73,7 +79,9 @@ class AppNavbar extends Component {
               <Nav className="ml-auto" navbar>
                 {isAuthenticated ? (
                   <NavItem>
-                    <NavLink href="/dashboard">Dashboard</NavLink>
+                    <NavLink className="text-info" href="/dashboard">
+                      Studio
+                    </NavLink>
                   </NavItem>
                 ) : (
                   ""
@@ -83,23 +91,34 @@ class AppNavbar extends Component {
                   ""
                 ) : (
                   <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <NavLink className="text-info" href="/login">
+                      Login
+                    </NavLink>
                   </NavItem>
                 )}
                 {isAuthenticated ? (
                   ""
                 ) : (
                   <NavItem>
-                    <NavLink href="/register">Register</NavLink>
+                    <NavLink className="text-info" href="/register">
+                      Register
+                    </NavLink>
                   </NavItem>
                 )}
 
                 <NavItem>
-                  <NavLink href="/gallery">Gallery</NavLink>
+                  <NavLink className="text-info" href="/gallery">
+                    Gallery
+                  </NavLink>
                 </NavItem>
 
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
+                <NavItem onClick={() => window.alert("Call Field")}>
+                  <NavLink className="text-info" href="/">
+                    Contact
+                  </NavLink>
+                </NavItem>
+                {/* <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret className="text-info">
                     Artists
                   </DropdownToggle>
                   <DropdownMenu right>
@@ -107,12 +126,13 @@ class AppNavbar extends Component {
                     <DropdownItem divider />
                     {this.showArtists()}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
                 {isAuthenticated ? (
                   <NavItem>
                     <NavLink
                       className="text-danger"
+                      style={{ color: "white" }}
                       href="/"
                       onClick={this.onLogoutClick}
                     >

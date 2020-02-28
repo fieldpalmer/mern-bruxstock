@@ -17,6 +17,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
 import bgImg from "./img/cartographer.png";
+import Decision from "./components/decision/Decision";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -34,11 +35,15 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App" style={{ backgroundImage: `url(${bgImg})` }}>
+        <div
+          className="App"
+          style={{ backgroundImage: `url(${bgImg})`, height: "100vh" }}
+        >
           <AppNavbar />
-          <div className="container-fluid">
+          <div className="container">
             <Switch>
               <Route exact path="/" component={Landing} />
+              <Route path="/decision" component={Decision} />
               <Route path="/gallery" component={Gallery} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
