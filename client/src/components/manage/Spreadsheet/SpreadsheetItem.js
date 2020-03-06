@@ -42,7 +42,7 @@ class SpreadsheetItem extends Component {
             alt="Card image cap"
           />
         </Link>
-        <NotesCollapse
+        {/* <NotesCollapse
           title={title}
           notes={notes}
           view={view}
@@ -50,7 +50,7 @@ class SpreadsheetItem extends Component {
           category={category}
           type={type}
           uploadDate={uploadDate}
-        />
+        /> */}
       </CardBody>
     );
   }

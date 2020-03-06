@@ -149,7 +149,6 @@ class Upload extends Component {
               id="notes"
               value={notes}
               onChange={this.onChange}
-              placeholder={`ex: date: ______; media:______`}
             />
           </FormGroup>
           <FormGroup>
@@ -164,7 +163,7 @@ class Upload extends Component {
               <option value="select">
                 {category === undefined ||
                 category === "choose from existing category"
-                  ? "choose from existing category"
+                  ? ""
                   : category}
               </option>
               {catSelects}

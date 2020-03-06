@@ -27,7 +27,7 @@ class Spreadsheet extends Component {
       file.uploadedBy === userId ? (
         <Card key={file._id} className="p-0 mb-2">
           <SpreadsheetItem file={file} />
-          <CardFooter>
+          {/* <CardFooter>
             <Button
               block
               outline
@@ -36,7 +36,7 @@ class Spreadsheet extends Component {
             >
               edit image
             </Button>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
       ) : null
     );

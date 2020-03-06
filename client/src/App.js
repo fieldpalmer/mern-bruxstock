@@ -36,27 +36,25 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div
-          className="App"
+          className="App container-fluid"
           style={{
             backgroundImage: `url(${bgImg})`,
             minHeight: "100vh"
           }}
         >
           <AppNavbar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route path="/decision" component={Decision} />
-              <Route path="/gallery" component={Gallery} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              {/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
-              <Route exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/upload" component={Upload} />
-              <Route path="/portfolio/:userid" component={Portfolio} />
-              <Route path="/view/:filename" component={ViewItem} />
-            </Switch>
-          </div>
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route path="/decision" component={Decision} />
+            <Route path="/gallery" component={Gallery} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/upload" component={Upload} />
+            <Route path="/portfolio/:userid" component={Portfolio} />
+            <Route path="/view/:filename" component={ViewItem} />
+          </Switch>
           <Footer />
         </div>
       </Provider>

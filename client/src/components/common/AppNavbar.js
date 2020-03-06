@@ -67,36 +67,35 @@ class AppNavbar extends Component {
     return (
       <div>
         <Navbar expand="sm" className="mb-3">
-          <Container>
-            <NavbarBrand style={{ color: "white" }} href="/">
-              {/* Beaux's Art */}
-              <FontAwesomeIcon icon={faCrow} />
-              brxtk |{" "}
-              <small style={{ color: "#32c6e6" }}>art storage & display</small>
-            </NavbarBrand>
-            <NavbarToggler color="dark" onClick={this.toggle}>
-              X
-            </NavbarToggler>
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink className="navLinks lead" href="/dashboard">
-                    Studio
-                  </NavLink>
-                </NavItem>
+          <NavbarBrand style={{ color: "white" }} href="/">
+            {/* Beaux's Art */}
+            <FontAwesomeIcon icon={faCrow} />
+            brxtk |{" "}
+            <small style={{ color: "#32c6e6" }}>art storage & display</small>
+          </NavbarBrand>
+          <NavbarToggler color="dark" onClick={this.toggle}>
+            X
+          </NavbarToggler>
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink className="navLinks lead" href="/dashboard">
+                  Studio
+                </NavLink>
+              </NavItem>
 
-                <NavItem>
-                  <NavLink className="navLinks lead" href="/gallery">
-                    Gallery
-                  </NavLink>
-                </NavItem>
+              <NavItem>
+                <NavLink className="navLinks lead" href="/gallery">
+                  Gallery
+                </NavLink>
+              </NavItem>
 
-                {/* <NavItem onClick={() => window.alert("Call Field")}>
+              {/* <NavItem onClick={() => window.alert("Call Field")}>
                   <NavLink className="navLinks" href="/">
                     Contact
                   </NavLink>
                 </NavItem> */}
-                {/* <UncontrolledDropdown nav inNavbar>
+              {/* <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret className="navLinks">
                     Artists
                   </DropdownToggle>
@@ -107,23 +106,22 @@ class AppNavbar extends Component {
                   </DropdownMenu>
                 </UncontrolledDropdown> */}
 
-                {isAuthenticated ? (
-                  <NavItem>
-                    <NavLink
-                      className="text-danger"
-                      style={{ color: "white" }}
-                      href="/"
-                      onClick={this.onLogoutClick}
-                    >
-                      Logout
-                    </NavLink>
-                  </NavItem>
-                ) : (
-                  ""
-                )}
-              </Nav>
-            </Collapse>
-          </Container>
+              {isAuthenticated ? (
+                <NavItem>
+                  <NavLink
+                    className="text-danger"
+                    style={{ color: "white" }}
+                    href="/"
+                    onClick={this.onLogoutClick}
+                  >
+                    Logout
+                  </NavLink>
+                </NavItem>
+              ) : (
+                ""
+              )}
+            </Nav>
+          </Collapse>
         </Navbar>
       </div>
     );

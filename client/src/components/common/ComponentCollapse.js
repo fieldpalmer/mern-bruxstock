@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Collapse, Card, CardHeader } from "reactstrap";
 
 const ComponentCollapse = props => {
-  const [collapse, setCollapse] = useState(true);
+  const [collapse, setCollapse] = useState(false);
 
   const toggle = () => setCollapse(!collapse);
 
