@@ -45,10 +45,10 @@ class Portfolio extends Component {
     );
 
     return (
-      <Container>
+      <Container className="text-white">
         <small>artist:</small>
         <strong>&nbsp;{artistName}</strong>
-        <hr />
+        <hr className="bg-white" />
         {files ? (
           <CardColumns>{userGallery}</CardColumns>
         ) : (
@@ -68,7 +68,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getFiles, getArtists, getCategories, setFileLoading }
-)(Portfolio);
+export default connect(mapStateToProps, {
+  getFiles,
+  getArtists,
+  getCategories,
+  setFileLoading
+})(Portfolio);

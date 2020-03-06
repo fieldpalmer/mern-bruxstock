@@ -35,22 +35,29 @@ class Gallery extends Component {
 
     return (
       <Container fluid>
+        <hr className="bg-white" />
         <Row>
-          <Col>
-            <hr className="bg-white" />
+          <Col sm="12" md="6">
             <p className="display-4 text-white">Bienvenue à la Galerie</p>
-            <hr className="bg-white" />
+          </Col>
+          <Col sm="12" md="2">
+            <p className="lead text-white">Filter by:</p>
+          </Col>
+          <Col sm="12" md="2">
+            <p className="lead text-white block">
+              <DataDropdown filter={`Artists`} />
+            </p>
+          </Col>
+          <Col sm="12" md="2">
+            <p className="lead text-white block">
+              <DataDropdown filter={`Categories`} />
+            </p>
           </Col>
         </Row>
+        <hr className="bg-white" />
         <Row>
           <Col>
             <Container>
-              <p className="lead text-white">
-                Filter by: <DataDropdown filter={`Artists`} />
-                <DataDropdown filter={`Categories`} />
-              </p>
-
-              <hr className="bg-white" />
               <CardColumns>
                 {files ? (
                   files.map(file =>
