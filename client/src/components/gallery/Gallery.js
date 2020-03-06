@@ -11,7 +11,7 @@ import {
   getCategories
 } from "../../redux/actions/fileActions";
 import { getArtists } from "../../redux/actions/authActions";
-import { Container, Row, Col, CardColumns } from "reactstrap";
+import { CardColumns } from "reactstrap";
 
 class Gallery extends Component {
   static propTypes = {
@@ -32,30 +32,21 @@ class Gallery extends Component {
     const { files, categories } = this.props.files;
 
     return (
-      <Container>
-        <Row>
-          <Col>
-            {/* <CategorySort categories={categories} /> */}
-            <CardColumns>
-              {files ? (
-                // <GroupByCategory files={files} categories={categories} />
-                files.map(file =>
-                  file.view === "public" ? (
-                    <GalleryItem key={file._id} file={file} />
-                  ) : null
-                )
-              ) : (
-                <div>
-                  <h1>
-                    Doesn't look like we were able to find anything in the
-                    database
-                  </h1>
-                </div>
-              )}
-            </CardColumns>
-          </Col>
-        </Row>
-      </Container>
+      <CardColumns>
+        {files ? (
+          files.map(file =>
+            file.view === "public" ? (
+              <GalleryItem key={file._id} file={file} />
+            ) : null
+          )
+        ) : (
+          <div>
+            <h1>
+              Doesn't look like we were able to find anything in the database
+            </h1>
+          </div>
+        )}
+      </CardColumns>
     );
   }
 }

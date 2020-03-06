@@ -14,6 +14,13 @@ class Dashboard extends Component {
     files: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: this.props.auth.isAuthenticated
+    };
+  }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -21,9 +28,10 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth;
+    const isLoggedIn = this.state.isLoggedIn;
 
     return (
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
             <p className="lead">Hello, {user.displayName}!</p>

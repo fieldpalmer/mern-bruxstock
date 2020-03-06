@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrow } from "@fortawesome/free-solid-svg-icons";
+import "./app_navbar.css";
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -70,55 +71,33 @@ class AppNavbar extends Component {
             <NavbarBrand style={{ color: "white" }} href="/">
               {/* Beaux's Art */}
               <FontAwesomeIcon icon={faCrow} />
-              brxtk
+              brxtk |{" "}
+              <small style={{ color: "#32c6e6" }}>art storage & display</small>
             </NavbarBrand>
             <NavbarToggler color="dark" onClick={this.toggle}>
               X
             </NavbarToggler>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                {isAuthenticated ? (
-                  <NavItem>
-                    <NavLink className="text-info" href="/dashboard">
-                      Studio
-                    </NavLink>
-                  </NavItem>
-                ) : (
-                  ""
-                )}
-
-                {isAuthenticated ? (
-                  ""
-                ) : (
-                  <NavItem>
-                    <NavLink className="text-info" href="/login">
-                      Login
-                    </NavLink>
-                  </NavItem>
-                )}
-                {isAuthenticated ? (
-                  ""
-                ) : (
-                  <NavItem>
-                    <NavLink className="text-info" href="/register">
-                      Register
-                    </NavLink>
-                  </NavItem>
-                )}
+                <NavItem>
+                  <NavLink className="navLinks lead" href="/dashboard">
+                    Studio
+                  </NavLink>
+                </NavItem>
 
                 <NavItem>
-                  <NavLink className="text-info" href="/gallery">
+                  <NavLink className="navLinks lead" href="/gallery">
                     Gallery
                   </NavLink>
                 </NavItem>
 
-                <NavItem onClick={() => window.alert("Call Field")}>
-                  <NavLink className="text-info" href="/">
+                {/* <NavItem onClick={() => window.alert("Call Field")}>
+                  <NavLink className="navLinks" href="/">
                     Contact
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 {/* <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret className="text-info">
+                  <DropdownToggle nav caret className="navLinks">
                     Artists
                   </DropdownToggle>
                   <DropdownMenu right>

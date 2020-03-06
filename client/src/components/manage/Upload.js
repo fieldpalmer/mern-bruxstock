@@ -149,7 +149,7 @@ class Upload extends Component {
               id="notes"
               value={notes}
               onChange={this.onChange}
-              placeholder={`date: [Date] media:[Media]`}
+              placeholder={`ex: date: ______; media:______`}
             />
           </FormGroup>
           <FormGroup>

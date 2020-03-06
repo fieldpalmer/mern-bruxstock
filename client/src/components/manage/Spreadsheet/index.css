@@ -1,6 +1,4 @@
 #spreadsheet {
-  height: 65vh;
   width: 100%;
-  padding: 10px;
   overflow: scroll;
 }

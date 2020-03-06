@@ -9,3 +9,14 @@
   font-size: calc(18px + (64 - 18) * ((100vw - 300px) / (1600 - 300)));
   line-height: calc(1.2em + (1.4 - 1.2) * ((100vw - 300px) / (1600 - 300)));
 }
+
+.bigButton {
+  transition: all 0.3s ease-out;
+  color: white;
+}
+
+.bigButton:hover {
+  border-color: #32c6e6;
+  color: white;
+  text-decoration: none;
+}

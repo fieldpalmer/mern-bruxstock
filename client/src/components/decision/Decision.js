@@ -15,8 +15,8 @@ const Decision = () => {
       <hr className="d-block bg-light my-4" />
       <Row className="text-white">
         <Col sm="6">
-          <Link to="/dashboard">
-            <div className="bigBox">
+          <Link to="/dashboard" style={{ textDecoration: "none" }}>
+            <div className="bigBox bigButton">
               <p className="fullScreenFont text-right">
                 MANAGE YOUR WORK IN THE STUDIO
               </p>
@@ -24,8 +24,8 @@ const Decision = () => {
           </Link>
         </Col>
         <Col sm="6">
-          <Link to="/gallery">
-            <div className="bigBox">
+          <Link to="/gallery" style={{ textDecoration: "none" }}>
+            <div className="bigBox bigButton">
               <p className="fullScreenFont text-left">
                 VIEW PUBLIC WORK IN THE GALLERY
               </p>

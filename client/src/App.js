@@ -37,7 +37,10 @@ class App extends Component {
       <Provider store={store}>
         <div
           className="App"
-          style={{ backgroundImage: `url(${bgImg})`, height: "100vh" }}
+          style={{
+            backgroundImage: `url(${bgImg})`,
+            minHeight: "100vh"
+          }}
         >
           <AppNavbar />
           <div className="container">
@@ -47,7 +50,8 @@ class App extends Component {
               <Route path="/gallery" component={Gallery} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              {/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
+              <Route exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/upload" component={Upload} />
               <Route path="/portfolio/:userid" component={Portfolio} />
               <Route path="/view/:filename" component={ViewItem} />

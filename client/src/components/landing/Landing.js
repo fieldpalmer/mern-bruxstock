@@ -31,8 +31,8 @@ class Landing extends Component {
                 <strong>use it.</strong>
               </p>
               <hr className="d-block bg-light my-4" />
-              <Link to="/decision">
-                <Button size="lg" outline color="info" block>
+              <Link to="/decision" style={{ textDecoration: "none" }}>
+                <Button size="lg" outline className="blueButton" block>
                   <h4 className="px-3 text-right">
                     LET'S FUCKIN' GO THEN&nbsp;
                     <FontAwesomeIcon icon={faAngleDoubleRight} />
