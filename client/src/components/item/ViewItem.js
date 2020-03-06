@@ -28,7 +28,7 @@ class ViewItem extends Component {
         <Container>
           <Row>
             <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <Card>
+              <Card className="text-white">
                 <CardImg
                   top
                   width="100%"
