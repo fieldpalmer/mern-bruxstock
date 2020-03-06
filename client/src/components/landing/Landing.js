@@ -17,7 +17,7 @@ class Landing extends Component {
           <Col sm="12">
             <div className="bigBox">
               <p className="fullScreenFont">
-                AN EXCELLENT PLACE TO SEE, STORE, AND SHOW OFF YOUR SHIT*!{" "}
+                AN EXCELLENT PLACE TO SEE SH!T, STORE SH!T, AND SHOW OFF SH!T*!{" "}
               </p>
               <hr className="d-block bg-light my-4" />
               <p className="small">
@@ -34,7 +34,7 @@ class Landing extends Component {
               <Link to="/decision" style={{ textDecoration: "none" }}>
                 <Button size="lg" outline className="blueButton" block>
                   <h4 className="px-3 text-right">
-                    LET'S FUCKIN' GO THEN&nbsp;
+                    LET'S GET GOIN' THEN&nbsp;
                     <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </h4>
                 </Button>
