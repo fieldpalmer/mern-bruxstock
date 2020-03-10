@@ -17,26 +17,26 @@ class Landing extends Component {
           <Col sm="12">
             <div className="bigBox">
               <p className="fullScreenFont">
-                AN EXCELLENT PLACE TO SEE SH!T, STORE SH!T, AND SHOW OFF SH!T*!{" "}
+                SHARE & SEE & STORE & SHOW OFF YOUR SH!T*!{" "}
               </p>
               <hr className="d-block bg-light my-4" />
               <p className="small">
                 * <strong>shit:</strong> as in, <em>that's my shit!</em> <br />
-                This site is for all kinds of shit: it's for shit in the works;
+                {/* This site is for all kinds of shit: it's for shit in the works;
                 it's for shit ready to show off; it's for shit already selling.
                 Mostly this site is to provide an alternative to the shit out
                 there now: the shit that makes you sign away all rights and
                 privileges to your work for their shit, but this shit ain't that
                 shit! This shit is yours, so&nbsp;
-                <strong>use it.</strong>
+                <strong>use it.</strong> */}
               </p>
               <hr className="d-block bg-light my-4" />
               <Link to="/decision" style={{ textDecoration: "none" }}>
                 <Button size="lg" outline className="blueButton" block>
-                  <h4 className="px-3 text-right">
+                  <p className="px-3 lead text-right">
                     LET'S GET GOIN' THEN&nbsp;
                     <FontAwesomeIcon icon={faAngleDoubleRight} />
-                  </h4>
+                  </p>
                 </Button>
               </Link>
             </div>

@@ -20,10 +20,10 @@ class Gallery extends Component {
     getArtists: PropTypes.func.isRequired,
     getCategories: PropTypes.func.isRequired,
     files: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     setFileLoading: PropTypes.func.isRequired
   };
 
-  // none of these do anything lol
   componentDidMount = () => {
     this.props.getFiles();
     this.props.getArtists();
@@ -32,32 +32,37 @@ class Gallery extends Component {
 
   render() {
     const { files, categories } = this.props.files;
+    const { users } = this.props.auth;
 
     return (
       <Container fluid>
         <hr className="bg-white" />
+
         <Row>
           <Col sm="12" md="6">
-            <p className="display-4 text-white">Bienvenue à la Galerie</p>
+            <h2 className="text-white">Welcome to the Gallery</h2>
+            {/* <p className="lead d-none d-md-block text-white">
+              We sincerely hope you enjoy this digital storage space, and we
+              welcome your input on anything you'd like to see
+            </p> */}
           </Col>
-          <Col sm="12" md="2">
+          {/* <Col sm="12" md="1">
             <p className="lead text-white">Filter by:</p>
+          </Col> */}
+          <Col sm="12" md="2">
+            <DataDropdown filterSet={users} filter={`Artist`} />
           </Col>
           <Col sm="12" md="2">
-            <p className="lead text-white block">
-              <DataDropdown filter={`Artists`} />
-            </p>
+            <DataDropdown filterSet={categories} filter={`Type`} />
           </Col>
           <Col sm="12" md="2">
-            <p className="lead text-white block">
-              <DataDropdown filter={`Categories`} />
-            </p>
+            <DataDropdown filterSet={files} filter={`Date`} />
           </Col>
         </Row>
         <hr className="bg-white" />
         <Row>
           <Col>
-            <Container>
+            <Container fluid>
               <CardColumns>
                 {files ? (
                   files.map(file =>
@@ -66,12 +71,10 @@ class Gallery extends Component {
                     ) : null
                   )
                 ) : (
-                  <div>
-                    <h1>
-                      Doesn't look like we were able to find anything in the
-                      database
-                    </h1>
-                  </div>
+                  <h1>
+                    Doesn't look like we were able to find anything in the
+                    database
+                  </h1>
                 )}
               </CardColumns>
             </Container>

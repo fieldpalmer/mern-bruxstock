@@ -11,7 +11,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container,
+  // Container,
   // UncontrolledDropdown,
   DropdownItem
   // DropdownToggle,
@@ -73,7 +73,11 @@ class AppNavbar extends Component {
             brxtk |{" "}
             <small style={{ color: "#32c6e6" }}>art storage & display</small>
           </NavbarBrand>
-          <NavbarToggler color="dark" onClick={this.toggle}>
+          <NavbarToggler
+            className="text-white"
+            color="light"
+            onClick={this.toggle}
+          >
             X
           </NavbarToggler>
           <Collapse isOpen={this.state.isOpen} navbar>

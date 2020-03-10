@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getFiles } from "../../../redux/actions/fileActions";
 import PropTypes from "prop-types";
 import SpreadsheetItem from "./SpreadsheetItem";
-import { Card, CardBody, CardColumns, Button, CardFooter } from "reactstrap";
+import { Card, CardBody, CardColumns } from "reactstrap";
 import "./index.css";
 
 class Spreadsheet extends Component {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 
 const ComponentModal = props => {
   const { buttonLabel, component } = props;
@@ -10,20 +10,12 @@ const ComponentModal = props => {
 
   return (
     <div>
-      <Button color="danger" block onClick={toggle}>
+      <Button color="info" className="btn-sm" block onClick={toggle}>
         {buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>{buttonLabel}</ModalHeader>
         <ModalBody>{component}</ModalBody>
-        {/* <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter> */}
       </Modal>
     </div>
   );
