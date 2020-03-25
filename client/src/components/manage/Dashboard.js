@@ -6,7 +6,7 @@ import Upload from "./Upload";
 import Spreadsheet from "./Spreadsheet/Spreadsheet";
 import ComponentModal from "../common/ComponentModal";
 import DataDropdown from "../common/DataDropdown";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import {
   getFiles,
   setFileLoading,
@@ -33,6 +33,10 @@ class Dashboard extends Component {
     };
   }
 
+  goToPortfolio = () => {
+    this.props.history.push(`/portfolio/${this.props.auth.user.id}`);
+  };
+
   componentDidMount = () => {
     this.props.getFiles();
     this.props.getArtists();
@@ -47,6 +51,10 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { files, categories } = this.props.files;
+    // const views = ["Public", "Private"];
+    //  const typeSortFunc = (type) => {
+
+    //   }
 
     return (
       <Container fluid>
@@ -60,27 +68,6 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md="8">
-            <hr className="bg-white" />
-            <Row>
-              {/* <Col sm="12" md="2" className="px-0 mx-0">
-                <p className="text-white">Filtersort:</p>
-              </Col> */}
-              <Col sm="12" md="4">
-                <DataDropdown filterSet={categories} filter={`Type`} />
-              </Col>
-              <Col sm="12" md="4">
-                <DataDropdown filterSet={files} filter={`Date`} />
-              </Col>
-              <Col sm="12" md="4">
-                <DataDropdown filterSet={files} filter={`View`} />
-              </Col>
-            </Row>
-            <hr className="bg-white" />
-            <Row>
-              <Spreadsheet />
-            </Row>
-          </Col>
           <Col sm="12" md="4">
             <hr className="bg-white" />
             <ComponentModal
@@ -93,16 +80,42 @@ class Dashboard extends Component {
               buttonLabel="Manage En Masse"
             /> */}
             <hr className="bg-white" />
-            <ComponentModal
-              component={<Portfolio />}
-              buttonLabel="View Your Profile"
-            />
+            <Button
+              // component={<Portfolio />}
+              onClick={this.goToPortfolio}
+              block
+            >
+              Go to Your Portfolio
+            </Button>
+            {/* 
             <hr className="bg-white" />
             <ComponentModal
               component={<Upload />}
               buttonLabel="Edit Personal Information"
-            />
+            /> */}
+          </Col>
+          <Col sm="12" md="8">
             <hr className="bg-white" />
+            <Row>
+              <Col sm="12" md="3">
+                <p className="text-white text-center">
+                  Filter By: <small>(not working)</small>
+                </p>
+              </Col>
+              <Col sm="12" md="3">
+                <DataDropdown filterSet={categories} filter={`Type`} />
+              </Col>
+              <Col sm="12" md="3">
+                <DataDropdown filterSet={files} filter={`Date`} />
+              </Col>
+              <Col sm="12" md="3">
+                <DataDropdown filterSet={files} filter={`View`} />
+              </Col>
+            </Row>
+            <hr className="bg-white" />
+            <Row>
+              <Spreadsheet />
+            </Row>
           </Col>
         </Row>
       </Container>

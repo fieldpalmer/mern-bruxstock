@@ -12,24 +12,24 @@ const DataDropdown = props => {
 
   let dropDownArtists;
   dropDownArtists = filterSet.map((item, i) => {
-    return <DropdownItem key={item + i}>{item.displayName}</DropdownItem>;
+    return <DropdownItem key={i}>{item.displayName}</DropdownItem>;
   });
 
   let dropDownTypes;
   dropDownTypes = filterSet.map((item, i) => {
-    return <DropdownItem key={item + i}>{item}</DropdownItem>;
+    return <DropdownItem key={i}>{item}</DropdownItem>;
   });
 
   let dropDownDates;
   let dates = ["Newest", "Oldest"];
   dropDownDates = dates.map((item, i) => {
-    return <DropdownItem key={item + i}>{item}</DropdownItem>;
+    return <DropdownItem key={i}>{item}</DropdownItem>;
   });
 
   let dropDownViews;
   let views = ["Public", "Private"];
   dropDownViews = views.map((item, i) => {
-    return <DropdownItem key={item + i}>{item}</DropdownItem>;
+    return <DropdownItem key={i}>{item}</DropdownItem>;
   });
 
   const dropDownItems = () => {

@@ -15,8 +15,8 @@ const NotesCollapse = props => {
   const { title, notes, view, category } = props;
 
   return (
-    <CardFooter>
-      <Button block outline color="success" onClick={toggle}>
+    <CardFooter className="p-0 m-0">
+      <Button block outline color="warning" onClick={toggle}>
         view info
       </Button>
       <Collapse isOpen={collapse}>

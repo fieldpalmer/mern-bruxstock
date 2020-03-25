@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { CardBody, CardImg } from "reactstrap";
-// import NotesCollapse from "./NotesCollapse";
+import NotesCollapse from "./NotesCollapse";
 
 class SpreadsheetItem extends Component {
   static propTypes = {
@@ -14,11 +14,11 @@ class SpreadsheetItem extends Component {
       filename,
       title,
       notes,
-      // view,
+      view,
       category,
-      // type,
-      // gfsId,
-      // uploadDate,
+      type,
+      gfsId,
+      uploadDate,
       uploadedBy
     } = this.props.file;
 
@@ -42,7 +42,7 @@ class SpreadsheetItem extends Component {
             alt="Card image cap"
           />
         </Link>
-        {/* <NotesCollapse
+        <NotesCollapse
           title={title}
           notes={notes}
           view={view}
@@ -50,7 +50,7 @@ class SpreadsheetItem extends Component {
           category={category}
           type={type}
           uploadDate={uploadDate}
-        /> */}
+        />
       </CardBody>
     );
   }

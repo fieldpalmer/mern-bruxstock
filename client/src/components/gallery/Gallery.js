@@ -49,15 +49,15 @@ class Gallery extends Component {
           {/* <Col sm="12" md="1">
             <p className="lead text-white">Filter by:</p>
           </Col> */}
-          <Col sm="12" md="2">
+          <Col sm="12" md="3">
             <DataDropdown filterSet={users} filter={`Artist`} />
           </Col>
-          <Col sm="12" md="2">
+          <Col sm="12" md="3">
             <DataDropdown filterSet={categories} filter={`Type`} />
           </Col>
-          <Col sm="12" md="2">
+          {/* <Col sm="12" md="2">
             <DataDropdown filterSet={files} filter={`Date`} />
-          </Col>
+          </Col> */}
         </Row>
         <hr className="bg-white" />
         <Row>
