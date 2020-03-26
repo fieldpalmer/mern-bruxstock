@@ -5,14 +5,8 @@ import "./index.css";
 
 const Decision = () => {
   return (
-    <Container fluid>
+    <Container>
       <hr className="d-block bg-light mb-4" />
-      <Row>
-        <Col>
-          <h2 className="text-center text-white">which way this time?</h2>
-        </Col>
-      </Row>
-      <hr className="d-block bg-light my-4" />
       <Row className="text-white">
         <Col sm="6">
           <Link to="/dashboard" style={{ textDecoration: "none" }}>

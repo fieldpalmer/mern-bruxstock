@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/actions/authActions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import "./index.css";
+
 import {
   Alert,
   Card,
@@ -60,11 +62,17 @@ class Login extends Component {
     const { errors } = this.state;
     return (
       <Container>
-        <Row>
-          <Col sm="12" md="4">
-            <Card className="p-4">
-              <h2>Login</h2>
-              <hr />
+        <Row className="text-white">
+          <Col sm={{ size: 6, offset: 3 }}>
+            <div className="bigBox bigButton">
+              <h2>Log in for studio access</h2>
+              <small>
+                Don't have an account?{" "}
+                <Link to="/register" style={{ color: "white" }}>
+                  <strong>Register here</strong>.
+                </Link>
+              </small>
+              <hr className="d-block bg-light" />
               <Form className="form" noValidate onSubmit={this.onSubmit}>
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
@@ -114,9 +122,11 @@ class Login extends Component {
                   )}
                 </FormGroup>
                 <hr />
-                <Button type="submit">Submit</Button>
+                <Button color="danger" type="submit">
+                  Submit
+                </Button>
               </Form>
-            </Card>
+            </div>
           </Col>
         </Row>
       </Container>
@@ -128,7 +138,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(withRouter(Login));
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));

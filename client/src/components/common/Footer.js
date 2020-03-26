@@ -11,7 +11,7 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer className="page-footer font-small text-white mt-2 ">
+      <footer className="page-footer fixed-bottom font-small text-white mt-2 ">
         <div className="footer-copyright text-center mt-3 py-3 small">
           © 2020 | BRXTK LLC
         </div>

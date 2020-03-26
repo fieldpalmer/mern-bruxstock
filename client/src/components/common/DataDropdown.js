@@ -7,29 +7,50 @@ import {
 } from "reactstrap";
 
 const DataDropdown = props => {
-  const { filter, filterSet } = props;
+  const { filter, filterSet, filterFunc } = props;
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleSelect = e => {
+    console.log(e);
+    filterFunc(e, filterSet);
+  };
 
   let dropDownArtists;
   dropDownArtists = filterSet.map((item, i) => {
-    return <DropdownItem key={i}>{item.displayName}</DropdownItem>;
+    return (
+      <DropdownItem onClick={handleSelect} key={i}>
+        {item.displayName}
+      </DropdownItem>
+    );
   });
 
   let dropDownTypes;
   dropDownTypes = filterSet.map((item, i) => {
-    return <DropdownItem key={i}>{item}</DropdownItem>;
+    return (
+      <DropdownItem onClick={() => handleSelect(item, filterSet)} key={i}>
+        {item}
+      </DropdownItem>
+    );
   });
 
   let dropDownDates;
   let dates = ["Newest", "Oldest"];
   dropDownDates = dates.map((item, i) => {
-    return <DropdownItem key={i}>{item}</DropdownItem>;
+    return (
+      <DropdownItem onClick={handleSelect} key={i}>
+        {item}
+      </DropdownItem>
+    );
   });
 
   let dropDownViews;
   let views = ["Public", "Private"];
   dropDownViews = views.map((item, i) => {
-    return <DropdownItem key={i}>{item}</DropdownItem>;
+    return (
+      <DropdownItem onClick={handleSelect} key={i}>
+        {item}
+      </DropdownItem>
+    );
   });
 
   const dropDownItems = () => {

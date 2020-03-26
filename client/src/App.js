@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div
-          className="App container-fluid"
+          className="App"
           style={{
             backgroundImage: `url(${bgImg})`,
             minHeight: "100vh"

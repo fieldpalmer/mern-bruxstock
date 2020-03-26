@@ -43,6 +43,12 @@ class Dashboard extends Component {
     this.props.getCategories();
   };
 
+  // prolly the move
+  // filterByType = (type) => {
+  //   let files = this.props.files;
+  //   filter now
+  // }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -51,48 +57,34 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { files, categories } = this.props.files;
-    // const views = ["Public", "Private"];
-    //  const typeSortFunc = (type) => {
 
-    //   }
+    // not the move
+    const filterDisplay = filter => {
+      if (filter && files) {
+        console.log(filter);
+        console.log(files);
+
+        // return true;
+      } else {
+        console.log("problemz");
+      }
+    };
 
     return (
-      <Container fluid>
+      <Container>
         <Row>
-          <Col sm="12" className="text-white">
+          <Col sm="12" md="4" className="text-white">
             <h2>Hello, {user.displayName}</h2>
-            {/* <p className="lead d-none d-lg-block">
-              We sincerely hope you enjoy this digital storage solution, and we
-              welcome your your input on anything you'd like to see
-            </p> */}
-          </Col>
-        </Row>
-        <Row>
-          <Col sm="12" md="4">
+
+            <hr className="bg-white" />
+            <Button onClick={this.goToPortfolio} size="sm" block>
+              Go to Your Portfolio
+            </Button>
             <hr className="bg-white" />
             <ComponentModal
               component={<Upload />}
               buttonLabel="Add Something New"
             />
-            {/* <hr className="bg-white" />
-            <ComponentModal
-              component={<Upload />}
-              buttonLabel="Manage En Masse"
-            /> */}
-            <hr className="bg-white" />
-            <Button
-              // component={<Portfolio />}
-              onClick={this.goToPortfolio}
-              block
-            >
-              Go to Your Portfolio
-            </Button>
-            {/* 
-            <hr className="bg-white" />
-            <ComponentModal
-              component={<Upload />}
-              buttonLabel="Edit Personal Information"
-            /> */}
           </Col>
           <Col sm="12" md="8">
             <hr className="bg-white" />
@@ -103,13 +95,25 @@ class Dashboard extends Component {
                 </p>
               </Col>
               <Col sm="12" md="3">
-                <DataDropdown filterSet={categories} filter={`Type`} />
+                <DataDropdown
+                  filterSet={categories}
+                  filter={`Type`}
+                  filterFunc={filterDisplay}
+                />
               </Col>
               <Col sm="12" md="3">
-                <DataDropdown filterSet={files} filter={`Date`} />
+                <DataDropdown
+                  filterSet={files}
+                  filter={`Date`}
+                  filterFunc={filterDisplay}
+                />
               </Col>
               <Col sm="12" md="3">
-                <DataDropdown filterSet={files} filter={`View`} />
+                <DataDropdown
+                  filterSet={files}
+                  filter={`View`}
+                  filterFunc={filterDisplay}
+                />
               </Col>
             </Row>
             <hr className="bg-white" />

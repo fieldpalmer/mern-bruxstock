@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { registerUser } from "../../redux/actions/authActions";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import "./index.css";
+
 import {
   Alert,
   Card,
@@ -65,15 +67,16 @@ class Register extends Component {
 
     return (
       <Container>
-        <Row>
-          <Col sm="!@" md="4">
-            <Card className="p-4">
-              <h2>Register</h2>
-              <hr />
+        <Row className="text-white">
+          <Col sm={{ size: 6, offset: 3 }}>
+            <div className="bigBox bigButton">
+              <h2>Create an account</h2>
+              <hr className="d-block bg-light" />
               <Form className="form" noValidate onSubmit={this.onSubmit}>
                 <FormGroup>
                   <Label htmlFor="name">Name</Label>
                   <Input
+                    size="sm"
                     type="name"
                     name="name"
                     id="name"
@@ -85,6 +88,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="displayName">Display Name</Label>
                   <Input
+                    size="sm"
                     type="name"
                     name="displayName"
                     id="displayName"
@@ -96,6 +100,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
                   <Input
+                    size="sm"
                     type="email"
                     name="email"
                     id="email"
@@ -117,6 +122,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="password">Password</Label>
                   <Input
+                    size="sm"
                     onChange={this.onChange}
                     value={this.state.password}
                     error={errors.password}
@@ -137,6 +143,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="password2">Confirm Password</Label>
                   <Input
+                    size="sm"
                     onChange={this.onChange}
                     value={this.state.password2}
                     error={errors.password2}
@@ -155,9 +162,11 @@ class Register extends Component {
                   )}
                 </FormGroup>
                 <hr />
-                <Button type="submit">Submit</Button>
+                <Button color="warning" type="submit">
+                  Submit
+                </Button>
               </Form>
-            </Card>
+            </div>
           </Col>
         </Row>
       </Container>
@@ -170,7 +179,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));
