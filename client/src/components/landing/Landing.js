@@ -18,9 +18,9 @@ class Landing extends Component {
         <Row className="fullScreen">
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <div className="bigBox">
-              <p className="fullScreenFont">
+              <h1 className="fullScreenFont">
                 SAFELY STORE, ORGANIZE, AND SHARE YOUR WORK
-              </p>
+              </h1>
               <hr className="d-flex bg-light my-4" />
               <Link to="/decision" style={{ textDecoration: "none" }}>
                 <Button
