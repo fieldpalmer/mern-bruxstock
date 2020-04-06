@@ -5,8 +5,8 @@ import { Container, CardColumns } from "reactstrap";
 
 import {
   getFiles,
-  setFileLoading,
-  getCategories
+  setFileLoading
+  // getCategories
 } from "../../redux/actions/fileActions";
 import { getArtists } from "../../redux/actions/authActions";
 import GalleryItem from "../gallery/GalleryItem";
@@ -23,7 +23,7 @@ class Portfolio extends Component {
   componentDidMount = () => {
     this.props.getFiles();
     this.props.getArtists();
-    this.props.getCategories();
+    // this.props.getCategories();
   };
 
   matchUser = userId => {
@@ -71,6 +71,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getFiles,
   getArtists,
-  getCategories,
+  // getCategories,
   setFileLoading
 })(Portfolio);

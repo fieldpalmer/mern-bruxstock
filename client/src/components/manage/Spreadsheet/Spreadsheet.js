@@ -1,57 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getFiles } from "../../../redux/actions/fileActions";
-import PropTypes from "prop-types";
+import React from "react";
 import SpreadsheetItem from "./SpreadsheetItem";
-import { Card, CardBody, CardColumns } from "reactstrap";
+import { Card, CardColumns } from "reactstrap";
 import "./index.css";
 
-class Spreadsheet extends Component {
-  static propTypes = {
-    getFiles: PropTypes.func.isRequired,
-    files: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired
-  };
+const Spreadsheet = props => {
+  const { userFiles } = props;
 
-  componentDidMount = () => {
-    this.props.getFiles();
-  };
+  let spreadsheetItems;
 
-  render() {
-    const { files } = this.props.files;
-    let userId = this.props.auth.user.id;
+  spreadsheetItems = userFiles.map(file => (
+    <Card key={file._id}>
+      <SpreadsheetItem file={file} />
+    </Card>
+  ));
 
-    let spreadsheetItems;
+  return <CardColumns>{spreadsheetItems}</CardColumns>;
+};
 
-    spreadsheetItems = files.map(file =>
-      file.uploadedBy === userId ? (
-        <Card key={file._id} className="p-0 mb-2">
-          <SpreadsheetItem file={file} />
-          {/* <CardFooter>
-            <Button
-              block
-              outline
-              color="warning"
-              // onClick={() => this.handleDelete(file.gfsId)}
-            >
-              edit image
-            </Button>
-          </CardFooter> */}
-        </Card>
-      ) : null
-    );
-
-    return (
-      <CardBody>
-        <CardColumns>{spreadsheetItems}</CardColumns>
-      </CardBody>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  files: state.files,
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { getFiles })(Spreadsheet);
+export default Spreadsheet;

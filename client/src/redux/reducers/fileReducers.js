@@ -1,6 +1,9 @@
 import {
   GET_FILES,
   GET_CATEGORIES,
+  GET_FILES_BY_CATEGORY,
+  GET_FILES_BY_USER,
+  GET_PRIVATE_FILES_BY_USER,
   ADD_FILE,
   FILE_LOADING
 } from "../actions/types";
@@ -23,6 +26,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         categories: action.payload,
+        loading: false
+      };
+    case GET_FILES_BY_CATEGORY:
+      return {
+        ...state,
+        files: action.payload,
+        loading: false
+      };
+    case GET_FILES_BY_USER:
+      return {
+        ...state,
+        files: action.payload,
+        loading: false
+      };
+    case GET_PRIVATE_FILES_BY_USER:
+      return {
+        ...state,
+        files: action.payload,
         loading: false
       };
     case ADD_FILE:

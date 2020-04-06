@@ -63,7 +63,7 @@ class AppNavbar extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
+    // const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <Navbar expand="sm" className="mb-3">
@@ -84,7 +84,7 @@ class AppNavbar extends Component {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink className="navLinks lead" href="/dashboard">
-                  Studio
+                  Dashboard
                 </NavLink>
               </NavItem>
 
@@ -94,23 +94,7 @@ class AppNavbar extends Component {
                 </NavLink>
               </NavItem>
 
-              {/* <NavItem onClick={() => window.alert("Call Field")}>
-                  <NavLink className="navLinks" href="/">
-                    Contact
-                  </NavLink>
-                </NavItem> */}
-              {/* <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret className="navLinks">
-                    Artists
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem disabled>View artist portfolios</DropdownItem>
-                    <DropdownItem divider />
-                    {this.showArtists()}
-                  </DropdownMenu>
-                </UncontrolledDropdown> */}
-
-              {isAuthenticated ? (
+              {/* {isAuthenticated ? (
                 <NavItem>
                   <NavLink
                     className="text-danger"
@@ -123,7 +107,7 @@ class AppNavbar extends Component {
                 </NavItem>
               ) : (
                 ""
-              )}
+              )} */}
             </Nav>
           </Collapse>
         </Navbar>

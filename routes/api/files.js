@@ -52,11 +52,17 @@ const storage = new GridFsStorage({
 const upload = multer({ storage: storage }).single("file");
 
 // @route      GET /api/files
-// @desc       Gets all files from db
+// @desc       Gets all public files from db
 // @access     Public
 router.get("/", (req, res) => {
   Image.find((err, images) => {
-    return res.json(images);
+    let publicImgArray = [];
+    images.map(img => {
+      if (img.view === "public") {
+        publicImgArray.push(img);
+      }
+    });
+    return res.json(publicImgArray);
   });
 });
 
@@ -73,6 +79,55 @@ router.get("/categories", (req, res) => {
     return res.json(catArry);
   });
 });
+
+// @route      GET /api/files/category/:cat
+// @desc       Gets public files by category
+// @access     Public
+router.get("/category/:cat", (req, res) => {
+  let categoryImgArray = [];
+  Image.find((err, images) => {
+    images.map(img => {
+      if (img.category === req.params.cat) {
+        categoryImgArray.push(img);
+      }
+    });
+    return res.json(categoryImgArray);
+  });
+});
+
+// @route      GET /api/files/:userid
+// @desc       Gets public files by user
+// @access     Public
+router.get("/user/:_id", (req, res) => {
+  let userImgArray = [];
+  Image.find((err, images) => {
+    images.map(img => {
+      if (img.uploadedBy === req.params._id && img.view === "public") {
+        userImgArray.push(img);
+      }
+    });
+    return res.json(userImgArray);
+  });
+});
+
+// @route      GET /api/files/:_id
+// @desc       Gets public & private images by user
+// @access     Private
+router.get(
+  "/user/private/:_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    let userImgArray = [];
+    Image.find((err, images) => {
+      images.map(img => {
+        if (img.uploadedBy === req.params._id) {
+          userImgArray.push(img);
+        }
+      });
+      return res.json(userImgArray);
+    });
+  }
+);
 
 // @route      GET /api/files/:filename
 // @desc       View Image

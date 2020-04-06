@@ -8,7 +8,7 @@ import "./index.css";
 
 import {
   Alert,
-  Card,
+  // Card,
   Container,
   Col,
   Row,
@@ -61,11 +61,11 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <Container>
-        <Row className="text-white">
-          <Col sm={{ size: 6, offset: 3 }}>
+      <Container style={{ minHeight: "75vh" }}>
+        <Row className="text-white mt-5">
+          <Col sm={{ size: 4, offset: 4 }}>
             <div className="bigBox bigButton">
-              <h2>Log in for studio access</h2>
+              <h2>Log In </h2>
               <small>
                 Don't have an account?{" "}
                 <Link to="/register" style={{ color: "white" }}>
@@ -122,7 +122,7 @@ class Login extends Component {
                   )}
                 </FormGroup>
                 <hr />
-                <Button color="danger" type="submit">
+                <Button block color="success" type="submit">
                   Submit
                 </Button>
               </Form>

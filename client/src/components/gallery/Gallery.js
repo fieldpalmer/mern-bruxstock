@@ -40,20 +40,16 @@ class Gallery extends Component {
 
         <Row>
           <Col sm="12" md="6">
-            <h2 className="text-white">Welcome to the Gallery</h2>
-            {/* <p className="lead d-none d-md-block text-white">
-              We sincerely hope you enjoy this digital storage space, and we
-              welcome your input on anything you'd like to see
-            </p> */}
-          </Col>
-          {/* <Col sm="12" md="1">
-            <p className="lead text-white">Filter by:</p>
-          </Col> */}
-          <Col sm="12" md="3">
-            <DataDropdown filterSet={users} filter={`Artist`} />
+            <h1 className="display-4 text-white">GALLERY</h1>
           </Col>
           <Col sm="12" md="3">
-            <DataDropdown filterSet={categories} filter={`Type`} />
+            <DataDropdown filterSet={users} filter={`Filter by Artist`} />
+          </Col>
+          <Col sm="12" md="3">
+            <DataDropdown
+              filterSet={categories}
+              filter={`Filter by Category`}
+            />
           </Col>
           {/* <Col sm="12" md="2">
             <DataDropdown filterSet={files} filter={`Date`} />

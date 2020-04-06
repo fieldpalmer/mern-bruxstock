@@ -12,7 +12,7 @@ const Decision = () => {
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <div className="bigBox bigButton">
               <p className="fullScreenFont text-right">
-                MANAGE YOUR WORK IN THE STUDIO
+                MANAGE YOUR WORK IN THE DASHBOARD
               </p>
             </div>
           </Link>

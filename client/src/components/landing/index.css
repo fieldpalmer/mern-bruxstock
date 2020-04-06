@@ -3,7 +3,6 @@
 }
 
 .fullScreenFont {
-  /* color: rgb(141, 2, 31); */
   color: white;
   font-size: calc(32px + (108 - 32) * ((100vw - 300px) / (1600 - 300)));
   line-height: calc(1.2em + (1.4 - 1.2) * ((100vw - 300px) / (1600 - 300)));

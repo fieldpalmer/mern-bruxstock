@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getFilesByCategory,
+  getFilesByUser
+} from "../../redux/actions/fileActions";
 import {
   Dropdown,
   DropdownToggle,
@@ -7,47 +12,25 @@ import {
 } from "reactstrap";
 
 const DataDropdown = props => {
-  const { filter, filterSet, filterFunc } = props;
+  const { filter, filterSet } = props;
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSelect = e => {
-    console.log(e);
-    filterFunc(e, filterSet);
-  };
-
+  // ARTIST SORT DROPDOWN
   let dropDownArtists;
   dropDownArtists = filterSet.map((item, i) => {
     return (
-      <DropdownItem onClick={handleSelect} key={i}>
+      <DropdownItem onClick={() => dispatch(getFilesByUser(item._id))} key={i}>
         {item.displayName}
       </DropdownItem>
     );
   });
 
+  // CATEGORY SORT DROPDOWN
   let dropDownTypes;
   dropDownTypes = filterSet.map((item, i) => {
     return (
-      <DropdownItem onClick={() => handleSelect(item, filterSet)} key={i}>
-        {item}
-      </DropdownItem>
-    );
-  });
-
-  let dropDownDates;
-  let dates = ["Newest", "Oldest"];
-  dropDownDates = dates.map((item, i) => {
-    return (
-      <DropdownItem onClick={handleSelect} key={i}>
-        {item}
-      </DropdownItem>
-    );
-  });
-
-  let dropDownViews;
-  let views = ["Public", "Private"];
-  dropDownViews = views.map((item, i) => {
-    return (
-      <DropdownItem onClick={handleSelect} key={i}>
+      <DropdownItem onClick={() => dispatch(getFilesByCategory(item))} key={i}>
         {item}
       </DropdownItem>
     );
@@ -55,14 +38,10 @@ const DataDropdown = props => {
 
   const dropDownItems = () => {
     switch (filter) {
-      case `Artist`:
+      case `Filter by Artist`:
         return dropDownArtists;
-      case `Type`:
+      case `Filter by Category`:
         return dropDownTypes;
-      case `Date`:
-        return dropDownDates;
-      case `View`:
-        return dropDownViews;
       default:
         return "Uh Oh";
     }

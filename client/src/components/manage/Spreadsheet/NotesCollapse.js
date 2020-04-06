@@ -16,7 +16,7 @@ const NotesCollapse = props => {
 
   return (
     <CardFooter className="p-0 m-0">
-      <Button block outline color="warning" onClick={toggle}>
+      <Button block outline color="success" onClick={toggle}>
         view info
       </Button>
       <Collapse isOpen={collapse}>
@@ -27,6 +27,16 @@ const NotesCollapse = props => {
           <ListGroupItem className="py-1">
             category:&nbsp;{category}
           </ListGroupItem>
+          {/* <ListGroupItem className="py-1">
+          <Button
+              block
+              outline
+              color="warning"
+              // onClick={() => this.handleDelete(file.gfsId)}
+            >
+              edit image
+            </Button
+          </ListGroupItem> */}
         </ListGroup>
       </Collapse>
     </CardFooter>

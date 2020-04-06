@@ -8,7 +8,7 @@ import "./index.css";
 
 import {
   Alert,
-  Card,
+  // Card,
   Container,
   Col,
   Row,
@@ -34,8 +34,8 @@ class Register extends Component {
 
   static propTypes = {
     registerUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired
+    // errors: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -68,15 +68,21 @@ class Register extends Component {
     return (
       <Container>
         <Row className="text-white">
-          <Col sm={{ size: 6, offset: 3 }}>
+          <Col sm={{ bsSize: 4, offset: 4 }}>
             <div className="bigBox bigButton">
               <h2>Create an account</h2>
+              <small>
+                Already have an account?{" "}
+                <Link to="/login" style={{ color: "white" }}>
+                  <strong>Login here</strong>.
+                </Link>
+              </small>
               <hr className="d-block bg-light" />
               <Form className="form" noValidate onSubmit={this.onSubmit}>
                 <FormGroup>
                   <Label htmlFor="name">Name</Label>
                   <Input
-                    size="sm"
+                    bsSize="sm"
                     type="name"
                     name="name"
                     id="name"
@@ -85,10 +91,10 @@ class Register extends Component {
                     placeholder="your name please"
                   />
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                   <Label htmlFor="displayName">Display Name</Label>
                   <Input
-                    size="sm"
+                    bsSize="sm"
                     type="name"
                     name="displayName"
                     id="displayName"
@@ -96,11 +102,11 @@ class Register extends Component {
                     onChange={this.onChange}
                     placeholder="how you want your name to appear"
                   />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
                   <Input
-                    size="sm"
+                    bsSize="sm"
                     type="email"
                     name="email"
                     id="email"
@@ -122,7 +128,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="password">Password</Label>
                   <Input
-                    size="sm"
+                    bsSize="sm"
                     onChange={this.onChange}
                     value={this.state.password}
                     error={errors.password}
@@ -143,7 +149,7 @@ class Register extends Component {
                 <FormGroup>
                   <Label htmlFor="password2">Confirm Password</Label>
                   <Input
-                    size="sm"
+                    bsSize="sm"
                     onChange={this.onChange}
                     value={this.state.password2}
                     error={errors.password2}
@@ -162,7 +168,7 @@ class Register extends Component {
                   )}
                 </FormGroup>
                 <hr />
-                <Button color="warning" type="submit">
+                <Button block color="warning" type="submit">
                   Submit
                 </Button>
               </Form>
@@ -175,8 +181,8 @@ class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  auth: state.auth
+  // errors: state.errors
 });
 
 export default connect(mapStateToProps, { registerUser })(withRouter(Register));

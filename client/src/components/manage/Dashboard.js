@@ -8,18 +8,15 @@ import ComponentModal from "../common/ComponentModal";
 import DataDropdown from "../common/DataDropdown";
 import { Container, Row, Col, Button } from "reactstrap";
 import {
-  getFiles,
+  getPrivateFilesByUser,
   setFileLoading,
   getCategories
 } from "../../redux/actions/fileActions";
-import { getArtists } from "../../redux/actions/authActions";
-import Portfolio from "../portfolio/Portfolio";
 
 class Dashboard extends Component {
   static propTypes = {
     logoutUser: PropTypes.func.isRequired,
-    getFiles: PropTypes.func.isRequired,
-    getArtists: PropTypes.func.isRequired,
+    getPrivateFilesByUser: PropTypes.func.isRequired,
     getCategories: PropTypes.func.isRequired,
     files: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
@@ -38,16 +35,9 @@ class Dashboard extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getFiles();
-    this.props.getArtists();
+    this.props.getPrivateFilesByUser(this.props.auth.user.id);
     this.props.getCategories();
   };
-
-  // prolly the move
-  // filterByType = (type) => {
-  //   let files = this.props.files;
-  //   filter now
-  // }
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -58,17 +48,12 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
     const { files, categories } = this.props.files;
 
-    // not the move
-    const filterDisplay = filter => {
-      if (filter && files) {
-        console.log(filter);
-        console.log(files);
-
-        // return true;
-      } else {
-        console.log("problemz");
+    let userFiles = [];
+    files.forEach(file => {
+      if (file.uploadedBy === user.id) {
+        userFiles.push(file);
       }
-    };
+    });
 
     return (
       <Container>
@@ -85,40 +70,16 @@ class Dashboard extends Component {
               component={<Upload />}
               buttonLabel="Add Something New"
             />
+            <hr className="bg-white" />
+
+            <DataDropdown
+              filterSet={categories}
+              filter={`Filter by Category`}
+            />
           </Col>
           <Col sm="12" md="8">
-            <hr className="bg-white" />
             <Row>
-              <Col sm="12" md="3">
-                <p className="text-white text-center">
-                  Filter By: <small>(not working)</small>
-                </p>
-              </Col>
-              <Col sm="12" md="3">
-                <DataDropdown
-                  filterSet={categories}
-                  filter={`Type`}
-                  filterFunc={filterDisplay}
-                />
-              </Col>
-              <Col sm="12" md="3">
-                <DataDropdown
-                  filterSet={files}
-                  filter={`Date`}
-                  filterFunc={filterDisplay}
-                />
-              </Col>
-              <Col sm="12" md="3">
-                <DataDropdown
-                  filterSet={files}
-                  filter={`View`}
-                  filterFunc={filterDisplay}
-                />
-              </Col>
-            </Row>
-            <hr className="bg-white" />
-            <Row>
-              <Spreadsheet />
+              <Spreadsheet userFiles={userFiles} />
             </Row>
           </Col>
         </Row>
@@ -134,8 +95,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   logoutUser,
-  getFiles,
-  getArtists,
+  getPrivateFilesByUser,
   getCategories,
   setFileLoading
 })(Dashboard);

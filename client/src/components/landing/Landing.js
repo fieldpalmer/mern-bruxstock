@@ -12,17 +12,19 @@ import "./index.css";
 class Landing extends Component {
   render() {
     return (
-      <Container className="App">
+      <Container fluid className="App" style={{ minHeight: "75vh" }}>
+        <hr className="d-block bg-light mb-4" />
+
         <Row className="fullScreen">
-          <Col sm="12" md={{ size: 8, offset: 2 }}>
+          <Col sm="12" md={{ size: 6, offset: 3 }}>
             <div className="bigBox">
               <p className="fullScreenFont">
-                SAFELY STORE, ORGANIZE, and SHARE your WORK
+                SAFELY STORE, ORGANIZE, AND SHARE YOUR WORK
               </p>
-              <hr className="d-block bg-light my-4" />
+              <hr className="d-flex bg-light my-4" />
               <Link to="/decision" style={{ textDecoration: "none" }}>
                 <Button
-                  size="lg"
+                  // size="lg"
                   outline
                   className="blueButton px-3 lead text-right"
                   block
