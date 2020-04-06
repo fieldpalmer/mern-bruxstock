@@ -70,8 +70,8 @@ class AppNavbar extends Component {
           <NavbarBrand style={{ color: "white" }} href="/">
             {/* Beaux's Art */}
             <FontAwesomeIcon icon={faCrow} />
-            brxtk |{" "}
-            <small style={{ color: "#32c6e6" }}>art storage & display</small>
+            beaux's art |{" "}
+            <small style={{ color: "#32c6e6" }}>storage & display</small>
           </NavbarBrand>
           <NavbarToggler
             className="text-white"

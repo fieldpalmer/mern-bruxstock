@@ -35,17 +35,16 @@ class Gallery extends Component {
     const { users } = this.props.auth;
 
     return (
-      <Container fluid>
+      <Container>
         <hr className="bg-white" />
 
         <Row>
           <Col sm="12" md="6">
             <h1 className="display-4 text-white">GALLERY</h1>
           </Col>
-          <Col sm="12" md="3">
+
+          <Col sm="12" md="6">
             <DataDropdown filterSet={users} filter={`Filter by Artist`} />
-          </Col>
-          <Col sm="12" md="3">
             <DataDropdown
               filterSet={categories}
               filter={`Filter by Category`}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { CardBody, CardTitle, CardImg, CardImgOverlay } from "reactstrap";
+import { CardBody, CardImg } from "reactstrap";
 import "./index.css";
 
 class SpreadsheetItem extends Component {

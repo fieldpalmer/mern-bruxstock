@@ -63,7 +63,7 @@ class Dashboard extends Component {
 
             <hr className="bg-white" />
             <Button onClick={this.goToPortfolio} size="sm" block>
-              Go to Your Portfolio
+              Go to Your Public Portfolio
             </Button>
             <hr className="bg-white" />
             <ComponentModal
