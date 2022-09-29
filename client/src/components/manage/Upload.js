@@ -14,10 +14,10 @@ class Upload extends Component {
     super();
     this.state = {
       file: {},
-      name: "",
+      // name: "",
       uploadedBy: props.auth.user.id,
       uploadDate: Date.now(),
-      type: "",
+      // type: "",
       title: "",
       notes: "",
       category: undefined,
@@ -50,10 +50,12 @@ class Upload extends Component {
   onSubmit = e => {
     e.preventDefault();
     let formData = new FormData();
-
+    console.log(formData)
+    
     const { file, notes, title, category, view, uploadedBy } = this.state;
     formData.append("file", file);
-
+    console.log(formData)
+    
     const fileData = {
       uploadedBy: uploadedBy,
       title: title,
@@ -61,10 +63,10 @@ class Upload extends Component {
       category: category,
       view: view
     };
-
+    
     let formValuesStr = JSON.stringify(fileData);
     formData.append("body", formValuesStr);
-
+    console.log(formData)
     this.props.addFile(formData, this.props.history);
   };
 

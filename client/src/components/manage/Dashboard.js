@@ -59,7 +59,7 @@ class Dashboard extends Component {
       <Container>
         <Row>
           <Col sm="12" md="4" className="text-white">
-            <h2>Hello, {user.displayName}</h2>
+            <h2>Hello, {user.email}</h2>
 
             <hr className="bg-white" />
             <Button onClick={this.goToPortfolio} size="sm" block>

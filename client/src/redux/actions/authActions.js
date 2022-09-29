@@ -21,13 +21,18 @@ export const loginUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/login", userData)
     .then(res => {
+      console.log(res);
       // Set token to localStorage
       const { token } = res.data;
+      console.log(token);
+      // this is where the error is 
       localStorage.setItem("jwtToken", token);
+      console.log(localStorage);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+      console.log(decoded);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -39,11 +44,11 @@ export const loginUser = (userData, history) => dispatch => {
     );
 };
 
-// Register User
+// Edit User
 export const editUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/edit", userData)
-    .then(res => history.push("/dashboard")) // re-direct to login on successful register
+    .then(res => history.push("/dashboard")) 
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

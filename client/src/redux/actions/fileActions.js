@@ -127,7 +127,9 @@ export const getPrivateFilesByUser = _id => dispatch => {
 
 // add file
 export const addFile = (fileData, history) => dispatch => {
+  console.log(fileData);
   dispatch(setFileLoading());
+  console.log(fileData);
   axios
     .post("/api/files/upload", fileData)
     .then(res =>
@@ -142,7 +144,7 @@ export const addFile = (fileData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.res.data
+        payload: err.response.data
       })
     );
 };

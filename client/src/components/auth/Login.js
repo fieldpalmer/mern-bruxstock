@@ -55,7 +55,7 @@ class Login extends Component {
       password: this.state.password
     };
     this.props.loginUser(userData);
-    window.setTimeout(this.goToDashboard, 1 * 1000);
+    window.setTimeout(this.goToDashboard, 2 * 1000);
   };
 
   render() {

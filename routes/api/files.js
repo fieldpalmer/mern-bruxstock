@@ -56,6 +56,8 @@ const upload = multer({ storage: storage }).single("file");
 // @access     Public
 router.get("/", (req, res) => {
   Image.find((err, images) => {
+    console.log(err)
+    console.log(images)
     let publicImgArray = [];
     images.map(img => {
       if (img.view === "public") {
@@ -71,6 +73,7 @@ router.get("/", (req, res) => {
 // @access     Public
 router.get("/categories", (req, res) => {
   Image.find((err, images) => {
+    console.log(images)
     let allCategories = [];
     images.forEach(img => {
       allCategories.push(img.category);
@@ -155,7 +158,10 @@ router.post(
   // this is the file being sent to GFS
   upload,
   (req, res) => {
+    console.log(upload);
+    console.log(req);
     let reqBodyParsed = JSON.parse(req.body.body);
+    console.log(reqBodyParsed);
     const { title, uploadedBy, notes, category, view } = reqBodyParsed;
     const { id, filename, uploadDate, contentType } = req.file;
 
@@ -172,23 +178,45 @@ router.post(
       view: view
     });
 
+    // newImg.save().then(img => {
+    //   console.log(img);
+    //   User.findOneAndUpdate(
+    //     { _id: uploadedBy },
+    //     { $push: { stock: img._id } },
+    //     (err, doc) => {
+    //       if (err) {
+    //         return console.log(err);
+    //       }
+    //       return res.json({
+    //         success: true,
+    //         msg: "file posted!",
+    //         doc: doc
+    //       });
+    //     }
+    //   );
+    // });
     Image.findOne({ id }).then(img => {
-      newImg.save().then(img => {
-        User.findOneAndUpdate(
-          { _id: uploadedBy },
-          { $push: { stock: img.gfsId } },
-          (err, doc) => {
-            if (err) {
-              return console.log(err);
+      if (img) {
+        return res.status(400).json({ img: "Image already exists" });
+      } else {
+        newImg.save().then(img => {
+          console.log(img);
+          User.findOneAndUpdate(
+            { _id: uploadedBy },
+            { $push: { stock: img.gfsId } },
+            (err, doc) => {
+              if (err) {
+                return console.log(err);
+              }
+              return res.json({
+                success: true,
+                msg: "file posted!",
+                doc: doc
+              });
             }
-            return res.json({
-              success: true,
-              msg: "file posted!",
-              doc: doc
-            });
-          }
-        );
-      });
+          );
+        });
+      }
     });
   }
 );

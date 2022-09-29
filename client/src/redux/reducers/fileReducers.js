@@ -17,36 +17,42 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_FILES:
+      console.log(state)
       return {
         ...state,
         files: action.payload,
         loading: false
       };
     case GET_CATEGORIES:
+      console.log(state)
       return {
         ...state,
         categories: action.payload,
         loading: false
       };
     case GET_FILES_BY_CATEGORY:
+      console.log(state)
       return {
         ...state,
         files: action.payload,
         loading: false
       };
     case GET_FILES_BY_USER:
+      console.log(state)
       return {
         ...state,
         files: action.payload,
         loading: false
       };
     case GET_PRIVATE_FILES_BY_USER:
+      console.log(state)
       return {
         ...state,
         files: action.payload,
         loading: false
       };
     case ADD_FILE:
+      console.log(state)
       return {
         ...state,
         file: action.payload,

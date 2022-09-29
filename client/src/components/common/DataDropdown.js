@@ -13,15 +13,17 @@ import {
 
 const DataDropdown = props => {
   const { filter, filterSet } = props;
+  console.log(filterSet);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
 
   // ARTIST SORT DROPDOWN
   let dropDownArtists;
   dropDownArtists = filterSet.map((item, i) => {
+    console.log(item)
     return (
-      <DropdownItem onClick={() => dispatch(getFilesByUser(item._id))} key={i}>
-        {item.displayName}
+      <DropdownItem onClick={() => dispatch(getFilesByUser(item))} key={i}>
+        {item != null ? item.email : "N/A"}
       </DropdownItem>
     );
   });
@@ -29,9 +31,10 @@ const DataDropdown = props => {
   // CATEGORY SORT DROPDOWN
   let dropDownTypes;
   dropDownTypes = filterSet.map((item, i) => {
+    console.log(item)
     return (
       <DropdownItem onClick={() => dispatch(getFilesByCategory(item))} key={i}>
-        {item}
+        {item != null ? item.filename : "N/A"}
       </DropdownItem>
     );
   });
